@@ -29,6 +29,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 .btn{width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:#fff;font-family:'Vazirmatn';font-size:15px;font-weight:800;cursor:pointer;margin-top:6px}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 .err{color:#f87171;font-size:12px;text-align:center;min-height:16px;margin-bottom:10px;line-height:1.6}
+.resend-link{text-align:center;margin-top:10px;font-size:11px}
+.resend-link a{color:#fbbf24;cursor:pointer;font-weight:700}
 .switch-link{text-align:center;margin-top:18px;font-size:13px;color:#64748b}
 .switch-link a{color:#38bdf8;font-weight:700;cursor:pointer}
 #main-app{display:none}
@@ -246,6 +248,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
         <div class="fg"><label>📧 ئیمەیل</label><input type="email" id="l-email" placeholder="example@email.com" required></div>
         <div class="fg"><label>🔑 وشەی نهێنی</label><input type="password" id="l-pass" placeholder="••••••••" required minlength="6"></div>
         <button type="submit" class="btn" id="l-btn">چوونەژوورەوە</button>
+        <div class="resend-link"><a onclick="resendVerification()">📩 لینکی پشتڕاستکردنم پێ نەگەیشت؟ دووبارە بینێرە</a></div>
         <div class="switch-link">هەژمارت نییە؟ <a onclick="switchAuth('register')">تۆمارکردن بکە</a></div>
       </form>
       <form id="f-reg" style="display:none" onsubmit="doRegister(event)">
@@ -418,6 +421,25 @@ const firebaseConfig={apiKey:"AIzaSyC3qMjhPB9hUbY8z6ebMKqHIWLdFO1Sfhs",authDomai
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(),db=firebase.firestore();
 let U=null,lbFilter='all',lbData=[],currentLB=[],lockTimer=null,LEVEL_REWARD=10,authBusy=false;
+// 🔗 لینکی پشتڕاستکردن دەچێتە دۆمەینی خۆت (کەمتر spam)
+const AC_SETTINGS={url:window.location.origin+window.location.pathname,handleCodeInApp:false};
+// ناردنی لینک بە دۆمەینی خۆت، ئەگەر شکستی هێنا بەبێ دۆمەین (fallback)
+async function sendVerify(user){try{await user.sendEmailVerification(AC_SETTINGS);}catch(e){try{await user.sendEmailVerification();}catch(x){}}}
+// 📩 ناردنەوەی لینکی پشتڕاستکردن (دوگمەی فۆرمی چوونەژوورەوە)
+async function resendVerification(){
+  const em=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pass').value,er=document.getElementById('err');
+  if(!em||!pw){er.style.color='#f87171';er.innerText='تکایە ئیمەیل و وشەی نهێنی بنووسە بۆ ناردنەوەی لینک';return;}
+  er.style.color='#94a3b8';er.innerText='⏳ چاوەڕوان بە، لینک دەنێردرێت...';authBusy=true;
+  try{
+    if(auth.currentUser){try{await auth.signOut();}catch(x){}}
+    const cred=await auth.signInWithEmailAndPassword(em,pw);
+    if(cred.user.emailVerified){er.style.color='#22c55e';er.innerText='✅ ئیمەیلەکەت پشتڕاست کراوەتەوە! ئێستا چوونەژوورەوە بکە.';try{await cred.user.signOut();}catch(x){}authBusy=false;return;}
+    await sendVerify(cred.user);
+    try{await cred.user.signOut();}catch(x){}
+    er.style.color='#fbbf24';er.innerText='📩 لینکی نوێ نێردرا بۆ '+em+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spam/junkـیش بپشکنە، و وەک "Not spam" نیشانەی بکە).';
+  }catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}
+  finally{authBusy=false;}
+}
 function avHtml(a,n){if(a&&(a.startsWith('data:')||a.startsWith('http')))return `<img src="${a}">`;if(a)return a;return (n||'?').charAt(0);}
 function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
@@ -443,13 +465,13 @@ const QUESTIONS={
 {q:'شاعیری "نالی" خەڵکی کوێیە؟',a:['هەولێر','شارەزوور','کۆیە','ڕانیە'],c:1},
 {q:'پارکی ئازادی لە کام شارە؟',a:['هەولێر','سلێمانی','دهۆک','زاخۆ'],c:1},
 {q:'چیای ئەزمەڕ لە کوێیە؟',a:['سلێمانی','هەولێر','ڕانیە','چوارقوڕنە'],c:0},
-{q:'زانکۆی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٦٠','١٩٦٨','١٩٧٥','١٩٨٠'],c:1},
-{q:'مۆزەخانەی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٤٠','١٩٦١','١٩٧٥','١٩٩'],c:1}
+{q:'زانکۆی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٦','١٩٦٨','١٩٧٥','١٩٨'],c:1},
+{q:'مۆزەخانەی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٤٠','١٩١','١٧٥','١٩٩٠'],c:1}
 ],
 'هەولێر':[
 {q:'هەولێر پایتەختی چییە؟',a:['کوردستانی ڕۆژهەڵات','هەرێمی کوردستان','کوردستانی سووریا','کوردستانی تورکیا'],c:1},
 {q:'قەڵای هەولێر لە لیستی کام ڕێکخراوە؟',a:['NATO','UNESCO','WHO','FIFA'],c:1},
-{q:'قەڵای هەولێر نزیکەی چەند ساڵ تەمەنییە؟',a:['١٠٠٠ ساڵ','٣٠٠٠ ساڵ','٦٠٠٠ ساڵ','٥٠٠ ساڵ'],c:2},
+{q:'قەڵای هەولێر نزیکەی چەند ساڵ تەمەنییە؟',a:['١٠٠٠ ساڵ','٣٠٠٠ ساڵ','٦٠٠ ساڵ','٥٠٠ ساڵ'],c:2},
 {q:'پارکی سامی عەبدولڕەحمان لە کوێیە؟',a:['سلێمانی','هەولێر','دهۆک','کەرکووک'],c:1},
 {q:'مزگەوتی جەلیل خەیات لە کام شارە؟',a:['سلێمانی','هەولێر','هەڵەبجە','دهۆک'],c:1},
 {q:'بازاڕی قەیسەری لە کوێیە؟',a:['هەولێر','سلێمانی','کۆیە','ڕانیە'],c:0},
@@ -473,7 +495,7 @@ auth.onAuthStateChanged(async user=>{
     if(!user.emailVerified){
       document.getElementById('login-screen').style.display='flex';
       document.getElementById('main-app').style.display='none';
-      if(!authBusy){const er=document.getElementById('err');er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت هێشتا پشتڕاست نەکراوەتەوە. تکایە ئیمەیلەکەت بپشکنە، یان چوونەژوورەوە بکە بۆ ناردنەوەی لینکی نوێ.';}
+      if(!authBusy){const er=document.getElementById('err');er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت هێشتا پشتڕاست نەکراوەتەوە. تکایە ئیمەیلەکەت بپشکنە (بۆکسی spamـیش)، یان خوارەوە "دووبارە بینێرە" دابگرە.';}
       return;
     }
     try{const doc=await db.collection('users').doc(user.uid).get();U=doc.exists?doc.data():{name:'یاریزان',email:user.email,phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0};}
@@ -487,8 +509,8 @@ auth.onAuthStateChanged(async user=>{
   }
 });
 function switchAuth(t){const tabs=document.querySelectorAll('.tab');const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';if(t==='login'){document.getElementById('f-login').style.display='block';document.getElementById('f-reg').style.display='none';tabs[0].classList.add('on');tabs[1].classList.remove('on');}else{document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='block';tabs[0].classList.remove('on');tabs[1].classList.add('on');}}
-async function doLogin(e){e.preventDefault();const btn=document.getElementById('l-btn'),em=document.getElementById('l-email').value.trim(),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;authBusy=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.signInWithEmailAndPassword(em,document.getElementById('l-pass').value);if(cred.user&&!cred.user.emailVerified){try{await cred.user.sendEmailVerification();}catch(x){}try{await cred.user.signOut();}catch(x){}er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت پشتڕاست نەکراوەتەوە! لینکی نوێ نێردرا بۆ '+em+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spamـیش بپشکنە).';}else{er.style.color='#f87171';er.innerText='';}}catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}finally{btn.innerText='چوونەژوورەوە';btn.disabled=false;authBusy=false;}}
-async function doRegister(e){e.preventDefault();const name=document.getElementById('r-name').value.trim(),email=document.getElementById('r-email').value,phone=document.getElementById('r-phone').value.trim(),city=document.getElementById('r-city').value,pass=document.getElementById('r-pass').value,btn=document.getElementById('r-btn'),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;authBusy=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.createUserWithEmailAndPassword(email,pass);try{await cred.user.sendEmailVerification();}catch(x){}await db.collection('users').doc(cred.user.uid).set({name,email,phone,city,points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await db.collection('scores').add({uid:cred.user.uid,name,city,score:0,diamonds:0,avatar:'',cover:'',coverSetAt:null,frame:'',timestamp:firebase.firestore.FieldValue.serverTimestamp()});try{await cred.user.signOut();}catch(x){}er.style.color='#22c55e';er.innerText='✅ تۆمارکردن سەرکەوتوو بوو! لینکی پشتڕاستکردن نێردرا بۆ '+email+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spamـیش)، پاشان چوونەژوورەوە بکە.';switchAuth('login');}catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}finally{btn.innerText='تۆمارکردن';btn.disabled=false;authBusy=false;}}
+async function doLogin(e){e.preventDefault();const btn=document.getElementById('l-btn'),em=document.getElementById('l-email').value.trim(),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;authBusy=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.signInWithEmailAndPassword(em,document.getElementById('l-pass').value);if(cred.user&&!cred.user.emailVerified){await sendVerify(cred.user);try{await cred.user.signOut();}catch(x){}er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت پشتڕاست نەکراوەتەوە! لینکی نوێ نێردرا بۆ '+em+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spam/junkـیش بپشکنە، و وەک "Not spam" نیشانەی بکە تا داهاتوو بچێتە inbox).';}else{er.style.color='#f87171';er.innerText='';}}catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}finally{btn.innerText='چوونەژوورەوە';btn.disabled=false;authBusy=false;}}
+async function doRegister(e){e.preventDefault();const name=document.getElementById('r-name').value.trim(),email=document.getElementById('r-email').value,phone=document.getElementById('r-phone').value.trim(),city=document.getElementById('r-city').value,pass=document.getElementById('r-pass').value,btn=document.getElementById('r-btn'),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;authBusy=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.createUserWithEmailAndPassword(email,pass);await sendVerify(cred.user);await db.collection('users').doc(cred.user.uid).set({name,email,phone,city,points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await db.collection('scores').add({uid:cred.user.uid,name,city,score:0,diamonds:0,avatar:'',cover:'',coverSetAt:null,frame:'',timestamp:firebase.firestore.FieldValue.serverTimestamp()});try{await cred.user.signOut();}catch(x){}er.style.color='#22c55e';er.innerText='✅ تۆمارکردن سەرکەوتوو بوو! لینکی پشتڕاستکردن نێردرا بۆ '+email+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spam/junkـیش)، پاشان چوونەژوورەوە بکە. 💡 ئەگەر لە spam بوو، وەک "Not spam" نیشانەی بکە.';switchAuth('login');}catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}finally{btn.innerText='تۆمارکردن';btn.disabled=false;authBusy=false;}}
 function showApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('main-app').style.display='block';
