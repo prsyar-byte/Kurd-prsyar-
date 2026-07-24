@@ -49,7 +49,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 .hdr .av-wrap{width:42px;height:42px}
 .hdr .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px;overflow:hidden}
 .hdr .av img{width:100%;height:100%;object-fit:cover;display:block}
-.av-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:158%;height:158%;object-fit:contain;pointer-events:none;z-index:4;display:none}
+.av-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:135%;height:135%;object-fit:contain;pointer-events:none;z-index:4;display:none}
 .sec{font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .games{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px}
 .gc{position:relative;border-radius:16px;overflow:hidden;height:150px;cursor:pointer;transition:.3s;border:1px solid rgba(255,255,255,.07)}
@@ -625,52 +625,78 @@ function loadImgForClean(src,cb){
   im.onerror=function(){tryProxy(0);};
   im.src=src;
 }
-/* ===== پرۆسێسی چوارچێوە: سڕینەوەی شەترەنجی + بڕینی چوارچێوەی شەفافی بەتاڵ (auto-trim) ===== */
+/* ===== پرۆسێسی چوارچێوە: سڕینەوەی شەترەنجی + بڕین + چوارگۆشەکردن + پێوانەی ناوەوە (بۆ قەبارەی زیرەک) ===== */
 const frameCache={};
 function processFrame(src,cb){
-  if(!src){cb(src);return;}
+  if(!src){cb({url:src,innerRatio:0});return;}
   if(frameCache[src]){cb(frameCache[src]);return;}
   const finish=function(res){frameCache[src]=res;cb(res);};
-  const trimFrom=function(imageSrc){
+  const measure=function(imageSrc){
     const im2=new Image();
     im2.onload=function(){
       try{
         const w=im2.naturalWidth||im2.width,h=im2.naturalHeight||im2.height;
-        if(!w||!h){finish(src);return;}
-        const c=document.createElement('canvas');c.width=w;c.height=h;
-        const x=c.getContext('2d');x.drawImage(im2,0,0,w,h);
-        const d=x.getImageData(0,0,w,h),p=d.data;
-        let minX=w,minY=h,maxX=0,maxY=0,found=false;
-        for(let y=0;y<h;y++){for(let xx=0;xx<w;xx++){if(p[(y*w+xx)*4+3]>12){found=true;if(xx<minX)minX=xx;if(xx>maxX)maxX=xx;if(y<minY)minY=y;if(y>maxY)maxY=y;}}}
-        if(!found||maxX<=minX||maxY<=minY){finish(src);return;}
-        const span=Math.max(maxX-minX,maxY-minY);
-        const pad=Math.max(1,Math.round(span*0.02));
-        minX=Math.max(0,minX-pad);minY=Math.max(0,minY-pad);maxX=Math.min(w-1,maxX+pad);maxY=Math.min(h-1,maxY+pad);
-        const cw=maxX-minX+1,ch=maxY-minY+1;
-        if(cw>=w&&ch>=h){finish(src);return;}
-        const c2=document.createElement('canvas');c2.width=cw;c2.height=ch;
-        c2.getContext('2d').drawImage(c,minX,minY,cw,ch,0,0,cw,ch);
-        finish(c2.toDataURL('image/png'));
-      }catch(e){finish(src);}
+        if(!w||!h){finish({url:src,innerRatio:0});return;}
+        let workSrc=imageSrc,W=w,H=h;
+        if(w!==h){
+          const side=Math.max(w,h);
+          const c=document.createElement('canvas');c.width=side;c.height=side;
+          c.getContext('2d').drawImage(im2,Math.round((side-w)/2),Math.round((side-h)/2),w,h);
+          workSrc=c.toDataURL('image/png');W=side;H=side;
+        }
+        const im3=new Image();
+        im3.onload=function(){
+          try{
+            const WW=im3.naturalWidth||W,HH=im3.naturalHeight||H;
+            const c=document.createElement('canvas');c.width=WW;c.height=HH;
+            const x=c.getContext('2d');x.drawImage(im3,0,0,WW,HH);
+            const d=x.getImageData(0,0,WW,HH).data;
+            const midY=Math.floor(HH/2);
+            let leftT=0;for(let xx=0;xx<WW;xx++){if(d[(midY*WW+xx)*4+3]>12)break;leftT++;}
+            let rightT=0;for(let xx=WW-1;xx>=0;xx--){if(d[(midY*WW+xx)*4+3]>12)break;rightT++;}
+            const inner=WW-leftT-rightT;
+            const innerRatio=inner/WW;
+            finish({url:workSrc,innerRatio:(innerRatio>0.25&&innerRatio<0.98)?innerRatio:0});
+          }catch(e){finish({url:workSrc,innerRatio:0});}
+        };
+        im3.onerror=function(){finish({url:workSrc,innerRatio:0});};
+        im3.src=workSrc;
+      }catch(e){finish({url:src,innerRatio:0});}
     };
-    im2.onerror=function(){finish(src);};
+    im2.onerror=function(){finish({url:src,innerRatio:0});};
     im2.src=imageSrc;
   };
   loadImgForClean(function(im){
-    if(!im){trimFrom(src);return;}
+    if(!im){measure(src);return;}
     try{
       const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;
-      if(!w||!h){trimFrom(src);return;}
+      if(!w||!h){measure(src);return;}
       const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
       x.drawImage(im,0,0,w,h);
       const didClean=cbPixels(x,w,h);
-      const inter=c.toDataURL('image/png');
-      trimFrom(didClean?inter:src);
-    }catch(e){trimFrom(src);}
+      const d=x.getImageData(0,0,w,h),p=d.data;
+      let minX=w,minY=h,maxX=0,maxY=0,found=false;
+      for(let y=0;y<h;y++){for(let xx=0;xx<w;xx++){if(p[(y*w+xx)*4+3]>12){found=true;if(xx<minX)minX=xx;if(xx>maxX)maxX=xx;if(y<minY)minY=y;if(y>maxY)maxY=y;}}}
+      if(!found||maxX<=minX||maxY<=minY){measure(didClean?c.toDataURL('image/png'):src);return;}
+      const pad=Math.max(1,Math.round(Math.max(maxX-minX,maxY-minY)*0.02));
+      minX=Math.max(0,minX-pad);minY=Math.max(0,minY-pad);maxX=Math.min(w-1,maxX+pad);maxY=Math.min(h-1,maxY+pad);
+      const cw=maxX-minX+1,ch=maxY-minY+1;
+      const c2=document.createElement('canvas');c2.width=cw;c2.height=ch;
+      c2.getContext('2d').drawImage(c,minX,minY,cw,ch,0,0,cw,ch);
+      measure(c2.toDataURL('image/png'));
+    }catch(e){measure(src);}
   });
 }
-/* ===== دانانی چوارچێوە لەسەر ئاڤاتار (لەگەڵ پرۆسێس) ===== */
-function setFrame(id,url){const el=document.getElementById(id);if(!el)return;if(url){el.style.display='block';el.src=url;processFrame(url,function(t){el.src=t;});}else{el.style.display='none';}}
+/* ===== دانانی چوارچێوە لەسەر ئاڤاتار — قەبارەی زیرەک بەپێی ناوەوە ===== */
+function applyFrameSize(el,ratio){
+  if(ratio>0){const pct=Math.round((1/ratio)*108);el.style.width=pct+'%';el.style.height=pct+'%';}
+  else{el.style.width='135%';el.style.height='135%';}
+}
+function setFrame(id,url){
+  const el=document.getElementById(id);if(!el)return;
+  if(url){el.style.display='block';el.src=url;processFrame(url,function(res){el.src=res.url;applyFrameSize(el,res.innerRatio);});}
+  else{el.style.display='none';}
+}
 function getLevel(s){return Math.floor((s||0)/500);}
 function getRankEmoji(f,r){if(r===1)return '🥇';if(r===2)return '🥈';if(r===3)return '🥉';return '';}
 function avHtml(a,n){if(a&&(a.startsWith('data:')||a.startsWith('http')))return `<img src="${a}">`;if(a)return a;return (n||'?').charAt(0);}
@@ -896,7 +922,7 @@ function renderLB(){
       <div class="lb-scores"><div class="sc">⭐ ${(d.score||0).toLocaleString()}</div><div class="dm">💎 ${(d.diamonds||0).toLocaleString()}</div></div>
     </div>`;r++;
   });
-  list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(t){img.src=t;});});
+  list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(res){img.src=res.url;applyFrameSize(img,res.innerRatio);});});
 }
 async function renderCityBoards(){
   const hScore=cityScoresData.hawler||0,sScore=cityScoresData.slimany||0;
@@ -906,8 +932,8 @@ async function renderCityBoards(){
     const headEl=document.getElementById('lbh-'+key);
     if(!el)continue;
     let medal='';
-    if(hScore>sScore)medal=key==='hawler'?'🥇':'🥈';
-    else if(sScore>hScore)medal=key==='slimany'?'🥇':'🥈';
+    if(hScore>sScore)medal=key==='hawler'?'🥇':'';
+    else if(sScore>hScore)medal=key==='slimany'?'🥇':'';
     else medal='🤝';
     const cScore=key==='hawler'?hScore:sScore;
     if(headEl)headEl.innerHTML=`🏙️ ${city} <span style="font-size:13px">${medal}</span> <span style="color:#fbbf24;font-size:14px;font-weight:900">${cScore.toLocaleString()}</span>`;
@@ -932,7 +958,7 @@ async function renderCityBoards(){
         <div class="lb-scores"><div class="sc">🏙️ ${d.cityPts||0}</div></div>
       </div>`;r++;
     });
-    el.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(t){img.src=t;});});
+    el.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(res){img.src=res.url;applyFrameSize(img,res.innerRatio);});});
   }
 }
 function viewUserByUid(uid){
