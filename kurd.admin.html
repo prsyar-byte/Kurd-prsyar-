@@ -127,6 +127,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
   <div class="tabs">
     <button class="tb on" onclick="sp('users',this)">👤 بەکارهێنەران</button>
     <button class="tb" onclick="sp('scores',this)">🏆 ڕیزبەندی</button>
+    <button class="tb" onclick="sp('history',this)">📊 مێژوو</button>
     <button class="tb" onclick="sp('msgs',this)">📢 پەیام</button>
     <button class="tb" onclick="sp('locks',this)">🔒 قوفڵ</button>
     <button class="tb" onclick="sp('levels',this)">🎖️ ئاست</button>
@@ -157,6 +158,23 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
       </div>
       <input type="text" class="search-box" id="s-search" placeholder="🔍 گەڕان بە ناو یان شار..." oninput="renderAdmLB()">
       <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>#</th><th>وێنە</th><th>ناو</th><th>شار</th><th>🎖️</th><th>🏅</th><th>⭐ سکۆر</th><th>💎 ئەڵماس</th><th>کردار</th></tr></thead><tbody id="s-tb"></tbody></table></div>
+    </div>
+  </div>
+
+  <div id="p-history" class="pnl">
+    <div class="card">
+      <h3>📊 مێژووی یارییەکان (کەی تەواو کرا + چەند خاڵ بەدەستهات)</h3>
+      <div class="lb-tabs">
+        <button class="lb-tab on" onclick="setHistFilter('all',this)">هەموو</button>
+        <button class="lb-tab" onclick="setHistFilter('سلێمانی',this)">سلێمانی</button>
+        <button class="lb-tab" onclick="setHistFilter('هەولێر',this)">هەولێر</button>
+      </div>
+      <input type="text" class="search-box" id="h-search" placeholder="🔍 گەڕان بە ناوی یاریزان..." oninput="renderHistory()">
+      <div class="q-count" id="h-count">٠ تۆمار</div>
+      <div style="overflow-x:auto;max-height:420px;overflow-y:auto"><table class="tbl"><thead><tr><th>ناو</th><th>شار</th><th>📅 بەروار/کات</th><th>✅ دروست/کۆ</th><th>⭐ خاڵ</th><th>💎 ئەڵماس</th></tr></thead><tbody id="h-tb"></tbody></table></div>
+      <p class="hint">💡 ئەم لیستە نوێترین ٥٠٠ یاری تەواوکراو/دەرچوو پیشان دەدات (بە ڕیزبەندی کات، نوێترین سەرەوە).
+هەر کاتێک یاریزانێک یاری تەواو بکات یان لە ناوەڕاست دەرچێت (دوای وەڵامدان بە لانیکەم ١ پرسیار)، لێرە تۆمار دەبێت لەگەڵ: بەروار، ژمارەی وەڵامی ڕاست/کۆی پرسیار، خاڵی بەدەستهاتوو، و ئەڵماس.
+🔍 دەتوانیت بە ناو بگەڕێیت یان بە شار فیلتر بکەیت.</p>
     </div>
   </div>
 
@@ -222,7 +240,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
     <div class="card">
       <h3>➕ زیادکردنی بۆکس</h3>
       <div class="frm">
-        <input type="text" id="rw-icon" placeholder="ئایکۆن/ئیمۆجی (🎁  💎)" value="">
+        <input type="text" id="rw-icon" placeholder="ئایکۆن/ئیمۆجی (🎁 🏆 💎)" value="">
         <input type="text" id="rw-name" placeholder="ناوی بۆکس">
         <input type="number" id="rw-rl" placeholder="🎖️ مەرجی ئاست (0=بێ مەرج)" value="0">
         <input type="number" id="rw-rs" placeholder="⭐ مەرجی خاڵ (0=بێ مەرج)" value="0">
@@ -264,7 +282,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
       <h3>📋 زیادکردنی بە کۆمەڵ (paste چەندین پرسیار بە یەک جار)</h3>
       <div class="frm">
         <select id="qb-city" class="full"><option value="هەولێر">🏙️ هەولێر</option><option value="سلێمانی">🏙️ سلێمانی</option></select>
-        <textarea id="qb-text" class="full" placeholder="هەر هێڵێک = پرسیارێک، بە | جیاکراوەتەوە:&#10;پرسیار|وەڵام١|وەڵام٢|وەڵام٣|وەڵام٤|ژمارەی_ڕاست&#10;&#10;نمونە:&#10;قەڵای هەولێر لە لیستی کام ڕێکخراوە؟|NATO|UNESCO|WHO|FIFA|1&#10;سلێمانی بە چی ناسراوە؟|کەلتوور|بازرگانی|پیشەسازی|کشتوکاڵ|0"></textarea>
+        <textarea id="qb-text" class="full" placeholder="هەر هێڵێک = پرسیارێک، بە | جیاکراوەتەوە:&#10;پرسیار|وەڵام١|وەڵام٢|وەڵام٣|وەڵام٤|ژمارەی_ڕاست&#10;&#10;نمونە:&#10;قەڵای هەولێر لە لیستی کام ڕێکخراوە؟|NATO|UNESCO|WHO|FIFA|1&#10;سلێمانی بە چی ناسراوە؟|کەلتوور و هونەر|بازرگانی|پیشەسازی|کشتوکاڵ|0"></textarea>
         <button class="sbtn" onclick="addBulkQuestions()">🚀 زیادکردنی هەموو پرسیارەکان</button>
       </div>
       <p class="hint">📌 فۆرمات: هەر هێڵێک پرسیارێکە. بە ڕیزبەندی: پرسیار | وەڵام١ | وەڵام٢ | وەڵام٣ | وەڵام٤ | ژمارەی وەڵامی ڕاست (0=یەکەم، 1=دووەم، 2=سێیەم، 3=چوارەم).
@@ -359,11 +377,12 @@ const db=firebase.firestore();
 const ADMIN_USER="dzhwaredres",ADMIN_PASS="Dzhwar1999$$$";
 let admLBFilter='all',admLBData=[],allUsers=[],avImgData='',avUrlData='',frImgData='',frUrlData='',userMap={};
 let qFilter='all',allQuestions=[];
+let histFilter='all',histData=[];
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function avHtml(a,n){if(a&&(a.startsWith('data:')||a.startsWith('http')))return `<img src="${a}">`;if(a)return a;return (n||'?').charAt(0);}
 function fmtDate(d){if(!d)return'-';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')} | ${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()}`;}catch(e){return'-';}}
 function getLevel(s){return Math.floor((s||0)/500);}
-function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇🏅':'';if(r===2)return f==='all'?'🥈🎖️':'🥈';if(r===3)return f==='all'?'🥉':'🥉';return '';}
+function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇🏅':'';if(r===2)return f==='all'?'🥈️':'🥈';if(r===3)return f==='all'?'🥉':'';return '';}
 function doLogin(){
   const user=document.getElementById('a-user').value.trim(),pass=document.getElementById('a-pass').value;
   const btn=document.getElementById('a-btn'),err=document.getElementById('a-err');err.innerText='';
@@ -376,9 +395,9 @@ function doLogin(){
   },400);
 }
 function doLogout(){document.getElementById('a-login').style.display='block';document.getElementById('a-panel').style.display='none';document.getElementById('a-user').value='';document.getElementById('a-pass').value='';document.getElementById('a-err').innerText='';}
-function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();if(id==='questions')loadQuestions();}
+function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();if(id==='questions')loadQuestions();if(id==='history')loadHistory();}
 function sm(t,type){const el=document.getElementById('a-msg');el.innerText=t;el.className='msg '+type;setTimeout(()=>{el.className='msg';},4000);}
-function loadAll(){loadUsers();loadScores();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();}
+function loadAll(){loadUsers();loadScores();loadHistory();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();}
 function loadUsers(){
   const tb=document.getElementById('u-tb');
   tb.innerHTML='<tr><td colspan="11" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
@@ -479,6 +498,29 @@ function renderAdmLB(){
 }
 async function editS(id,cur){const ns=prompt('سکۆر:',cur);if(ns===null)return;try{await db.collection('scores').doc(id).update({score:parseInt(ns)||0});sm('✅','ok');loadScores();}catch(e){sm('هەڵە','err');}}
 async function delS(id){if(!confirm('سڕینەوە؟'))return;try{await db.collection('scores').doc(id).delete();sm('✅','ok');loadScores();}catch(e){sm('هەڵە','err');}}
+// 📊 مێژووی یارییەکان
+function loadHistory(){
+  const tb=document.getElementById('h-tb');
+  tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
+  db.collection('gameHistory').orderBy('date','desc').limit(500).get().then(snap=>{
+    histData=[];snap.forEach(doc=>{histData.push({id:doc.id,...doc.data()});});
+    renderHistory();
+  }).catch(()=>{tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#f87171">هەڵە لە بارکردن</td></tr>';});
+}
+function setHistFilter(f,el){histFilter=f;document.querySelectorAll('#p-history .lb-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');renderHistory();}
+function renderHistory(){
+  const tb=document.getElementById('h-tb');
+  const q=(document.getElementById('h-search').value||'').trim().toLowerCase();
+  let data=histData;
+  if(histFilter!=='all')data=data.filter(d=>d.city===histFilter);
+  if(q)data=data.filter(d=>(d.name||'').toLowerCase().includes(q));
+  document.getElementById('h-count').innerText=`پیشاندراو: ${data.length} لە کۆی ${histData.length} تۆمار (نوێترین ٥٠٠)`;
+  if(!data.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#64748b">هیچ تۆمارێک نییە</td></tr>';return;}
+  tb.innerHTML='';
+  data.forEach(d=>{
+    tb.innerHTML+=`<tr><td>${esc(d.name||'-')}</td><td>${esc(d.city||'-')}</td><td style="font-size:10px">${fmtDate(d.date)}</td><td style="color:#22c55e;font-weight:700">${d.correct||0}/${d.total||0}</td><td style="color:#fbbf24;font-weight:700">+${d.points||0}</td><td style="color:#a78bfa">+${d.diamonds||0}</td></tr>`;
+  });
+}
 function loadUserSelect(){const sel=document.getElementById('m-uid');db.collection('users').get().then(snap=>{sel.innerHTML='<option value="">هەڵبژێرە...</option>';snap.forEach(doc=>{const d=doc.data();sel.innerHTML+=`<option value="${doc.id}">${esc(d.name||d.email||doc.id)}</option>`;});});}
 async function sendAll(){
   const msg=document.getElementById('m-all').value.trim();
@@ -564,7 +606,6 @@ async function addReward(){
   }catch(e){sm('هەڵە: '+e.message,'err');}
 }
 async function delReward(id){if(!confirm('سڕینەوەی ئەم بۆکسە؟'))return;try{await db.collection('rewards').doc(id).delete();sm('✅','ok');loadRewards();}catch(e){sm('هەڵە','err');}}
-// ❓ پرسیارەکان
 function setQFilter(f,el){qFilter=f;document.querySelectorAll('#p-questions .lb-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');renderQuestions();}
 function loadQuestions(){
   const tb=document.getElementById('q-tb');
