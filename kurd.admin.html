@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>ئەدمین</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -27,7 +30,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
 .pnl{display:none}.pnl.on{display:block}
 .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:18px;margin-bottom:14px}
 .card h3{font-size:14px;font-weight:800;margin-bottom:12px;color:#fbbf24}
-.card .hint{font-size:10px;color:#64748b;margin-top:10px;line-height:1.6}
+.card .hint{font-size:10px;color:#64748b;margin-top:10px;line-height:1.7;background:rgba(255,255,255,.02);padding:8px 10px;border-radius:8px;white-space:pre-wrap}
 .search-box{width:100%;padding:10px 14px;border:1.5px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(15,23,42,.5);color:#fff;font-family:'Vazirmatn';font-size:12px;margin-bottom:12px}
 .search-box:focus{outline:none;border-color:#f87171}
 .tbl{width:100%;border-collapse:collapse;font-size:11px}
@@ -54,9 +57,10 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
 .frm{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .frm input,.frm select,.frm textarea{width:100%;padding:10px;border:1.5px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(15,23,42,.5);color:#fff;font-family:'Vazirmatn';font-size:12px}
 .frm select{appearance:none;cursor:pointer}.frm select option{background:#1e293b}
-.frm textarea{resize:vertical;min-height:70px}
+.frm textarea{resize:vertical;min-height:120px;font-family:monospace;font-size:11px;line-height:1.6}
 .frm .full{grid-column:1/-1}
 .sbtn{grid-column:1/-1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:#fff;font-family:'Vazirmatn';font-size:13px;font-weight:800;cursor:pointer}
+.sbtn.red{background:linear-gradient(135deg,#f87171,#ef4444)}
 .msg{text-align:center;padding:9px;border-radius:8px;margin-bottom:12px;font-size:11px;font-weight:700;display:none}
 .msg.ok{display:block;background:rgba(34,197,94,.1);color:#22c55e}
 .msg.err{display:block;background:rgba(239,68,68,.1);color:#ef4444}
@@ -76,6 +80,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
 .lb-tabs{display:flex;gap:5px;margin-bottom:12px;background:rgba(255,255,255,.04);padding:4px;border-radius:11px}
 .lb-tab{flex:1;padding:8px;border:none;background:0 0;color:#64748b;font-family:'Vazirmatn';font-weight:700;font-size:11px;border-radius:8px;cursor:pointer}
 .lb-tab.on{background:linear-gradient(135deg,#f87171,#ef4444);color:#fff}
+.q-count{font-size:11px;color:#94a3b8;margin-bottom:8px}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:3000;padding:20px}
 .modal-bg.show{display:flex}
 .modal{background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:24px;width:100%;max-width:360px;max-height:90vh;overflow-y:auto}
@@ -126,6 +131,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
     <button class="tb" onclick="sp('locks',this)">🔒 قوفڵ</button>
     <button class="tb" onclick="sp('levels',this)">🎖️ ئاست</button>
     <button class="tb" onclick="sp('rewards',this)">🎁 بۆکس</button>
+    <button class="tb" onclick="sp('questions',this)">❓ پرسیار</button>
     <button class="tb" onclick="sp('avatars',this)">🖼️ پاشبنەما</button>
     <button class="tb" onclick="sp('frames',this)">👑 چوارچێوە</button>
     <button class="tb" onclick="sp('packs',this)">💎 پاکێج</button>
@@ -192,13 +198,13 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
           <div class="lock-btns"><button class="lb-lock" onclick="setLock('hawler')">⏰ قوفڵ بە کات</button><button class="lb-perm" onclick="setLockPerm('hawler')">🔒 هەمیشەیی</button><button class="lb-unlock" onclick="setUnlock('hawler')">🔓 کردنەوە</button></div>
         </div>
       </div>
-      <p class="hint">⏳ <b>قوفڵی 24 کاتژمێر</b> خۆکارانەیە بۆ هەر یاریزانێک دوای تەواوکردنی یاری. بۆ لابردنی بۆ یاریزانێکی دیاریکراو، بچۆرە بەشی 👤 و دوگمەی 🔓 دابگرە.</p>
+      <p class="hint">⏳ قوفڵی 24 کاتژمێر خۆکارانەیە بۆ هەر یاریزانێک دوای تەواوکردنی یاری. بۆ لابردنی بۆ یاریزانێکی دیاریکراو، بچۆرە بەشی 👤 و دوگمەی 🔓 دابگرە.</p>
     </div>
   </div>
 
   <div id="p-levels" class="pnl">
     <div class="card"><h3>🎖️ خەڵاتی ئەڵماس بۆ هەر ئاست</h3>
-      <p class="hint" style="margin-top:0;margin-bottom:12px">هەر کات یاریزانێک دەگاتە ئاستێکی نوێ، ئەم بڕە ئەڵماسە <b>خۆکارانە</b> وەک خەڵات وەردەگرێت. (ئاست = هەر 500 خاڵ = 1 ئاست.)</p>
+      <p class="hint" style="margin-top:0;margin-bottom:12px">هەر کات یاریزانێک دەگاتە ئاستێکی نوێ، ئەم بڕە ئەڵماسە خۆکارانە وەک خەڵات وەردەگرێت. (ئاست = هەر 500 خاڵ = 1 ئاست.)</p>
       <div class="frm">
         <input type="number" id="lr-per" placeholder="💎 ئەڵماس بۆ هەر ئاست" value="10" class="full">
         <button class="sbtn" onclick="saveLevelReward()">💾 پاشەکەوتکردنی خەڵات</button>
@@ -216,7 +222,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
     <div class="card">
       <h3>➕ زیادکردنی بۆکس</h3>
       <div class="frm">
-        <input type="text" id="rw-icon" placeholder="ئایکۆن/ئیمۆجی (🎁 🏆 💎)" value="🎁">
+        <input type="text" id="rw-icon" placeholder="ئایکۆن/ئیمۆجی (🎁  💎)" value="">
         <input type="text" id="rw-name" placeholder="ناوی بۆکس">
         <input type="number" id="rw-rl" placeholder="🎖️ مەرجی ئاست (0=بێ مەرج)" value="0">
         <input type="number" id="rw-rs" placeholder="⭐ مەرجی خاڵ (0=بێ مەرج)" value="0">
@@ -225,7 +231,46 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
         <input type="number" id="rw-gn" placeholder="💵 خەڵاتی دینار" value="0" class="full">
         <button class="sbtn" onclick="addReward()">➕ زیادکردنی بۆکس</button>
       </div>
-      <p class="hint">💡 مەرج: یاریزان دەبێت <b>هەردوو</b> ئاست و خاڵی هەبێت بۆ کردنەوەی بۆکس. ئەگەر 0 بنووسیت، ئەو مەرجە پێویست نییە. هەر بۆکسێک تەنها یەک جار وەردەگیرێت.</p>
+      <p class="hint">💡 مەرج: یاریزان دەبێت هەردوو ئاست و خاڵی هەبێت بۆ کردنەوەی بۆکس. ئەگەر 0 بنووسیت، ئەو مەرجە پێویست نییە. هەر بۆکسێک تەنها یەک جار وەردەگیرێت.</p>
+    </div>
+  </div>
+
+  <div id="p-questions" class="pnl">
+    <div class="card">
+      <h3>❓ پرسیارەکان (لە یاریدا بەکاردێن)</h3>
+      <div class="lb-tabs">
+        <button class="lb-tab on" onclick="setQFilter('all',this)">هەموو</button>
+        <button class="lb-tab" onclick="setQFilter('هەولێر',this)">هەولێر</button>
+        <button class="lb-tab" onclick="setQFilter('سلێمانی',this)">سلێمانی</button>
+      </div>
+      <div class="q-count" id="q-count">٠ پرسیار</div>
+      <div style="overflow-x:auto;max-height:340px;overflow-y:auto"><table class="tbl"><thead><tr><th>شار</th><th>پرسیار</th><th>✅ وەڵامی ڕاست</th><th>کردار</th></tr></thead><tbody id="q-tb"></tbody></table></div>
+      <div style="margin-top:12px"><button class="sbtn red" onclick="delAllQuestions()" style="grid-column:auto">🗑️ سڕینەوەی هەموو پرسیارەکانی ئەم شارە (کە لە فیلتردایە)</button></div>
+    </div>
+    <div class="card">
+      <h3>➕ زیادکردنی یەک پرسیار</h3>
+      <div class="frm">
+        <select id="q-city" class="full"><option value="هەولێر">🏙️ هەولێر</option><option value="سلێمانی">🏙️ سلێمانی</option></select>
+        <input type="text" id="q-q" placeholder="❓ پرسیارەکە" class="full">
+        <input type="text" id="q-a0" placeholder="وەڵامی ١">
+        <input type="text" id="q-a1" placeholder="وەڵامی ٢">
+        <input type="text" id="q-a2" placeholder="وەڵامی ٣">
+        <input type="text" id="q-a3" placeholder="وەڵامی ٤">
+        <select id="q-c" class="full"><option value="0">✅ وەڵامی ڕاست = وەڵامی ١</option><option value="1">✅ وەڵامی ڕاست = وەڵامی ٢</option><option value="2">✅ وەڵامی ڕاست = وەڵامی ٣</option><option value="3">✅ وەڵامی ڕاست = وەڵامی ٤</option></select>
+        <button class="sbtn" onclick="addQuestion()">➕ زیادکردنی پرسیار</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📋 زیادکردنی بە کۆمەڵ (paste چەندین پرسیار بە یەک جار)</h3>
+      <div class="frm">
+        <select id="qb-city" class="full"><option value="هەولێر">🏙️ هەولێر</option><option value="سلێمانی">🏙️ سلێمانی</option></select>
+        <textarea id="qb-text" class="full" placeholder="هەر هێڵێک = پرسیارێک، بە | جیاکراوەتەوە:&#10;پرسیار|وەڵام١|وەڵام٢|وەڵام٣|وەڵام٤|ژمارەی_ڕاست&#10;&#10;نمونە:&#10;قەڵای هەولێر لە لیستی کام ڕێکخراوە؟|NATO|UNESCO|WHO|FIFA|1&#10;سلێمانی بە چی ناسراوە؟|کەلتوور|بازرگانی|پیشەسازی|کشتوکاڵ|0"></textarea>
+        <button class="sbtn" onclick="addBulkQuestions()">🚀 زیادکردنی هەموو پرسیارەکان</button>
+      </div>
+      <p class="hint">📌 فۆرمات: هەر هێڵێک پرسیارێکە. بە ڕیزبەندی: پرسیار | وەڵام١ | وەڵام٢ | وەڵام٣ | وەڵام٤ | ژمارەی وەڵامی ڕاست (0=یەکەم، 1=دووەم، 2=سێیەم، 3=چوارەم).
+ ئەمە خێرایە: دەتوانیت ١٠٠ یان ١٠٠٠ پرسیار بە یەک جار paste بکەیت (بە batch زیاد دەکرێن).
+🤖 پێشنیار: پرسیارەکان لە AI (وەک من) بە فۆرماتی سەرەوە وەربگرە، پاشان لێرە pasteیان بکە — بێ ماندووبوون!
+🗑️ بۆ گۆڕینی پرسیارەکانی ڕۆژانە: سەرەوە شارەکە هەڵبژێرە → "سڕینەوەی هەموو" → لێرە ١٠٠ی تازە paste بکە.</p>
     </div>
   </div>
 
@@ -255,7 +300,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
   <div id="p-frames" class="pnl">
     <div class="card"><h3>👑 چوارچێوەکانی پرۆفایل (یاریزان بە ئەڵماس دەیکڕن)</h3>
       <div class="adm-av-grid" id="adm-fr-grid"><p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:11px;padding:14px">بارکردن...</p></div>
-      <p class="hint">💡 باشترین وێنە بۆ چوارچێوە: <b>PNG شەفاف</b> (transparent) کە ناوەڕاستەکەی بەتاڵ بێت تا بازنەی ئاڤاتار لە ناوەوە دەربکەوێت. وێنەکە وەک خۆی (بێ بڕین) پیشان دەدرێت.</p>
+      <p class="hint">💡 باشترین وێنە بۆ چوارچێوە: PNG شەفاف (transparent) کە ناوەڕاستەکەی بەتاڵ بێت تا بازنەی ئاڤاتار لە ناوەوە دەربکەوێت. وێنەکە وەک خۆی (بێ بڕین) پیشان دەدرێت.</p>
     </div>
     <div class="card">
       <h3>➕ زیادکردنی چوارچێوە</h3>
@@ -313,11 +358,12 @@ firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 const ADMIN_USER="dzhwaredres",ADMIN_PASS="Dzhwar1999$$$";
 let admLBFilter='all',admLBData=[],allUsers=[],avImgData='',avUrlData='',frImgData='',frUrlData='',userMap={};
+let qFilter='all',allQuestions=[];
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function avHtml(a,n){if(a&&(a.startsWith('data:')||a.startsWith('http')))return `<img src="${a}">`;if(a)return a;return (n||'?').charAt(0);}
 function fmtDate(d){if(!d)return'-';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')} | ${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()}`;}catch(e){return'-';}}
 function getLevel(s){return Math.floor((s||0)/500);}
-function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇🏆🏅':'🥇';if(r===2)return f==='all'?'🥈🎖️':'🥈';if(r===3)return f==='all'?'🥉':'🥉';return '';}
-
+function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇🏅':'';if(r===2)return f==='all'?'🥈🎖️':'🥈';if(r===3)return f==='all'?'🥉':'🥉';return '';}
 function doLogin(){
   const user=document.getElementById('a-user').value.trim(),pass=document.getElementById('a-pass').value;
   const btn=document.getElementById('a-btn'),err=document.getElementById('a-err');err.innerText='';
@@ -330,10 +376,9 @@ function doLogin(){
   },400);
 }
 function doLogout(){document.getElementById('a-login').style.display='block';document.getElementById('a-panel').style.display='none';document.getElementById('a-user').value='';document.getElementById('a-pass').value='';document.getElementById('a-err').innerText='';}
-function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();}
-function sm(t,type){const el=document.getElementById('a-msg');el.innerText=t;el.className='msg '+type;setTimeout(()=>{el.className='msg';},3000);}
-function loadAll(){loadUsers();loadScores();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadUserSelect();loadSent();}
-
+function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();if(id==='questions')loadQuestions();}
+function sm(t,type){const el=document.getElementById('a-msg');el.innerText=t;el.className='msg '+type;setTimeout(()=>{el.className='msg';},4000);}
+function loadAll(){loadUsers();loadScores();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();}
 function loadUsers(){
   const tb=document.getElementById('u-tb');
   tb.innerHTML='<tr><td colspan="11" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
@@ -353,17 +398,13 @@ function renderUsers(){
   data.forEach(d=>{
     const safeName=(d.name||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');
     let lockHtml='<span class="lock-badge off">ئازاد</span>';
-    if(d.lastGameAt){
-      const last=d.lastGameAt.toDate?d.lastGameAt.toDate():new Date(d.lastGameAt);
-      const diff=Date.now()-last.getTime();
-      if(diff<24*60*60*1000){const rem=24*60*60*1000-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%3600000)/60000);lockHtml=`<span class="lock-badge on">🔒 ${h}h ${m}m</span>`;}
-    }
+    if(d.lastGameAt){const last=d.lastGameAt.toDate?d.lastGameAt.toDate():new Date(d.lastGameAt);const diff=Date.now()-last.getTime();if(diff<24*60*60*1000){const rem=24*60*60*1000-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%3600000)/60000);lockHtml=`<span class="lock-badge on">🔒 ${h}h ${m}m</span>`;}}
     tb.innerHTML+=`<tr>
       <td><div class="av-cell">${avHtml(d.avatar,d.name)}</div></td>
-      <td>${d.name||'-'}</td>
-      <td style="font-size:10px">${d.email||'-'}</td>
-      <td>${d.phone||'-'}</td>
-      <td>${d.city||'-'}</td>
+      <td>${esc(d.name||'-')}</td>
+      <td style="font-size:10px">${esc(d.email||'-')}</td>
+      <td>${esc(d.phone||'-')}</td>
+      <td>${esc(d.city||'-')}</td>
       <td class="lvl-cell">🎖️ ${getLevel(d.points)}</td>
       <td style="color:#fbbf24;font-weight:700">${d.points||0}</td>
       <td style="color:#a78bfa">${d.diamonds||0}</td>
@@ -400,13 +441,12 @@ async function editDia(id,name,cur){const nd=prompt('💎 ئەڵماس بۆ "'+n
 async function giveDinars(id,name,cur){const nd=prompt('💵 دینار بۆ "'+name+'" (ئێستا: '+cur+'):',cur);if(nd===null)return;try{await db.collection('users').doc(id).update({dinars:parseInt(nd)||0});const u=allUsers.find(x=>x.id===id);if(u)u.dinars=parseInt(nd)||0;renderUsers();sm('✅ دینار نوێکرایەوە','ok');}catch(e){sm('هەڵە','err');}}
 async function resetGameLock(id){
   if(!confirm('لابردنی قوفڵی 24 کاتژمێر بۆ ئەم یاریزانە؟\n(دەتوانێت ڕاستەوخۆ دووبارە یاری بکات)'))return;
-  try{await db.collection('users').doc(id).update({lastGameAt:null});const u=allUsers.find(x=>x.id===id);if(u)u.lastGameAt=null;renderUsers();sm('✅ قوفڵی یاری لابرا - ئێستا دەتوانێت یاری بکات','ok');}catch(e){sm('هەڵە: '+e.message,'err');}
+  try{await db.collection('users').doc(id).update({lastGameAt:null});const u=allUsers.find(x=>x.id===id);if(u)u.lastGameAt=null;renderUsers();sm('✅ قوفڵی یاری لابرا','ok');}catch(e){sm('هەڵە: '+e.message,'err');}
 }
 async function delU(id,btn){
   if(!confirm('سڕینەوەی ئەم بەکارهێنەرە؟'))return;
   try{await db.collection('users').doc(id).delete();allUsers=allUsers.filter(u=>u.id!==id);if(btn){const row=btn.closest('tr');if(row)row.remove();}sm('✅ بەکارهێنەر سڕایەوە','ok');}catch(e){sm('هەڵە: '+e.message,'err');}
 }
-
 function setAdmLB(f,el){admLBFilter=f;document.querySelectorAll('#p-scores .lb-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');renderAdmLB();}
 function loadScores(){
   const tb=document.getElementById('s-tb');
@@ -427,8 +467,8 @@ function renderAdmLB(){
     tb.innerHTML+=`<tr>
       <td style="color:#38bdf8;font-weight:900">#${r}</td>
       <td><div class="av-cell">${avHtml(d.avatar,d.name)}</div></td>
-      <td>${d.name||'-'}</td>
-      <td>${d.city||'-'}</td>
+      <td>${esc(d.name||'-')}</td>
+      <td>${esc(d.city||'-')}</td>
       <td class="lvl-cell">🎖️ ${getLevel(d.score)}</td>
       <td class="medal-cell">${medal}</td>
       <td style="color:#fbbf24;font-weight:700">${(d.score||0).toLocaleString()}</td>
@@ -439,8 +479,7 @@ function renderAdmLB(){
 }
 async function editS(id,cur){const ns=prompt('سکۆر:',cur);if(ns===null)return;try{await db.collection('scores').doc(id).update({score:parseInt(ns)||0});sm('✅','ok');loadScores();}catch(e){sm('هەڵە','err');}}
 async function delS(id){if(!confirm('سڕینەوە؟'))return;try{await db.collection('scores').doc(id).delete();sm('✅','ok');loadScores();}catch(e){sm('هەڵە','err');}}
-
-function loadUserSelect(){const sel=document.getElementById('m-uid');db.collection('users').get().then(snap=>{sel.innerHTML='<option value="">هەڵبژێرە...</option>';snap.forEach(doc=>{const d=doc.data();sel.innerHTML+=`<option value="${doc.id}">${d.name||d.email||doc.id}</option>`;});});}
+function loadUserSelect(){const sel=document.getElementById('m-uid');db.collection('users').get().then(snap=>{sel.innerHTML='<option value="">هەڵبژێرە...</option>';snap.forEach(doc=>{const d=doc.data();sel.innerHTML+=`<option value="${doc.id}">${esc(d.name||d.email||doc.id)}</option>`;});});}
 async function sendAll(){
   const msg=document.getElementById('m-all').value.trim();
   if(!msg){sm('پەیام بنووسە','err');return;}
@@ -457,12 +496,11 @@ function loadSent(){
   db.collection('notifications').orderBy('timestamp','desc').limit(50).get().then(snap=>{
     if(snap.empty){el.innerHTML='<p style="text-align:center;color:#64748b;font-size:11px;padding:14px">هیچ پەیامێک نەنێردراوە</p>';return;}
     el.innerHTML='';
-    snap.forEach(doc=>{const d=doc.data();const targetTxt=d.target==='all'?'📢 بۆ هەموو':'✉️ بۆ: '+(userMap[d.target]||d.target||'کەس');
-      el.innerHTML+=`<div class="sent-item"><div class="si-body"><div class="si-target">${targetTxt}</div><div class="si-msg">${d.message||''}</div><div class="si-date">${fmtDate(d.timestamp)}</div></div><button class="si-del" onclick="delSent('${doc.id}')">🗑️</button></div>`;});
+    snap.forEach(doc=>{const d=doc.data();const targetTxt=d.target==='all'?'📢 بۆ هەموو':'✉️ بۆ: '+esc(userMap[d.target]||d.target||'کەس');
+      el.innerHTML+=`<div class="sent-item"><div class="si-body"><div class="si-target">${targetTxt}</div><div class="si-msg">${esc(d.message||'')}</div><div class="si-date">${fmtDate(d.timestamp)}</div></div><button class="si-del" onclick="delSent('${doc.id}')">🗑️</button></div>`;});
   }).catch(()=>{el.innerHTML='<p style="text-align:center;color:#f87171;font-size:11px;padding:14px">هەڵە</p>';});
 }
 async function delSent(id){if(!confirm('ئەم پەیامە بسڕمەوە؟'))return;try{await db.collection('notifications').doc(id).delete();sm('✅ سڕایەوە','ok');loadSent();}catch(e){sm('هەڵە','err');}}
-
 function loadCityScores(){
   db.collection('settings').doc('cityScores').onSnapshot(doc=>{
     const d=doc.exists?doc.data():{};
@@ -475,10 +513,9 @@ async function resetCityScore(key){
   if(key==='slimany'){nm='سلێمانی';data={slimany:0};}
   else if(key==='hawler'){nm='هەولێر';data={hawler:0};}
   else{nm='هەردوو شار';data={slimany:0,hawler:0};}
-  if(!confirm('سفرکردنەوەی خاڵی '+nm+' بۆ 0؟\nخاڵەکان لەسەر بۆکسی یاریی یاریزانان ڕاستەوخۆ سفر دەبنەوە.'))return;
-  try{await db.collection('settings').doc('cityScores').set(data,{merge:true});sm('✅ خاڵی '+nm+' سفرکرایەوە بۆ 0','ok');}catch(e){sm('هەڵە: '+e.message,'err');}
+  if(!confirm('سفرکردنەوەی خاڵی '+nm+' بۆ 0؟'))return;
+  try{await db.collection('settings').doc('cityScores').set(data,{merge:true});sm('✅ خاڵی '+nm+' سفرکرایەوە','ok');}catch(e){sm('هەڵە: '+e.message,'err');}
 }
-
 function loadLevelReward(){
   db.collection('settings').doc('levelReward').onSnapshot(doc=>{
     const per=(doc.exists&&typeof doc.data().perLevel==='number')?doc.data().perLevel:10;
@@ -496,7 +533,6 @@ function renderLevelGuide(per){
   tb.innerHTML='';
   for(let L=0;L<=10;L++){tb.innerHTML+=`<tr><td class="lvl-cell">🎖️ ${L}</td><td>${(L*500).toLocaleString()} - ${((L+1)*500-1).toLocaleString()}</td><td style="color:#a78bfa">${L===0?'-':per+' 💎'}</td><td style="color:#22c55e">${(L*per).toLocaleString()} 💎</td></tr>`;}
 }
-
 function loadRewards(){
   const tb=document.getElementById('rw-tb');
   tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
@@ -504,7 +540,7 @@ function loadRewards(){
     tb.innerHTML='';
     snap.forEach(doc=>{const d=doc.data();
       let g=[];if(d.rewardPoints)g.push('⭐'+d.rewardPoints);if(d.rewardDiamonds)g.push('💎'+d.rewardDiamonds);if(d.rewardDinars)g.push('💵'+d.rewardDinars);
-      tb.innerHTML+=`<tr><td style="font-size:20px">${d.icon||'🎁'}</td><td>${d.name||'-'}</td><td class="lvl-cell">${d.reqLevel||0}</td><td style="color:#fbbf24;font-weight:700">${d.reqScore||0}</td><td style="font-size:10px">${g.join(' ')||'-'}</td><td><button class="abtn abtn-d" onclick="delReward('${doc.id}')">🗑️</button></td></tr>`;});
+      tb.innerHTML+=`<tr><td style="font-size:20px">${d.icon||'🎁'}</td><td>${esc(d.name||'-')}</td><td class="lvl-cell">${d.reqLevel||0}</td><td style="color:#fbbf24;font-weight:700">${d.reqScore||0}</td><td style="font-size:10px">${g.join(' ')||'-'}</td><td><button class="abtn abtn-d" onclick="delReward('${doc.id}')">🗑️</button></td></tr>`;});
     if(snap.empty)tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#64748b">هیچ بۆکسێک نییە</td></tr>';
   });
 }
@@ -528,7 +564,80 @@ async function addReward(){
   }catch(e){sm('هەڵە: '+e.message,'err');}
 }
 async function delReward(id){if(!confirm('سڕینەوەی ئەم بۆکسە؟'))return;try{await db.collection('rewards').doc(id).delete();sm('✅','ok');loadRewards();}catch(e){sm('هەڵە','err');}}
-
+// ❓ پرسیارەکان
+function setQFilter(f,el){qFilter=f;document.querySelectorAll('#p-questions .lb-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');renderQuestions();}
+function loadQuestions(){
+  const tb=document.getElementById('q-tb');
+  tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
+  db.collection('questions').get().then(snap=>{allQuestions=[];snap.forEach(doc=>{allQuestions.push({id:doc.id,...doc.data()});});renderQuestions();}).catch(()=>{tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:#f87171">هەڵە</td></tr>';});
+}
+function renderQuestions(){
+  const tb=document.getElementById('q-tb');
+  let data=allQuestions;
+  if(qFilter!=='all')data=data.filter(d=>d.city===qFilter);
+  const hCount=allQuestions.filter(d=>d.city==='هەولێر').length,sCount=allQuestions.filter(d=>d.city==='سلێمانی').length;
+  document.getElementById('q-count').innerText=`کۆی گشتی: ${allQuestions.length} | هەولێر: ${hCount} | سلێمانی: ${sCount}  —  (پیشاندراو: ${data.length})`;
+  if(!data.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:#64748b">هیچ پرسیارێک نییە بۆ ئەم شارە. خوارەوە پرسیار زیاد بکە.</td></tr>';return;}
+  tb.innerHTML='';
+  data.forEach(d=>{
+    const correct=(d.a&&d.a[d.c]!=null)?d.a[d.c]:'-';
+    tb.innerHTML+=`<tr><td>${esc(d.city||'-')}</td><td>${esc(d.q||'-')}</td><td style="color:#22c55e;font-weight:700">${esc(correct)}</td><td><button class="abtn abtn-d" onclick="delQuestion('${d.id}')">🗑️</button></td></tr>`;
+  });
+}
+async function addQuestion(){
+  const city=document.getElementById('q-city').value;
+  const q=document.getElementById('q-q').value.trim();
+  const a=[document.getElementById('q-a0').value.trim(),document.getElementById('q-a1').value.trim(),document.getElementById('q-a2').value.trim(),document.getElementById('q-a3').value.trim()];
+  const c=parseInt(document.getElementById('q-c').value);
+  if(!q){sm('پرسیارەکە بنووسە','err');return;}
+  if(a.some(x=>!x)){sm('هەموو ٤ وەڵامەکە پێویستن','err');return;}
+  try{await db.collection('questions').add({city,q,a,c});sm('✅ پرسیار زیادکرا','ok');document.getElementById('q-q').value='';document.getElementById('q-a0').value='';document.getElementById('q-a1').value='';document.getElementById('q-a2').value='';document.getElementById('q-a3').value='';loadQuestions();}catch(e){sm('هەڵە: '+e.message,'err');}
+}
+async function addBulkQuestions(){
+  const city=document.getElementById('qb-city').value;
+  const txt=document.getElementById('qb-text').value;
+  const lines=txt.split('\n').map(l=>l.trim()).filter(l=>l);
+  if(!lines.length){sm('هیچ هێڵێک نییە بۆ زیادکردن','err');return;}
+  const valid=[];let bad=0;
+  for(const line of lines){
+    const p=line.split('|');
+    if(p.length<6){bad++;continue;}
+    const q=p[0].trim();
+    const a=[p[1].trim(),p[2].trim(),p[3].trim(),p[4].trim()];
+    const c=parseInt(p[5].trim());
+    if(!q||a.some(x=>!x)||isNaN(c)||c<0||c>3){bad++;continue;}
+    valid.push({city,q,a,c});
+  }
+  if(!valid.length){sm('هیچ هێڵێکی دروست نەدۆزرایەوە ('+bad+' هەڵە). فۆرمات بپشکنە.','err');return;}
+  sm('⏳ '+valid.length+' پرسیار دەنێردرێت... چاوەڕوان بە','ok');
+  let ok=0;
+  for(let i=0;i<valid.length;i+=400){
+    const chunk=valid.slice(i,i+400);
+    const batch=db.batch();
+    chunk.forEach(item=>{batch.set(db.collection('questions').doc(),item);});
+    try{await batch.commit();ok+=chunk.length;}catch(e){bad+=chunk.length;}
+  }
+  sm('✅ '+ok+' پرسیار زیادکرا بۆ '+city+(bad?'  ('+bad+' هەڵە/نەگونجاو)':''),'ok');
+  document.getElementById('qb-text').value='';
+  loadQuestions();
+}
+async function delQuestion(id){if(!confirm('ئەم پرسیارە بسڕمەوە؟'))return;try{await db.collection('questions').doc(id).delete();sm('✅ سڕایەوە','ok');loadQuestions();}catch(e){sm('هەڵە','err');}}
+async function delAllQuestions(){
+  let data=allQuestions;
+  if(qFilter!=='all')data=data.filter(d=>d.city===qFilter);
+  if(!data.length){sm('هیچ پرسیارێک نییە بۆ سڕینەوە','err');return;}
+  const nm=qFilter==='all'?'هەموو شارەکان':qFilter;
+  if(!confirm('سڕینەوەی '+data.length+' پرسیار لە "'+nm+'"؟\n⚠️ ئەم کارە ناگەڕێتەوە!'))return;
+  let ok=0;
+  for(let i=0;i<data.length;i+=400){
+    const chunk=data.slice(i,i+400);
+    const batch=db.batch();
+    chunk.forEach(d=>{batch.delete(db.collection('questions').doc(d.id));});
+    try{await batch.commit();ok+=chunk.length;}catch(e){}
+  }
+  sm('✅ '+ok+' پرسیار سڕایەوە','ok');
+  loadQuestions();
+}
 function loadLockState(){
   db.collection('settings').doc('locks').onSnapshot(doc=>{
     if(!doc.exists)return;
@@ -552,8 +661,6 @@ async function setLock(key){
 }
 async function setLockPerm(key){if(!confirm('قوفڵی هەمیشەیی؟'))return;try{const data={};data[key]=true;data[key+'Until']=0;data[key+'Perm']=true;await db.collection('settings').doc('locks').set(data,{merge:true});sm('🔒 قوفڵی هەمیشەیی','ok');}catch(e){sm('هەڵە: '+e.message,'err');}}
 async function setUnlock(key){try{const data={};data[key]=false;data[key+'Until']=0;data[key+'Perm']=false;await db.collection('settings').doc('locks').set(data,{merge:true});sm('🔓 کرایەوە','ok');}catch(e){sm('هەڵە: '+e.message,'err');}}
-
-// 🖼️ پاشبنەما
 function previewAvImg(e){
   const file=e.target.files[0];if(!file)return;
   if(file.size>300000){alert('وێنەکە زۆر گەورەیە (300KB)');return;}
@@ -574,8 +681,8 @@ function loadAvatars(){
     snap.forEach(doc=>{const d=doc.data();
       const isImage=d.avatar&&(d.avatar.startsWith('data:')||d.avatar.startsWith('http'));
       const imgHtml=isImage?`<img src="${d.avatar}">`:(d.avatar||'🖼️');
-      const nmHtml=d.name?`<div class="aai-nm">${d.name}</div>`:'';
-      const ctHtml=d.city?`<div class="aai-ct">🏙️ ${d.city}</div>`:'';
+      const nmHtml=d.name?`<div class="aai-nm">${esc(d.name)}</div>`:'';
+      const ctHtml=d.city?`<div class="aai-ct">🏙️ ${esc(d.city)}</div>`:'';
       grid.innerHTML+=`<div class="adm-av-item"><button class="aai-del" onclick="delAvatar('${doc.id}')">✕</button><div class="aai-img">${imgHtml}</div><div class="aai-info">${nmHtml}${ctHtml}<div class="aai-price">💎 ${d.price||0}</div></div></div>`;});
   });
 }
@@ -598,8 +705,6 @@ async function addAvatar(){
   }catch(e){sm('هەڵە: '+e.message,'err');}
 }
 async function delAvatar(id){if(!confirm('سڕینەوە؟'))return;try{await db.collection('avatars').doc(id).delete();sm('✅','ok');loadAvatars();}catch(e){sm('هەڵە','err');}}
-
-// 👑 چوارچێوە
 function previewFrImg(e){
   const file=e.target.files[0];if(!file)return;
   if(file.size>300000){alert('وێنەکە زۆر گەورەیە (300KB)');return;}
@@ -618,7 +723,7 @@ function loadFrames(){
     if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:11px;padding:14px">هیچ چوارچێوەیەک نییە</p>';return;}
     grid.innerHTML='';
     snap.forEach(doc=>{const d=doc.data();
-      const nmHtml=d.name?`<div class="aai-nm">${d.name}</div>`:'';
+      const nmHtml=d.name?`<div class="aai-nm">${esc(d.name)}</div>`:'';
       grid.innerHTML+=`<div class="adm-av-item"><button class="aai-del" onclick="delFrame('${doc.id}')">✕</button><div class="aai-img contain"><img src="${d.avatar}"></div><div class="aai-info">${nmHtml}<div class="aai-price">💎 ${d.price||0}</div></div></div>`;});
   });
 }
@@ -638,7 +743,6 @@ async function addFrame(){
   }catch(e){sm('هەڵە: '+e.message,'err');}
 }
 async function delFrame(id){if(!confirm('سڕینەوەی ئەم چوارچێوەیە؟'))return;try{await db.collection('frames').doc(id).delete();sm('✅','ok');loadFrames();}catch(e){sm('هەڵە','err');}}
-
 function loadPacks(){
   const tb=document.getElementById('pk-tb');
   tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
@@ -655,6 +759,27 @@ async function addPack(){
   try{await db.collection('diamond_packs').add({diamonds:dia,dinars:din});sm('✅ پاکێج زیادکرا','ok');document.getElementById('pk-dia').value='100';document.getElementById('pk-din').value='1000';loadPacks();}catch(e){sm('هەڵە: '+e.message,'err');}
 }
 async function delPack(id){if(!confirm('سڕینەوە؟'))return;try{await db.collection('diamond_packs').doc(id).delete();sm('✅','ok');loadPacks();}catch(e){sm('هەڵە','err');}}
+(function(){
+  var lastMod='';
+  function check(){
+    try{
+      fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){
+        var m=r.headers.get('last-modified')||r.headers.get('etag')||'';
+        if(!m)return;
+        if(!lastMod){lastMod=m;return;}
+        if(m!==lastMod){location.reload();}
+      }).catch(function(){});
+    }catch(e){}
+  }
+  setTimeout(function(){
+    try{fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){
+      lastMod=r.headers.get('last-modified')||r.headers.get('etag')||'';
+    }).catch(function(){});}catch(e){}
+  },5000);
+  setInterval(check,30000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});
+  window.addEventListener('online',check);
+})();
 </script>
 </body>
 </html>
