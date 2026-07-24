@@ -11,6 +11,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172a,#1e1b4b 55%,#312e81);min-height:100vh;color:#fff;overflow-x:hidden;touch-action:pan-x pan-y}
@@ -248,7 +249,6 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
         <div class="fg"><label>📧 ئیمەیل</label><input type="email" id="l-email" placeholder="example@email.com" required></div>
         <div class="fg"><label>🔑 وشەی نهێنی</label><input type="password" id="l-pass" placeholder="••••••••" required minlength="6"></div>
         <button type="submit" class="btn" id="l-btn">چوونەژوورەوە</button>
-        <div class="resend-link"><a onclick="resendVerification()">📩 لینکی پشتڕاستکردنم پێ نەگەیشت؟ دووبارە بینێرە</a></div>
         <div class="switch-link">هەژمارت نییە؟ <a onclick="switchAuth('register')">تۆمارکردن بکە</a></div>
       </form>
       <form id="f-reg" style="display:none" onsubmit="doRegister(event)">
@@ -259,6 +259,16 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
         <div class="fg"><label>🔑 وشەی نهێنی</label><input type="password" id="r-pass" placeholder="بەلایەنی کەمەوە ٦ پیت" required minlength="6"></div>
         <button type="submit" class="btn" id="r-btn">تۆمارکردن</button>
         <div class="switch-link">هەژمارت هەیە؟ <a onclick="switchAuth('login')">چوونەژوورەوە بکە</a></div>
+      </form>
+      <form id="f-verify" style="display:none" onsubmit="doVerify(event)">
+        <div style="text-align:center;margin-bottom:16px">
+          <div style="font-size:34px;margin-bottom:6px">📩</div>
+          <div style="font-size:13px;color:#94a3b8;line-height:1.7">کۆدی ٤ ژمارەیی نێردرا بۆ<br><b id="v-email" style="color:#38bdf8"></b></div>
+        </div>
+        <div class="fg"><label>🔢 کۆدی پشتڕاستکردن</label><input type="text" id="v-code" placeholder="• • • •" required maxlength="4" pattern="[0-9]{4}" inputmode="numeric" autocomplete="one-time-code" style="text-align:center;letter-spacing:10px;font-size:22px;font-weight:800"></div>
+        <button type="submit" class="btn" id="v-btn">پشتڕاستکردن</button>
+        <div class="resend-link"><a onclick="resendCode()">📩 کۆدەکەم پێ نەگەیشت؟ دووبارە بینێرە</a></div>
+        <div class="switch-link"><a onclick="backToLogin()">⬅️ گەڕانەوە بۆ چوونەژوورەوە</a></div>
       </form>
     </div>
   </div>
@@ -396,7 +406,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="um-inner">
       <h3>✏️ گۆڕینی ناو</h3>
       <input type="text" id="new-name-input" placeholder="ناوی نوێ" minlength="3">
-      <p style="font-size:10px;color:#f87171;margin-bottom:12px;text-align:center">⚠️ ٧ ڕۆژ ناتوانیت بگۆڕیتەوە</p>
+      <p style="font-size:10px;color:#f87171;margin-bottom:12px;text-align:center">⚠️  ڕۆژ ناتوانیت بگۆڕیتەوە</p>
       <div class="modal-btns"><button class="m-save" onclick="saveName()">پاشەکەوت</button><button class="m-cancel" onclick="closeNameModal()">پاشگەزبوونەوە</button></div>
     </div>
   </div>
@@ -420,64 +430,50 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 const firebaseConfig={apiKey:"AIzaSyC3qMjhPB9hUbY8z6ebMKqHIWLdFO1Sfhs",authDomain:"prsyar-walam-90198.firebaseapp.com",projectId:"prsyar-walam-90198",storageBucket:"prsyar-walam-90198.firebasestorage.app",messagingSenderId:"860935258194",appId:"1:860935258194:web:8608971a55df56bb4d5f8b",measurementId:"G-ZEVJ0VMJXJ"};
 firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(),db=firebase.firestore();
-let U=null,lbFilter='all',lbData=[],currentLB=[],lockTimer=null,LEVEL_REWARD=10,authBusy=false;
-// 🔗 لینکی پشتڕاستکردن دەچێتە دۆمەینی خۆت (کەمتر spam)
-const AC_SETTINGS={url:window.location.origin+window.location.pathname,handleCodeInApp:false};
-// ناردنی لینک بە دۆمەینی خۆت، ئەگەر شکستی هێنا بەبێ دۆمەین (fallback)
-async function sendVerify(user){try{await user.sendEmailVerification(AC_SETTINGS);}catch(e){try{await user.sendEmailVerification();}catch(x){}}}
-// 📩 ناردنەوەی لینکی پشتڕاستکردن (دوگمەی فۆرمی چوونەژوورەوە)
-async function resendVerification(){
-  const em=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pass').value,er=document.getElementById('err');
-  if(!em||!pw){er.style.color='#f87171';er.innerText='تکایە ئیمەیل و وشەی نهێنی بنووسە بۆ ناردنەوەی لینک';return;}
-  er.style.color='#94a3b8';er.innerText='⏳ چاوەڕوان بە، لینک دەنێردرێت...';authBusy=true;
-  try{
-    if(auth.currentUser){try{await auth.signOut();}catch(x){}}
-    const cred=await auth.signInWithEmailAndPassword(em,pw);
-    if(cred.user.emailVerified){er.style.color='#22c55e';er.innerText='✅ ئیمەیلەکەت پشتڕاست کراوەتەوە! ئێستا چوونەژوورەوە بکە.';try{await cred.user.signOut();}catch(x){}authBusy=false;return;}
-    await sendVerify(cred.user);
-    try{await cred.user.signOut();}catch(x){}
-    er.style.color='#fbbf24';er.innerText='📩 لینکی نوێ نێردرا بۆ '+em+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spam/junkـیش بپشکنە، و وەک "Not spam" نیشانەی بکە).';
-  }catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}
-  finally{authBusy=false;}
-}
+const EJ_PK='5KuG9-tUz8fRRhO8o',EJ_SID='service_d42jfbi',EJ_TID='template_bar5pst';
+emailjs.init({publicKey:EJ_PK});
+let U=null,lbFilter='all',lbData=[],currentLB=[],lockTimer=null,LEVEL_REWARD=10;
+let suppressAuth=false,pendingEmail='',pendingName='',pendingUid='',verifyAttempts=0,lastResend=0;
+const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0};
+function genCode(){return String(Math.floor(1000+Math.random()*9000));}
+async function sendCode(email,name){const code=genCode();try{await emailjs.send(EJ_SID,EJ_TID,{to_email:email,name:name||'یاریزان',code:code});}catch(e){console.error('emailjs',e);}return code;}
+function showVerify(){document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='none';document.getElementById('f-verify').style.display='block';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('v-email').innerText=pendingEmail;document.getElementById('v-code').value='';verifyAttempts=0;}
+function showLogin(){suppressAuth=false;document.getElementById('f-verify').style.display='none';document.getElementById('f-login').style.display='block';document.getElementById('f-reg').style.display='none';document.querySelectorAll('.tab')[0].classList.add('on');const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';}
+function backToLogin(){suppressAuth=false;if(auth.currentUser){try{auth.signOut();}catch(e){}}showLogin();}
+async function resendCode(){const er=document.getElementById('err');er.style.color='#f87171';if(!pendingUid||!pendingEmail){er.innerText='هیچ هەژمارێک چالاک نییە';return;}const now=Date.now();if(now-lastResend<30000){er.innerText='⏳ تکایە '+Math.ceil((30000-(now-lastResend))/1000)+' چرکە چاوەڕوان بە';return;}er.style.color='#94a3b8';er.innerText='⏳ کۆد دەنێردرێت...';const code=await sendCode(pendingEmail,pendingName);lastResend=Date.now();try{await db.collection('users').doc(pendingUid).update({pendingCode:code,pendingCodeExpires:new Date(Date.now()+10*60*1000)});er.style.color='#22c55e';er.innerText='✅ کۆدی نوێ نێردرا! ئیمەیلەکەت بپشکنە (spamـیش).';}catch(e){er.innerText='هەڵە لە ناردن: '+e.message;}}
+async function doVerify(e){e.preventDefault();const code=document.getElementById('v-code').value.trim(),btn=document.getElementById('v-btn'),er=document.getElementById('err');er.style.color='#f87171';if(!/^[0-9]{4}$/.test(code)){er.innerText='تکایە ٤ ژمارە بنووسە';return;}if(verifyAttempts>=5){er.innerText='🔒 زۆر هەوڵی هەڵەت دا. تکایە "دووبارە بینێرە" دابگرە.';return;}btn.disabled=true;btn.innerText='چاوەڕێ...';try{const doc=await db.collection('users').doc(pendingUid).get();const d=doc.data()||{};const exp=d.pendingCodeExpires?(d.pendingCodeExpires.toDate?d.pendingCodeExpires.toDate():new Date(d.pendingCodeExpires)):null;if(!exp||Date.now()>exp.getTime()){er.innerText='⏰ کۆدەکە بەسەرچووە. "دووبارە بینێرە" دابگرە.';btn.disabled=false;btn.innerText='پشتڕاستکردن';return;}if(code!==d.pendingCode){verifyAttempts++;er.innerText='❌ کۆدەکە هەڵەیە ('+verifyAttempts+'/5)';btn.disabled=false;btn.innerText='پشتڕاستکردن';return;}await db.collection('users').doc(pendingUid).update({verified:true,pendingCode:'',pendingCodeExpires:null});er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';suppressAuth=false;setTimeout(()=>location.reload(),900);}catch(err){er.innerText='هەڵە: '+err.message;btn.disabled=false;btn.innerText='پشتڕاستکردن';}}
 function avHtml(a,n){if(a&&(a.startsWith('data:')||a.startsWith('http')))return `<img src="${a}">`;if(a)return a;return (n||'?').charAt(0);}
 function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
 function getLevel(s){return Math.floor((s||0)/500);}
-function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇':'';if(r===2)return f==='all'?'🥈️':'🥈';if(r===3)return f==='all'?'🥉':'';return '';}
+function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇':'';if(r===2)return f==='all'?'🥈️':'';if(r===3)return f==='all'?'🥉':'';return '';}
 function setFrame(id,url){const el=document.getElementById(id);if(!el)return;if(url){el.src=url;el.style.display='block';}else{el.style.display='none';}}
-function updateLevelBar(){
-  const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);
-  const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;
-  const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';
-  const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;
-  const pt=document.getElementById('profile-lvl-txt');if(pt)pt.innerText=txt;
-}
+function updateLevelBar(){const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;const pt=document.getElementById('profile-lvl-txt');if(pt)pt.innerText=txt;}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.7));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
 function shuffleOpts(q){const ca=q.a[q.c];const sh=[...q.a].sort(()=>Math.random()-0.5);return{q:q.q,a:sh,c:sh.indexOf(ca)};}
 const QUESTIONS={
 'سلێمانی':[
 {q:'سلێمانی بە چی ناسراوە؟',a:['شاری کەلتوور و هونەر','شاری بازرگانی','شاری پیشەسازی','شاری کشتوکاڵ'],c:0},
 {q:'چیای گۆیژە لە کام شارە؟',a:['هەولێر','دهۆک','سلێمانی','کەرکووک'],c:2},
-{q:'سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٧٠٠','١٧٨','١٨٥٠','١٩٠٠'],c:1},
+{q:'سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٧٠٠','١٧٨','١٨٥٠','١٩٠'],c:1},
 {q:'کێ سلێمانی دامەزراند؟',a:['مەحموود پاشا','ئیبراهیم پاشای بابان','شێخ مەحموود','عەلی بەگ'],c:1},
 {q:'بازاڕی سەرچنار لە کوێیە؟',a:['هەولێر','سلێمانی','دهۆک','هەڵەبجە'],c:1},
 {q:'شاعیری "نالی" خەڵکی کوێیە؟',a:['هەولێر','شارەزوور','کۆیە','ڕانیە'],c:1},
 {q:'پارکی ئازادی لە کام شارە؟',a:['هەولێر','سلێمانی','دهۆک','زاخۆ'],c:1},
 {q:'چیای ئەزمەڕ لە کوێیە؟',a:['سلێمانی','هەولێر','ڕانیە','چوارقوڕنە'],c:0},
-{q:'زانکۆی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٦','١٩٦٨','١٩٧٥','١٩٨'],c:1},
-{q:'مۆزەخانەی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٤٠','١٩١','١٧٥','١٩٩٠'],c:1}
+{q:'زانکۆی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٦','١٩٦٨','١٩٧','١٩٨'],c:1},
+{q:'مۆزەخانەی سلێمانی لە چ ساڵێک دامەزرا؟',a:['١٩٤٠','١٩١','١٩٧٥','١٩٩'],c:1}
 ],
 'هەولێر':[
 {q:'هەولێر پایتەختی چییە؟',a:['کوردستانی ڕۆژهەڵات','هەرێمی کوردستان','کوردستانی سووریا','کوردستانی تورکیا'],c:1},
 {q:'قەڵای هەولێر لە لیستی کام ڕێکخراوە؟',a:['NATO','UNESCO','WHO','FIFA'],c:1},
-{q:'قەڵای هەولێر نزیکەی چەند ساڵ تەمەنییە؟',a:['١٠٠٠ ساڵ','٣٠٠٠ ساڵ','٦٠٠ ساڵ','٥٠٠ ساڵ'],c:2},
+{q:'قەڵای هەولێر نزیکەی چەند ساڵ تەمەنییە؟',a:['١٠٠٠ ساڵ','٣٠٠٠ ساڵ','٦٠٠٠ ساڵ','٥٠٠ ساڵ'],c:2},
 {q:'پارکی سامی عەبدولڕەحمان لە کوێیە؟',a:['سلێمانی','هەولێر','دهۆک','کەرکووک'],c:1},
 {q:'مزگەوتی جەلیل خەیات لە کام شارە؟',a:['سلێمانی','هەولێر','هەڵەبجە','دهۆک'],c:1},
 {q:'بازاڕی قەیسەری لە کوێیە؟',a:['هەولێر','سلێمانی','کۆیە','ڕانیە'],c:0},
 {q:'زانکۆی سەلاحەدین لە کوێیە؟',a:['سلێمانی','هەولێر','دهۆک','زاخۆ'],c:1},
 {q:'چیای سەفین لە نزیک کام شارە؟',a:['سلێمانی','هەولێر','سۆران','ئاکرێ'],c:1},
-{q:'فڕۆکەخانەی هەولێر لە چ ساڵێک کرایەوە؟',a:['١٩٩٥','٢٠٠','٢٠٠٥','٢٠١٠'],c:2},
+{q:'فڕۆکەخانەی هەولێر لە چ ساڵێک کرایەوە؟',a:['١٩٥','٢٠٠','٢٠٥','٢١٠'],c:2},
 {q:'پارکی شانەدەر لە کوێیە؟',a:['سلێمانی','هەولێر','دهۆک','کەرکووک'],c:1}
 ]};
 const TIME_PER_Q=15,POINTS_CORRECT=10,CITY_POINT=1,GAME_COOLDOWN=24*60*60*1000;
@@ -485,32 +481,24 @@ async function checkLevelReward(){
   try{const lrDoc=await db.collection('settings').doc('levelReward').get();if(lrDoc.exists&&typeof lrDoc.data().perLevel==='number')LEVEL_REWARD=lrDoc.data().perLevel;}catch(e){}
   const reward=LEVEL_REWARD||0;if(reward<=0)return;
   const lvl=getLevel(U.points),last=U.lastRewardedLevel||0;
-  if(lvl>last){
-    const gained=(lvl-last)*reward,newD=(U.diamonds||0)+gained;
-    try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,lastRewardedLevel:lvl});U.diamonds=newD;U.lastRewardedLevel=lvl;refreshUI();await syncProfileToScores();alert('🎖️ پیرۆز! گەیشتیتە ئاست '+lvl+'!\n💎 '+gained+' ئەڵماس وەک خەڵات وەرگرت!');}catch(e){console.error(e);}
-  }
+  if(lvl>last){const gained=(lvl-last)*reward,newD=(U.diamonds||0)+gained;try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,lastRewardedLevel:lvl});U.diamonds=newD;U.lastRewardedLevel=lvl;refreshUI();await syncProfileToScores();alert('🎖️ پیرۆز! گەیشتیتە ئاست '+lvl+'!\n💎 '+gained+' ئەڵماس وەک خەڵات وەرگرت!');}catch(e){console.error(e);}}
 }
 auth.onAuthStateChanged(async user=>{
+  if(suppressAuth)return;
   if(user){
-    if(!user.emailVerified){
-      document.getElementById('login-screen').style.display='flex';
-      document.getElementById('main-app').style.display='none';
-      if(!authBusy){const er=document.getElementById('err');er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت هێشتا پشتڕاست نەکراوەتەوە. تکایە ئیمەیلەکەت بپشکنە (بۆکسی spamـیش)، یان خوارەوە "دووبارە بینێرە" دابگرە.';}
-      return;
-    }
-    try{const doc=await db.collection('users').doc(user.uid).get();U=doc.exists?doc.data():{name:'یاریزان',email:user.email,phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0};}
-    catch(e){U={name:'یاریزان',email:user.email,phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0};}
-    showApp();loadNotif();loadLocks();loadCityScores();
+    let d={};try{const doc=await db.collection('users').doc(user.uid).get();d=doc.exists?doc.data():{};}catch(e){}
+    if(d.verified===true){U=Object.assign({},UDEF,{email:user.email},d);showApp();loadNotif();loadLocks();loadCityScores();}
+    else{pendingUid=user.uid;pendingEmail=user.email;pendingName=d.name||'یاریزان';showVerify();const er=document.getElementById('err');er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت هێشتا پشتڕاست نەکراوەتەوە. کۆدەکە بنووسە یان "دووبارە بینێرە" دابگرە.';}
   }else{
     document.getElementById('login-screen').style.display='flex';
     document.getElementById('main-app').style.display='none';
     if(lockTimer){clearInterval(lockTimer);lockTimer=null;}
-    if(!authBusy){const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';}
+    const er=document.getElementById('err');if(er){er.innerText='';er.style.color='#f87171';}
   }
 });
-function switchAuth(t){const tabs=document.querySelectorAll('.tab');const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';if(t==='login'){document.getElementById('f-login').style.display='block';document.getElementById('f-reg').style.display='none';tabs[0].classList.add('on');tabs[1].classList.remove('on');}else{document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='block';tabs[0].classList.remove('on');tabs[1].classList.add('on');}}
-async function doLogin(e){e.preventDefault();const btn=document.getElementById('l-btn'),em=document.getElementById('l-email').value.trim(),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;authBusy=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.signInWithEmailAndPassword(em,document.getElementById('l-pass').value);if(cred.user&&!cred.user.emailVerified){await sendVerify(cred.user);try{await cred.user.signOut();}catch(x){}er.style.color='#fbbf24';er.innerText='⚠️ ئیمەیلەکەت پشتڕاست نەکراوەتەوە! لینکی نوێ نێردرا بۆ '+em+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spam/junkـیش بپشکنە، و وەک "Not spam" نیشانەی بکە تا داهاتوو بچێتە inbox).';}else{er.style.color='#f87171';er.innerText='';}}catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}finally{btn.innerText='چوونەژوورەوە';btn.disabled=false;authBusy=false;}}
-async function doRegister(e){e.preventDefault();const name=document.getElementById('r-name').value.trim(),email=document.getElementById('r-email').value,phone=document.getElementById('r-phone').value.trim(),city=document.getElementById('r-city').value,pass=document.getElementById('r-pass').value,btn=document.getElementById('r-btn'),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;authBusy=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.createUserWithEmailAndPassword(email,pass);await sendVerify(cred.user);await db.collection('users').doc(cred.user.uid).set({name,email,phone,city,points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await db.collection('scores').add({uid:cred.user.uid,name,city,score:0,diamonds:0,avatar:'',cover:'',coverSetAt:null,frame:'',timestamp:firebase.firestore.FieldValue.serverTimestamp()});try{await cred.user.signOut();}catch(x){}er.style.color='#22c55e';er.innerText='✅ تۆمارکردن سەرکەوتوو بوو! لینکی پشتڕاستکردن نێردرا بۆ '+email+' — تکایە ئیمەیلەکەت بپشکنە (بۆکسی spam/junkـیش)، پاشان چوونەژوورەوە بکە. 💡 ئەگەر لە spam بوو، وەک "Not spam" نیشانەی بکە.';switchAuth('login');}catch(err){er.style.color='#f87171';er.innerText=errMsg(err.code);}finally{btn.innerText='تۆمارکردن';btn.disabled=false;authBusy=false;}}
+function switchAuth(t){const tabs=document.querySelectorAll('.tab');const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';document.getElementById('f-verify').style.display='none';if(t==='login'){document.getElementById('f-login').style.display='block';document.getElementById('f-reg').style.display='none';tabs[0].classList.add('on');tabs[1].classList.remove('on');}else{document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='block';tabs[0].classList.remove('on');tabs[1].classList.add('on');}}
+async function doLogin(e){e.preventDefault();const btn=document.getElementById('l-btn'),em=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pass').value,er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;er.style.color='#f87171';suppressAuth=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.signInWithEmailAndPassword(em,pw);const doc=await db.collection('users').doc(cred.user.uid).get();const d=doc.exists?doc.data():{};if(d.verified===true){suppressAuth=false;U=Object.assign({},UDEF,{email:cred.user.email},d);showApp();loadNotif();loadLocks();loadCityScores();er.innerText='';}else{const code=await sendCode(cred.user.email,d.name||'یاریزان');await db.collection('users').doc(cred.user.uid).update({pendingCode:code,pendingCodeExpires:new Date(Date.now()+10*60*1000)});pendingUid=cred.user.uid;pendingEmail=cred.user.email;pendingName=d.name||'یاریزان';showVerify();er.style.color='#22c55e';er.innerText='✅ کۆدی نوێ نێردرا بۆ '+cred.user.email+' — بینووسە (spamـیش بپشکنە).';}}catch(err){suppressAuth=false;er.innerText=errMsg(err.code);}finally{btn.innerText='چوونەژوورەوە';btn.disabled=false;}}
+async function doRegister(e){e.preventDefault();const name=document.getElementById('r-name').value.trim(),email=document.getElementById('r-email').value,phone=document.getElementById('r-phone').value.trim(),city=document.getElementById('r-city').value,pass=document.getElementById('r-pass').value,btn=document.getElementById('r-btn'),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;er.style.color='#f87171';suppressAuth=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.createUserWithEmailAndPassword(email,pass);const code=await sendCode(email,name);await db.collection('users').doc(cred.user.uid).set(Object.assign({},UDEF,{name,email,phone,city,verified:false,pendingCode:code,pendingCodeExpires:new Date(Date.now()+10*60*1000),createdAt:firebase.firestore.FieldValue.serverTimestamp()}));await db.collection('scores').add({uid:cred.user.uid,name,city,score:0,diamonds:0,avatar:'',cover:'',coverSetAt:null,frame:'',timestamp:firebase.firestore.FieldValue.serverTimestamp()});pendingUid=cred.user.uid;pendingEmail=email;pendingName=name;showVerify();er.style.color='#22c55e';er.innerText='✅ کۆدی پشتڕاستکردن نێردرا بۆ '+email+' — بینووسە (spamـیش بپشکنە).';}catch(err){suppressAuth=false;er.innerText=errMsg(err.code);}finally{btn.innerText='تۆمارکردن';btn.disabled=false;}}
 function showApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('main-app').style.display='block';
@@ -873,7 +861,7 @@ async function endGame(){
   document.getElementById('r-points').innerText=gameScore;
   document.getElementById('r-diamonds').innerText=gameDiamonds;
   const pct=gameCorrect/gameQs.length;
-  document.getElementById('r-trophy').innerText=pct>=0.8?'🏆':pct>=0.5?'🥈':'🥉';
+  document.getElementById('r-trophy').innerText=pct>=0.8?'🏆':pct>=0.5?'🥈':'';
   document.getElementById('r-title').innerText=pct>=0.8?'نایاب!':pct>=0.5?'باشە!':'هەوڵ بدەرەوە';
   document.getElementById('r-sub').innerText='یاری تەواو بوو | بۆ شاری '+gameCity+': +'+gameCityScore+' خاڵ 🏙️';
   try{
