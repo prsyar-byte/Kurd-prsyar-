@@ -434,7 +434,7 @@ const EJ_PK='5KuG9-tUz8fRRhO8o',EJ_SID='service_d42jfbi',EJ_TID='template_bar5ps
 emailjs.init({publicKey:EJ_PK});
 let U=null,lbFilter='all',lbData=[],currentLB=[],lockTimer=null,LEVEL_REWARD=10;
 let suppressAuth=false,pendingEmail='',pendingName='',pendingUid='',verifyAttempts=0,lastResend=0;
-const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0};
+const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,answeredQuestions:[]};
 function genCode(){return String(Math.floor(1000+Math.random()*9000));}
 async function sendCode(email,name){const code=genCode();try{await emailjs.send(EJ_SID,EJ_TID,{to_email:email,name:name||'یاریزان',code:code});}catch(e){console.error('emailjs',e);var er=document.getElementById('err');if(er){er.style.color='#f87171';er.innerText='⚠️ هەڵە لە ناردنی کۆد: '+((e&&e.text)?e.text:((e&&e.message)?e.message:'ئینتەرنێت یان EmailJS پشکنە'));}}return code;}
 function showVerify(){document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='none';document.getElementById('f-verify').style.display='block';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('v-email').innerText=pendingEmail;document.getElementById('v-code').value='';verifyAttempts=0;}
@@ -450,7 +450,7 @@ function getRankEmoji(f,r){if(r===1)return f==='all'?'🥇':'';if(r===2)return f
 function setFrame(id,url){const el=document.getElementById(id);if(!el)return;if(url){el.src=url;el.style.display='block';}else{el.style.display='none';}}
 function updateLevelBar(){const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;const pt=document.getElementById('profile-lvl-txt');if(pt)pt.innerText=txt;}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.7));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
-function shuffleOpts(q){const ca=q.a[q.c];const sh=[...q.a].sort(()=>Math.random()-0.5);return{q:q.q,a:sh,c:sh.indexOf(ca)};}
+function shuffleOpts(q){const ca=q.a[q.c];const sh=[...q.a].sort(()=>Math.random()-0.5);return{id:q.id,q:q.q,a:sh,c:sh.indexOf(ca)};}
 const TIME_PER_Q=15,POINTS_CORRECT=10,CITY_POINT=1,GAME_COOLDOWN=24*60*60*1000;
 async function checkLevelReward(){
   try{const lrDoc=await db.collection('settings').doc('levelReward').get();if(lrDoc.exists&&typeof lrDoc.data().perLevel==='number')LEVEL_REWARD=lrDoc.data().perLevel;}catch(e){}
@@ -796,8 +796,11 @@ async function startGame(city){
   const box=document.getElementById('gc-'+(city==='سلێمانی'?'slimany':'hawler'));
   if(box.classList.contains('locked'))return;
   let qs=[];
-  try{const snap=await db.collection('questions').where('city','==',city).get();snap.forEach(d=>qs.push(d.data()));}catch(e){console.error(e);}
+  try{const snap=await db.collection('questions').where('city','==',city).get();snap.forEach(d=>qs.push(Object.assign({id:d.id},d.data())));}catch(e){console.error(e);}
   if(qs.length<1){alert('⚠️ هیچ پرسیارێک بۆ "'+city+'" نییە لە سیستەمدا.\nتکایە لە admin (تابی ❓ پرسیار) پرسیار زیاد بکە، پاشان دووبارە هەوڵ بدە.');return;}
+  const answered=U.answeredQuestions||[];
+  qs=qs.filter(q=>!answered.includes(q.id));
+  if(qs.length<1){alert('🎉 پیرۆز! تۆ هەموو پرسیارەکانی "'+city+'"ـت وەڵام دایەوە!\nهیچ پرسیاری تازەت بۆ نەماوە لەم شارەدا.\n(کاتێک پرسیاری نوێ لە admin زیاد بکرێت، دەتوانیت دووبارە یاری بکەیت.)');return;}
   gameCity=city;
   gameQs=qs.sort(()=>Math.random()-0.5).slice(0,Math.min(10,qs.length)).map(shuffleOpts);
   gameIdx=0;gameScore=0;gameCorrect=0;gameCityScore=0;
@@ -844,8 +847,10 @@ async function endGame(){
   document.getElementById('r-sub').innerText='یاری تەواو بوو | بۆ شاری '+gameCity+': +'+gameCityScore+' خاڵ 🏙️';
   try{
     const newP=(U.points||0)+gameScore,newD=(U.diamonds||0)+gameDiamonds;
-    await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,lastGameAt:firebase.firestore.FieldValue.serverTimestamp()});
-    U.points=newP;U.diamonds=newD;U.lastGameAt=new Date();
+    const newIds=gameQs.map(q=>q.id).filter(Boolean);
+    const newAnswered=[...(U.answeredQuestions||[]),...newIds];
+    await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,lastGameAt:firebase.firestore.FieldValue.serverTimestamp(),answeredQuestions:newAnswered});
+    U.points=newP;U.diamonds=newD;U.lastGameAt=new Date();U.answeredQuestions=newAnswered;
     if(gameCityScore>0){const cityKey=gameCity==='سلێمانی'?'slimany':'hawler';await db.collection('settings').doc('cityScores').set({[cityKey]:firebase.firestore.FieldValue.increment(gameCityScore)},{merge:true});}
     refreshUI();await syncProfileToScores();updateGameNotice();await checkLevelReward();
   }catch(e){console.error(e);}
