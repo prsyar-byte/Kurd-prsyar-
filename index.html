@@ -380,7 +380,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="game-top"><button class="game-close" onclick="exitGame()">✕ دەرچوون</button><div class="game-city" id="g-city">سلێمانی</div></div>
     <div class="game-progress"><div class="game-progress-bar" id="g-progress" style="width:0%"></div></div>
     <div class="game-stats">
-      <div class="game-stat qnum"><div class="lbl">پرسیار</div><div class="val"><span id="g-qnum">1</span>/10</div></div>
+      <div class="game-stat qnum"><div class="lbl">پرسیار</div><div class="val"><span id="g-qnum">1</span>/<span id="g-qtotal">0</span></div></div>
       <div class="game-stat timer" id="g-timer-box"><div class="lbl">کات</div><div class="val" id="g-timer">15</div></div>
       <div class="game-stat score"><div class="lbl">خاڵ</div><div class="val" id="g-score">0</div></div>
     </div>
@@ -786,6 +786,17 @@ function go(id,el){
   if(id==='store'){loadDPacks();loadAvatars();loadFrames();}
 }
 let gameCity='',gameQs=[],gameIdx=0,gameScore=0,gameCorrect=0,gameDiamonds=0,gameCityScore=0,gameTimer=null,gameTimeLeft=0;
+// 🧠 تۆمارکردنی پرسیارە وەڵامدراوەکان (بێ دووبارەبوونەوە، بێ duplicate)
+async function recordAnswered(ids){
+  if(!ids||!ids.length)return;
+  const set=new Set(U.answeredQuestions||[]);
+  let added=false;
+  ids.forEach(id=>{if(id&&!set.has(id)){set.add(id);added=true;}});
+  if(!added)return;
+  const arr=[...set];
+  U.answeredQuestions=arr;
+  try{await db.collection('users').doc(auth.currentUser.uid).update({answeredQuestions:arr});}catch(e){console.error(e);}
+}
 async function startGame(city){
   if(city!==U.city){alert('🚫 تەنها دەتوانیت یاری شاری خۆت ('+(U.city||'-')+') بکەیت!\nبۆ ڕێگری لە فێڵ، هەر کەسێک و شاری خۆی.');return;}
   if(U.lastGameAt){
@@ -802,9 +813,10 @@ async function startGame(city){
   qs=qs.filter(q=>!answered.includes(q.id));
   if(qs.length<1){alert('🎉 پیرۆز! تۆ هەموو پرسیارەکانی "'+city+'"ـت وەڵام دایەوە!\nهیچ پرسیاری تازەت بۆ نەماوە لەم شارەدا.\n(کاتێک پرسیاری نوێ لە admin زیاد بکرێت، دەتوانیت دووبارە یاری بکەیت.)');return;}
   gameCity=city;
-  gameQs=qs.sort(()=>Math.random()-0.5).slice(0,Math.min(10,qs.length)).map(shuffleOpts);
+  gameQs=qs.sort(()=>Math.random()-0.5).map(shuffleOpts);
   gameIdx=0;gameScore=0;gameCorrect=0;gameCityScore=0;
   document.getElementById('g-city').innerText=city;
+  document.getElementById('g-qtotal').innerText=gameQs.length;
   document.getElementById('game-screen').classList.add('show');
   document.getElementById('game-play').style.display='block';
   document.getElementById('game-result').style.display='none';
@@ -842,20 +854,25 @@ async function endGame(){
   document.getElementById('r-points').innerText=gameScore;
   document.getElementById('r-diamonds').innerText=gameDiamonds;
   const pct=gameCorrect/gameQs.length;
-  document.getElementById('r-trophy').innerText=pct>=0.8?'🏆':pct>=0.5?'🥈':'🥉';
+  document.getElementById('r-trophy').innerText=pct>=0.8?'🏆':pct>=0.5?'🥈':'';
   document.getElementById('r-title').innerText=pct>=0.8?'نایاب!':pct>=0.5?'باشە!':'هەوڵ بدەرەوە';
   document.getElementById('r-sub').innerText='یاری تەواو بوو | بۆ شاری '+gameCity+': +'+gameCityScore+' خاڵ 🏙️';
   try{
     const newP=(U.points||0)+gameScore,newD=(U.diamonds||0)+gameDiamonds;
-    const newIds=gameQs.map(q=>q.id).filter(Boolean);
-    const newAnswered=[...(U.answeredQuestions||[]),...newIds];
-    await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,lastGameAt:firebase.firestore.FieldValue.serverTimestamp(),answeredQuestions:newAnswered});
-    U.points=newP;U.diamonds=newD;U.lastGameAt=new Date();U.answeredQuestions=newAnswered;
+    await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,lastGameAt:firebase.firestore.FieldValue.serverTimestamp()});
+    U.points=newP;U.diamonds=newD;U.lastGameAt=new Date();
+    await recordAnswered(gameQs.map(q=>q.id));
     if(gameCityScore>0){const cityKey=gameCity==='سلێمانی'?'slimany':'hawler';await db.collection('settings').doc('cityScores').set({[cityKey]:firebase.firestore.FieldValue.increment(gameCityScore)},{merge:true});}
     refreshUI();await syncProfileToScores();updateGameNotice();await checkLevelReward();
   }catch(e){console.error(e);}
 }
-function exitGame(){if(gameTimer)clearInterval(gameTimer);document.getElementById('game-screen').classList.remove('show');updateGameNotice();loadLB();}
+async function exitGame(){
+  if(gameTimer)clearInterval(gameTimer);
+  const done=gameQs.slice(0,gameIdx).map(q=>q.id).filter(Boolean);
+  if(done.length){await recordAnswered(done);}
+  document.getElementById('game-screen').classList.remove('show');
+  updateGameNotice();loadLB();
+}
 function errMsg(c){const m={'auth/user-not-found':'ئەم ئیمەیلە تۆمار نەکراوە','auth/wrong-password':'وشەی نهێنی هەڵەیە','auth/email-already-in-use':'ئەم ئیمەیلە پێشتر تۆمار کراوە','auth/weak-password':'وشەی نهێنی لاوازە (لانیکەم ٦ پیت)','auth/invalid-email':'ئیمەیل نادروستە','auth/too-many-requests':'زۆر هەوڵت دا، چاوەڕوان بە','auth/invalid-credential':'ئیمەیل یان وشەی نهێنی هەڵەیە','auth/network-request-failed':'پەیوەندی ئینتەرنێت نییە'};return m[c]||c;}
 (function(){
   var lastMod='';
