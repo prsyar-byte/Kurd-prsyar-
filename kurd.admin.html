@@ -81,6 +81,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
 .lb-tab{flex:1;padding:8px;border:none;background:0 0;color:#64748b;font-family:'Vazirmatn';font-weight:700;font-size:11px;border-radius:8px;cursor:pointer}
 .lb-tab.on{background:linear-gradient(135deg,#f87171,#ef4444);color:#fff}
 .q-count{font-size:11px;color:#94a3b8;margin-bottom:8px}
+.qb-progress{display:none;margin-top:12px;padding:10px 12px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);border-radius:9px;font-size:12px;color:#38bdf8;font-weight:700;text-align:center;line-height:1.6}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:3000;padding:20px}
 .modal-bg.show{display:flex}
 .modal{background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:24px;width:100%;max-width:360px;max-height:90vh;overflow-y:auto}
@@ -240,7 +241,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
     <div class="card">
       <h3>➕ زیادکردنی بۆکس</h3>
       <div class="frm">
-        <input type="text" id="rw-icon" placeholder="ئایکۆن/ئیمۆجی (🎁 🏆 💎)" value="">
+        <input type="text" id="rw-icon" placeholder="ئایکۆن/ئیمۆجی (🎁  💎)" value="">
         <input type="text" id="rw-name" placeholder="ناوی بۆکس">
         <input type="number" id="rw-rl" placeholder="🎖️ مەرجی ئاست (0=بێ مەرج)" value="0">
         <input type="number" id="rw-rs" placeholder="⭐ مەرجی خاڵ (0=بێ مەرج)" value="0">
@@ -279,16 +280,18 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
       </div>
     </div>
     <div class="card">
-      <h3>📋 زیادکردنی بە کۆمەڵ (paste چەندین پرسیار بە یەک جار)</h3>
+      <h3>📋 زیادکردنی بە کۆمەڵ (paste چەندین پرسیار بە یەک جار — تەنانەت ١٠,٠٠٠+)</h3>
       <div class="frm">
         <select id="qb-city" class="full"><option value="هەولێر">🏙️ هەولێر</option><option value="سلێمانی">🏙️ سلێمانی</option></select>
         <textarea id="qb-text" class="full" placeholder="هەر هێڵێک = پرسیارێک، بە | جیاکراوەتەوە:&#10;پرسیار|وەڵام١|وەڵام٢|وەڵام٣|وەڵام٤|ژمارەی_ڕاست&#10;&#10;نمونە:&#10;قەڵای هەولێر لە لیستی کام ڕێکخراوە؟|NATO|UNESCO|WHO|FIFA|1&#10;سلێمانی بە چی ناسراوە؟|کەلتوور و هونەر|بازرگانی|پیشەسازی|کشتوکاڵ|0"></textarea>
-        <button class="sbtn" onclick="addBulkQuestions()">🚀 زیادکردنی هەموو پرسیارەکان</button>
+        <button class="sbtn" id="qb-btn" onclick="addBulkQuestions()">🚀 زیادکردنی هەموو پرسیارەکان</button>
       </div>
+      <div class="qb-progress" id="qb-progress"></div>
       <p class="hint">📌 فۆرمات: هەر هێڵێک پرسیارێکە. بە ڕیزبەندی: پرسیار | وەڵام١ | وەڵام٢ | وەڵام٣ | وەڵام٤ | ژمارەی وەڵامی ڕاست (0=یەکەم، 1=دووەم، 2=سێیەم، 3=چوارەم).
- ئەمە خێرایە: دەتوانیت ١٠٠ یان ١٠٠٠ پرسیار بە یەک جار paste بکەیت (بە batch زیاد دەکرێن).
-🤖 پێشنیار: پرسیارەکان لە AI (وەک من) بە فۆرماتی سەرەوە وەربگرە، پاشان لێرە pasteیان بکە — بێ ماندووبوون!
-🗑️ بۆ گۆڕینی پرسیارەکانی ڕۆژانە: سەرەوە شارەکە هەڵبژێرە → "سڕینەوەی هەموو" → لێرە ١٠٠ی تازە paste بکە.</p>
+🚀 بۆ ١٠,٠٠٠+ پرسیار: تەنها paste بکە و دوگمەکە دابگرە — progress bar پیشان دەدرێت و هەمووی بە batchـی پارێزراو زیاد دەکرێن (بێ تێکچوون).
+🛡️ پارێزراوی: ئەگەر یەک batch شکستی بهێنێت، ئەوانی تر بەردەوام دەبن. پرسیاری دووبارە (لەناو paste یان لەگەڵ پرسیارە کۆنەکان) خۆکار پشتگوێ دەخرێت — بێ هەڵە.
+📊 لە کۆتاییدا ڕاپۆرتێک دەبینیت: چەند زیادکرا + چەند دووبارە پشتگوێ خرا + چەند هەڵەی فۆرمات.
+🤖 پێشنیار: پرسیارەکان لە AI بە فۆرماتی سەرەوە وەربگرە، پاشان لێرە pasteیان بکە — بێ ماندووبوون!</p>
     </div>
   </div>
 
@@ -306,7 +309,7 @@ body{font-family:'Vazirmatn',sans-serif;background:#0f172a;min-height:100vh;colo
       <div class="or-div">— یان —</div>
       <div class="frm">
         <input type="text" id="av-url" placeholder="🔗 لینکی وێنە (URL) https://..." class="full" oninput="previewAvUrl()">
-        <input type="text" id="av-emoji" placeholder="یان ئیمۆجی بنووسە (🦁 🐯 ⚽)" class="full">
+        <input type="text" id="av-emoji" placeholder="یان ئیمۆجی بنووسە (🦁  ⚽)" class="full">
         <input type="text" id="av-name" placeholder="📛 ناو بۆ وێنەکە (ئارەزوومەندانە)" class="full">
         <input type="text" id="av-city" placeholder="🏙️ شار بۆ وێنەکە (ئارەزوومەندانە)" class="full">
         <input type="number" id="av-price" placeholder="💎 نرخ بە ئەڵماس" value="50" class="full">
@@ -498,7 +501,6 @@ function renderAdmLB(){
 }
 async function editS(id,cur){const ns=prompt('سکۆر:',cur);if(ns===null)return;try{await db.collection('scores').doc(id).update({score:parseInt(ns)||0});sm('✅','ok');loadScores();}catch(e){sm('هەڵە','err');}}
 async function delS(id){if(!confirm('سڕینەوە؟'))return;try{await db.collection('scores').doc(id).delete();sm('✅','ok');loadScores();}catch(e){sm('هەڵە','err');}}
-// 📊 مێژووی یارییەکان
 function loadHistory(){
   const tb=document.getElementById('h-tb');
   tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:#64748b">بارکردن...</td></tr>';
@@ -637,9 +639,21 @@ async function addQuestion(){
 async function addBulkQuestions(){
   const city=document.getElementById('qb-city').value;
   const txt=document.getElementById('qb-text').value;
+  const prog=document.getElementById('qb-progress');
+  const btn=document.getElementById('qb-btn');
+  prog.style.display='block';
+  prog.style.color='#94a3b8';
+  prog.innerHTML='⏳ پشکنینی پرسیارە کۆنەکان بۆ ڕێگری لە دووبارەبوون...';
+  btn.disabled=true;
+  let existing=new Set();
+  try{
+    const snap=await db.collection('questions').where('city','==',city).select('q').get();
+    snap.forEach(d=>{existing.add((d.data().q||'').trim());});
+  }catch(e){console.error('existing load',e);}
   const lines=txt.split('\n').map(l=>l.trim()).filter(l=>l);
-  if(!lines.length){sm('هیچ هێڵێک نییە بۆ زیادکردن','err');return;}
-  const valid=[];let bad=0;
+  if(!lines.length){prog.style.color='#f87171';prog.innerHTML='❌ هیچ هێڵێک نییە بۆ زیادکردن';btn.disabled=false;return;}
+  const seen=new Set();
+  const valid=[];let bad=0,dup=0;
   for(const line of lines){
     const p=line.split('|');
     if(p.length<6){bad++;continue;}
@@ -647,19 +661,27 @@ async function addBulkQuestions(){
     const a=[p[1].trim(),p[2].trim(),p[3].trim(),p[4].trim()];
     const c=parseInt(p[5].trim());
     if(!q||a.some(x=>!x)||isNaN(c)||c<0||c>3){bad++;continue;}
+    if(existing.has(q)||seen.has(q)){dup++;continue;}
+    seen.add(q);
     valid.push({city,q,a,c});
   }
-  if(!valid.length){sm('هیچ هێڵێکی دروست نەدۆزرایەوە ('+bad+' هەڵە). فۆرمات بپشکنە.','err');return;}
-  sm('⏳ '+valid.length+' پرسیار دەنێردرێت... چاوەڕوان بە','ok');
-  let ok=0;
-  for(let i=0;i<valid.length;i+=400){
+  if(!valid.length){prog.style.color='#f87171';prog.innerHTML='❌ هیچ پرسیارێکی نوێ نەدۆزرایەوە — '+bad+' هەڵەی فۆرمات، '+dup+' دووبارە. فۆرمات بپشکنە.';btn.disabled=false;return;}
+  prog.style.color='#38bdf8';
+  prog.innerHTML='⏳ ئامادەکردن... ٠ لە '+valid.length+' (دووبارە پشتگوێخراو: '+dup+')';
+  let ok=0,fail=0;
+  const total=valid.length;
+  for(let i=0;i<total;i+=400){
     const chunk=valid.slice(i,i+400);
     const batch=db.batch();
     chunk.forEach(item=>{batch.set(db.collection('questions').doc(),item);});
-    try{await batch.commit();ok+=chunk.length;}catch(e){bad+=chunk.length;}
+    try{await batch.commit();ok+=chunk.length;}catch(e){fail+=chunk.length;console.error('batch',e);}
+    prog.innerHTML='⏳ زیادکردن... '+ok+' لە '+total+(fail?' ('+fail+' شکست)':'');
   }
-  sm('✅ '+ok+' پرسیار زیادکرا بۆ '+city+(bad?'  ('+bad+' هەڵە/نەگونجاو)':''),'ok');
+  prog.style.color='#22c55e';
+  prog.innerHTML='✅ تەواو بوو! '+ok+' پرسیاری نوێ زیادکرا بۆ '+city+(dup?' | '+dup+' دووبارە پشتگوێ خرا':'')+(fail?' | '+fail+' شکست':'')+(bad?' | '+bad+' هەڵەی فۆرمات':'');
+  sm('✅ '+ok+' پرسیار زیادکرا بۆ '+city,'ok');
   document.getElementById('qb-text').value='';
+  btn.disabled=false;
   loadQuestions();
 }
 async function delQuestion(id){if(!confirm('ئەم پرسیارە بسڕمەوە؟'))return;try{await db.collection('questions').doc(id).delete();sm('✅ سڕایەوە','ok');loadQuestions();}catch(e){sm('هەڵە','err');}}
