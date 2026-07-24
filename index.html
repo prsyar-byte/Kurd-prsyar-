@@ -573,6 +573,34 @@ let PAY_CFG={},PAY_PACK=null,PAY_METHOD='',PAY_PROOF='',PAY_STEP='method';
 let userDocUnsub=null,payLockUnsub=null,hasPendingPay=false;
 const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,answeredQuestions:[],cityPoints:{}};
 const POP_ICONS={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️',reward:'🎉'};
+/* ===== لابردنی پاتەرنی شەترەنجی (checkerboard) لە چوارچێوە ===== */
+const cbCache={};
+function cleanCB(url,cb){
+  if(!url){cb(url);return;}
+  if(cbCache[url]){cb(cbCache[url]);return;}
+  const im=new Image();
+  im.onload=function(){
+    try{
+      const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;
+      if(!w||!h){cb(url);return;}
+      const c=document.createElement('canvas');c.width=w;c.height=h;
+      const x=c.getContext('2d');x.drawImage(im,0,0,w,h);
+      const d=x.getImageData(0,0,w,h),p=d.data;
+      for(let i=0;i<p.length;i+=4){
+        const r=p[i],g=p[i+1],b=p[i+2];
+        const mx=Math.max(r,g,b),mn=Math.min(r,g,b);
+        const s=mx===0?0:(mx-mn)/mx;
+        const v=mx/255;
+        if(s<0.06&&v>0.74){p[i+3]=0;}
+      }
+      x.putImageData(d,0,0);
+      const res=c.toDataURL('image/png');
+      cbCache[url]=res;cb(res);
+    }catch(e){cb(url);}
+  };
+  im.onerror=function(){cb(url);};
+  im.src=url;
+}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showPopup(msg,type,btn){type=type||'info';btn=btn||'باشە';const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText=POP_ICONS[type]||'ℹ️';ic.className='popup-icon '+type;document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn '+type+'" id="popup-ok">'+btn+'</button>';bg.classList.add('show');document.getElementById('popup-ok').onclick=function(){bg.classList.remove('show');};}
 function showConfirm(msg,okText,noText){okText=okText||'بەڵێ';noText=noText||'نەخێر';return new Promise(function(resolve){const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText='❓';ic.className='popup-icon info';document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn no" id="popup-no">'+noText+'</button><button class="popup-btn yes" id="popup-yes">'+okText+'</button>';bg.classList.add('show');document.getElementById('popup-yes').onclick=function(){bg.classList.remove('show');resolve(true);};document.getElementById('popup-no').onclick=function(){bg.classList.remove('show');resolve(false);};});}
@@ -589,7 +617,7 @@ function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
 function getLevel(s){return Math.floor((s||0)/500);}
 function getRankEmoji(f,r){if(r===1)return '🥇';if(r===2)return '🥈';if(r===3)return '🥉';return '';}
-function setFrame(id,url){const el=document.getElementById(id);if(!el)return;if(url){el.src=url;el.style.display='block';}else{el.style.display='none';}}
+function setFrame(id,url){const el=document.getElementById(id);if(!el)return;if(url){el.style.display='block';cleanCB(url,function(c){el.src=c;});}else{el.style.display='none';}}
 function updateLevelBar(){const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;const pt=document.getElementById('profile-lvl-txt');if(pt)pt.innerText=txt;}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.7));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
 function shuffleOpts(q){const ca=q.a[q.c];const sh=[...q.a].sort(()=>Math.random()-0.5);return{id:q.id,q:q.q,a:sh,c:sh.indexOf(ca)};}
@@ -804,6 +832,7 @@ function renderLB(){
       <div class="lb-scores"><div class="sc">⭐ ${(d.score||0).toLocaleString()}</div><div class="dm">💎 ${(d.diamonds||0).toLocaleString()}</div></div>
     </div>`;r++;
   });
+  list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)cleanCB(s,function(c){img.src=c;});});
 }
 async function renderCityBoards(){
   const hScore=cityScoresData.hawler||0,sScore=cityScoresData.slimany||0;
@@ -839,6 +868,7 @@ async function renderCityBoards(){
         <div class="lb-scores"><div class="sc">🏙️ ${d.cityPts||0}</div></div>
       </div>`;r++;
     });
+    el.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)cleanCB(s,function(c){img.src=c;});});
   }
 }
 function viewUserByUid(uid){
