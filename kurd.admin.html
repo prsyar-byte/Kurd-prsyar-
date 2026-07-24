@@ -49,13 +49,6 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
 .card .hint{font-size:10.5px;color:var(--mut);margin-top:12px;line-height:1.8;background:rgba(255,255,255,.025);padding:10px 12px;border-radius:10px;white-space:pre-wrap;border:1px solid var(--line)}
 .search-box{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;background:rgba(10,15,31,.6);color:var(--txt);font-family:'Vazirmatn';font-size:12px;margin-bottom:12px}
 .search-box:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(56,189,248,.13)}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-.stat-card{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:14px;padding:14px;overflow:hidden;transition:transform .18s,border-color .18s}
-.stat-card:hover{transform:translateY(-3px);border-color:var(--line2)}
-.stat-card .st-ic{position:absolute;top:12px;left:12px;font-size:18px;opacity:.85}
-.stat-card .st-v{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1;font-family:'JetBrains Mono','Vazirmatn',monospace}
-.stat-card .st-l{font-size:10px;color:var(--mut);margin-top:7px;font-weight:600}
-.stat-card.s-total .st-v{color:var(--blue)}.stat-card.s-haw .st-v{color:var(--gold)}.stat-card.s-sli .st-v{color:var(--green)}.stat-card.s-pay .st-v{color:var(--rose)}
 .tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
 .tbl{width:100%;border-collapse:collapse;font-size:11px}
 .tbl th{text-align:right;padding:11px 9px;background:rgba(255,255,255,.03);color:var(--mut);font-weight:800;font-size:10px;position:sticky;top:0;z-index:2}
@@ -89,7 +82,6 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
 .frm select{appearance:none;cursor:pointer}.frm select option{background:#131a2c}
 .frm textarea{resize:vertical;min-height:96px;font-size:11.5px;line-height:1.7}
 .frm .full{grid-column:1/-1}
-.frm label.fl{grid-column:1/-1;font-size:11px;font-weight:700;color:var(--mut);margin-top:2px}
 .sbtn{grid-column:1/-1;padding:12px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-family:'Vazirmatn';font-size:13px;font-weight:800;cursor:pointer}
 .sbtn:active{transform:scale(.98)}.sbtn:hover{filter:brightness(1.08)}
 .sbtn.red{background:linear-gradient(135deg,var(--rose),var(--rose2))}.sbtn.green{background:linear-gradient(135deg,var(--green),var(--green2))}
@@ -111,6 +103,11 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
 .qr-prev{width:150px;height:150px;border-radius:14px;background:#fff;padding:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.3)}
 .qr-prev img{width:100%;height:100%;object-fit:contain}
 .qr-prev.empty{background:rgba(255,255,255,.03);border:1.5px dashed var(--line2);color:var(--mut2);font-size:11px}
+.checker-bg{background-color:#fff;background-image:linear-gradient(45deg,#cfcfcf 25%,transparent 25%),linear-gradient(-45deg,#cfcfcf 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#cfcfcf 75%),linear-gradient(-45deg,transparent 75%,#cfcfcf 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0}
+.clean-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:8px;font-size:11px;color:var(--txt);cursor:pointer;user-select:none;padding:6px 10px;border:1px solid var(--line);border-radius:20px;transition:border-color .15s,background .15s}
+.clean-toggle:hover{border-color:var(--green);background:rgba(34,197,94,.06)}
+.clean-toggle input{width:16px;height:16px;accent-color:var(--green);cursor:pointer}
+.fr-status{font-size:10px;margin-top:6px;min-height:14px;font-weight:700;transition:color .2s}
 .pay-list{display:flex;flex-direction:column;gap:10px}
 .pay-card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:14px;transition:border-color .15s,transform .15s}
 .pay-card:hover{border-color:var(--line2);transform:translateY(-2px)}
@@ -358,7 +355,7 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
         <button onclick="adjCity('hawler',10)">➕١٠</button>
         <button onclick="adjCity('hawler',-10)">➖١</button>
         <button onclick="adjCity('hawler',100)">➕١٠٠</button>
-        <button onclick="adjCity('hawler',-100)">➖١٠٠</button>
+        <button onclick="adjCity('hawler',-100)">➖١٠</button>
         <input id="cs-set-hawler" type="number" placeholder="بڕ">
         <button class="green" onclick="setCity('hawler')">📥 دانان</button>
         <button class="red" onclick="zeroCity('hawler')">🗑️ سفر</button>
@@ -502,22 +499,30 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
   <div id="p-frames" class="pnl">
     <div class="card"><h3>👑 چوارچێوەکانی پرۆفایل</h3>
       <div class="adm-av-grid" id="adm-fr-grid"><p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">بارکردن...</p></div>
-      <p class="hint">💡 باشترین وێنە: PNG شەفاف کە ناوەڕاستەکەی بەتاڵ بێت.</p>
+      <p class="hint">💡 باشترین وێنە: PNG شەفاف کە ناوەڕاستەکەی بەتاڵ بێت. ئەگەر چوارچێوەکەت پاشبنەمای شەترەنجی هەبوو، لە خوارەوە چەکباکسی «🧹 پاککردنەوە» چالاک بکە — پێشبینینەکە لەسەر پاشبنەمای شەترەنجی پیشان دەدرێت تا دڵنیا بیت شەفافییەکە کاری کرد.</p>
     </div>
     <div class="card">
       <h3>➕ زیادکردنی چوارچێوە</h3>
-      <div style="text-align:center;margin-bottom:14px">
-        <div class="avatar-preview" id="fr-preview" onclick="document.getElementById('fr-img').click()">👑</div>
+      <div style="text-align:center;margin-bottom:10px">
+        <div class="avatar-preview checker-bg" id="fr-preview" onclick="document.getElementById('fr-img').click()">👑</div>
         <input type="file" id="fr-img" accept="image/*" style="display:none" onchange="previewFrImg(event)">
-        <p style="font-size:10px;color:var(--mut)">کلیک بکە بۆ هەڵبژاردنی وێنە</p>
+        <p style="font-size:10px;color:var(--mut)">کلیک بکە بۆ هەڵبژاردنی وێنە — پاشبنەمای شەترەنجی لە پشتەوە = بەڵگەی شەفافی</p>
+        <label class="clean-toggle"><input type="checkbox" id="fr-clean" checked onchange="frReprocess()">🧹 پاشبنەمای شەترەنجی بسڕەوە (بۆ چوارچێوەی شەفاف)</label>
+        <div class="fr-status" id="fr-status"></div>
       </div>
-      <div class="or-div">— یان —</div>
+      <div class="or-div">— یان لینک —</div>
       <div class="frm">
-        <input type="text" id="fr-url" placeholder="🔗 لینکی وێنە (URL)" class="full" oninput="previewFrUrl()">
+        <input type="text" id="fr-url" placeholder="🔗 لینکی وێنە (URL) — دوای نووسین Enter دابگرە" class="full" oninput="frUrlDebounced()" onchange="previewFrUrl()">
         <input type="text" id="fr-name" placeholder="📛 ناوی چوارچێوە" class="full">
         <input type="number" id="fr-price" placeholder="💎 نرخ بە ئەڵماس" value="100" class="full">
         <button class="sbtn" onclick="addFrame()">➕ زیادکردنی چوارچێوە</button>
       </div>
+      <p class="hint">💡 چۆن شەفافی ڕاستەقینە دابنێیت (چارەی کێشەی شەترەنجی):
+• باشترین ڕێگا: وێنەکە دابەزێنە (Download PNG) پاشان وەک فایل بار بکە — شەفافی ڕاستەقینە دەبێت، بێ کێشە.
+• لینک: ئەگەر هۆستەکە ڕێگا بدات (وەک i.ibb.co) پاشبنەمای شەترەنجی خۆکار دەسڕدرێتەوە و پەیامی سەوز دەردەکەوێت.
+• ئەگەر پەیامی زەرد/ئاگاداری دەرکەوت (هۆستەکە ڕێگای نەدا): وێنەکە دابەزێنە بۆ مۆبایل/کۆمپیوتەرەکەت و وەک فایل بار بکە — ئەمە هەمیشە کار دەکات.
+• لە پێشبینیندا شەترەنجی لە پشتی چوارچێوەکە دەبینیت = ئەمە باشە (واتە شەفافە). لە ئەپەکەدا پاشبنەماکە لە پشتی دەردەکەوێت.
+• ئەگەر چوارچێوەکە پاشبنەمای ڕەنگی تێری هەبوو (نەک شەفاف)، چەکباکسەکە لابە تا بەشی ڕووناکی نەسڕدرێتەوە.</p>
     </div>
   </div>
   <div id="p-packs" class="pnl">
@@ -568,7 +573,7 @@ const ADMIN_USER="dzhwaredres",ADMIN_PASS="Dzhwar1999$$$";
 let admLBFilter='all',admLBData=[],allUsers=[],avImgData='',avUrlData='',frImgData='',frUrlData='',userMap={};
 let qFilter='all',allQuestions=[],histFilter='all',histData=[];
 let payData=[],payFilter='pending',payPendingCount=0,payBadgeStarted=false,PROOF_MAP={};
-let cfgQRData='';
+let cfgQRData='',frRawData='';
 const POP_ICONS={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function avHtml(a,n){if(a&&(a.startsWith('data:')||a.startsWith('http')))return `<img src="${a}">`;if(a)return a;return (n||'?').charAt(0);}
@@ -586,6 +591,13 @@ function openLightboxById(id){const src=PROOF_MAP[id];if(src)openLightbox(src);e
 function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
 function copyText(t,btn){const done=function(){if(btn){const o=btn.innerText;btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.innerText=o;},1400);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(function(){fallbackCopy(t);done();});}else{fallbackCopy(t);done();}}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.8));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
+/* ===== خوێندنەوەی وێنە وەک PNG (پاراستنی شەفافی) ===== */
+function readAsBoundedPng(file,maxW,cb){const r=new FileReader();r.onload=function(ev){const im=new Image();im.onload=function(){let w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);cb(c.toDataURL('image/png'));};im.onerror=function(){cb(null);};im.src=ev.target.result;};r.onerror=function(){cb(null);};r.readAsDataURL(file);}
+/* ===== سڕینەوەی پاشبنەمای شەترەنجی (checkerboard) -> شەفافی ڕاستەقینە ===== */
+function cleanCheckerboard(src,cb){const im=new Image();im.onload=function(){try{const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(!w||!h){cb(src,false);return;}const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(im,0,0,w,h);const d=x.getImageData(0,0,w,h),p=d.data;let removed=0;for(let i=0;i<p.length;i+=4){const r=p[i],g=p[i+1],b=p[i+2];const mx=Math.max(r,g,b),mn=Math.min(r,g,b);if((mx-mn)<=8&&mn>=170){p[i+3]=0;removed++;}}x.putImageData(d,0,0);cb(c.toDataURL('image/png'),removed>0);}catch(e){cb(src,false);}};im.onerror=function(){cb(src,false);};im.crossOrigin='anonymous';im.src=src;}
+function frSetStatus(txt,color){const s=document.getElementById('fr-status');if(s){s.innerText=txt||'';s.style.color=color||'var(--mut)';}}
+function frReprocess(){if(!frRawData)return;const want=document.getElementById('fr-clean').checked;const pv=document.getElementById('fr-preview');if(!want){frImgData=frRawData;frUrlData=(frRawData.startsWith('data:')?'':frRawData);pv.innerHTML=`<img src="${frRawData}">`;frSetStatus('بێ پاککردنەوە — وێنەی ڕەسەن هەڵگیرا','var(--mut)');return;}frSetStatus('⏳ پاککردنەوەی پاشبنەمای شەترەنجی...','var(--blue)');cleanCheckerboard(frRawData,function(cleaned,ok){if(ok){frImgData=cleaned;frUrlData='';pv.innerHTML=`<img src="${cleaned}">`;frSetStatus('✅ پاشبنەمای شەترەنجی سڕایەوە — ئێستا شەفافە','var(--green)');}else{frImgData='';frUrlData=frRawData;pv.innerHTML=`<img src="${frRawData}">`;frSetStatus('⚠️ نەتوانرا بسڕدرێتەوە (لینکەکە ڕێگای پێ نەدا، یان پاشبنەما شەترەنجی نییە). وێنەکە دابەزێنە و وەک فایل بار بکە.','var(--gold)');}});}
+function frUrlDebounced(){clearTimeout(window.__frt);window.__frt=setTimeout(previewFrUrl,700);}
 function doLogin(){const user=document.getElementById('a-user').value.trim(),pass=document.getElementById('a-pass').value;const btn=document.getElementById('a-btn'),err=document.getElementById('a-err');err.innerText='';if(!user||!pass){err.innerText='❌ ناو و وشەی نهێنی پێویستە';return;}btn.innerText='پشکنین...';btn.disabled=true;setTimeout(()=>{if(user===ADMIN_USER&&pass===ADMIN_PASS){document.getElementById('a-login').style.display='none';document.getElementById('a-panel').style.display='block';loadAll();}else{err.innerText='❌ ناو یان وشەی نهێنی هەڵەیە';}btn.innerText='چوونەژوورەوە';btn.disabled=false;},400);}
 function doLogout(){document.getElementById('a-login').style.display='block';document.getElementById('a-panel').style.display='none';document.getElementById('a-user').value='';document.getElementById('a-pass').value='';document.getElementById('a-err').innerText='';}
 function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();if(id==='questions')loadQuestions();if(id==='history')loadHistory();if(id==='payments')loadPayments();if(id==='paycfg')loadPayCfg();}
@@ -688,13 +700,13 @@ async function delAllQuestions(){let data=allQuestions;if(qFilter!=='all')data=d
 function loadAvatars(){const grid=document.getElementById('adm-av-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">بارکردن...</p>';db.collection('avatars').get().then(snap=>{if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">هیچ پاشبنەمایەک نییە</p>';return;}grid.innerHTML='';snap.forEach(doc=>{const d=doc.data();const isImage=d.avatar&&(d.avatar.startsWith('data:')||d.avatar.startsWith('http'));const imgHtml=isImage?`<img src="${d.avatar}">`:(d.avatar||'🖼️');const nmHtml=d.name?`<div class="aai-nm">${esc(d.name)}</div>`:'';const ctHtml=d.city?`<div class="aai-ct">🏙️ ${esc(d.city)}</div>`:'';grid.innerHTML+=`<div class="adm-av-item"><button class="aai-del" onclick="delAvatar('${doc.id}')">✕</button><div class="aai-img">${imgHtml}</div><div class="aai-info">${nmHtml}${ctHtml}<div class="aai-price">💎 ${d.price||0}</div></div></div>`;});});}
 async function addAvatar(){const price=parseInt(document.getElementById('av-price').value)||0;const emoji=document.getElementById('av-emoji').value.trim();const avName=document.getElementById('av-name').value.trim();const avCity=document.getElementById('av-city').value.trim();let avatarData=avUrlData||avImgData||emoji;if(!avatarData){toast('وێنە یان لینک یان ئیمۆجی پێویستە','warning');return;}if(price<=0){toast('نرخ بنووسە','warning');return;}try{await db.collection('avatars').add({avatar:avatarData,price:price,name:avName,city:avCity});toast('✅ پاشبنەما زیادکرا','success');document.getElementById('av-price').value='50';document.getElementById('av-url').value='';document.getElementById('av-emoji').value='';document.getElementById('av-name').value='';document.getElementById('av-city').value='';avImgData='';avUrlData='';document.getElementById('av-preview').innerHTML='🖼️';loadAvatars();}catch(e){toast('هەڵە: '+e.message,'error');}}
 async function delAvatar(id){if(!(await showConfirm('ئەم پاشبنەمایە بسڕمەوە؟','بسڕە','پاشگەزبوونەوە')))return;try{await db.collection('avatars').doc(id).delete();toast('✅','success');loadAvatars();}catch(e){toast('هەڵە','error');}}
-function previewAvImg(e){const file=e.target.files[0];if(!file)return;if(file.size>3*1024*1024){toast('وێنەکە زۆر گەورەیە (زۆرتر لە 3MB)','warning');return;}compressImage(file,600,0.8).then(function(data){avImgData=data;avUrlData='';document.getElementById('av-url').value='';document.getElementById('av-emoji').value='';document.getElementById('av-preview').innerHTML=`<img src="${data}">`;}).catch(function(){toast('هەڵە لە خوێندنەوەی وێنە','error');});}
-function previewAvUrl(){const u=document.getElementById('av-url').value.trim();avUrlData=u;if(u){avImgData='';document.getElementById('av-emoji').value='';document.getElementById('av-preview').innerHTML=`<img src="${u}" onerror="this.style.display='none';this.parentElement.innerHTML='❌'">`;}}
+function previewAvImg(e){const file=e.target.files[0];if(!file)return;if(file.size>3*1024*1024){toast('وێنەکە زۆر گەورەیە (زۆرتر لە 3MB)','warning');return;}compressImage(file,600,0.8).then(function(data){avImgData=data;avUrlData='';document.getElementById('av-preview').innerHTML=`<img src="${data}">`;}).catch(function(){toast('هەڵە لە خوێندنەوەی وێنە','error');});}
+function previewAvUrl(){const u=document.getElementById('av-url').value.trim();avUrlData=u;if(u){avImgData='';document.getElementById('av-preview').innerHTML=`<img src="${u}" onerror="this.style.display='none';this.parentElement.innerHTML='❌'">`;}}
 function loadFrames(){const grid=document.getElementById('adm-fr-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">بارکردن...</p>';db.collection('frames').get().then(snap=>{if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">هیچ چوارچێوەیەک نییە</p>';return;}grid.innerHTML='';snap.forEach(doc=>{const d=doc.data();const nmHtml=d.name?`<div class="aai-nm">${esc(d.name)}</div>`:'';grid.innerHTML+=`<div class="adm-av-item"><button class="aai-del" onclick="delFrame('${doc.id}')">✕</button><div class="aai-img contain"><img src="${d.avatar}"></div><div class="aai-info">${nmHtml}<div class="aai-price">💎 ${d.price||0}</div></div></div>`;});});}
-async function addFrame(){const price=parseInt(document.getElementById('fr-price').value)||0;const frName=document.getElementById('fr-name').value.trim();let frData=frUrlData||frImgData;if(!frData){toast('وێنەی چوارچێوە پێویستە (upload یان لینک)','warning');return;}if(price<=0){toast('نرخ بنووسە','warning');return;}try{await db.collection('frames').add({avatar:frData,price:price,name:frName});toast('✅ چوارچێوە زیادکرا','success');document.getElementById('fr-price').value='100';document.getElementById('fr-url').value='';document.getElementById('fr-name').value='';frImgData='';frUrlData='';document.getElementById('fr-preview').innerHTML='👑';loadFrames();}catch(e){toast('هەڵە: '+e.message,'error');}}
+async function addFrame(){const price=parseInt(document.getElementById('fr-price').value)||0;const frName=document.getElementById('fr-name').value.trim();let frData=frUrlData||frImgData;if(!frData){toast('وێنەی چوارچێوە پێویستە (فایل یان لینک)','warning');return;}if(price<=0){toast('نرخ بنووسە','warning');return;}try{await db.collection('frames').add({avatar:frData,price:price,name:frName});toast('✅ چوارچێوە زیادکرا — ئێستا شەفافە','success');document.getElementById('fr-price').value='100';document.getElementById('fr-url').value='';document.getElementById('fr-name').value='';frImgData='';frUrlData='';frRawData='';frSetStatus('');document.getElementById('fr-preview').innerHTML='👑';loadFrames();}catch(e){toast('هەڵە: '+e.message,'error');}}
 async function delFrame(id){if(!(await showConfirm('ئەم چوارچێوەیە بسڕمەوە؟','بسڕە','پاشگەزبوونەوە')))return;try{await db.collection('frames').doc(id).delete();toast('✅','success');loadFrames();}catch(e){toast('هەڵە','error');}}
-function previewFrImg(e){const file=e.target.files[0];if(!file)return;if(file.size>3*1024*1024){toast('وێنەکە زۆر گەورەیە (زۆرتر لە 3MB)','warning');return;}compressImage(file,600,0.8).then(function(data){frImgData=data;frUrlData='';document.getElementById('fr-url').value='';document.getElementById('fr-preview').innerHTML=`<img src="${data}">`;}).catch(function(){toast('هەڵە لە خوێندنەوەی وێنە','error');});}
-function previewFrUrl(){const u=document.getElementById('fr-url').value.trim();frUrlData=u;if(u){frImgData='';document.getElementById('fr-preview').innerHTML=`<img src="${u}" onerror="this.style.display='none';this.parentElement.innerHTML='❌'">`;}}
+function previewFrImg(e){const file=e.target.files[0];if(!file)return;if(file.size>3*1024*1024){toast('وێنەکە زۆر گەورەیە (زۆرتر لە 3MB)','warning');return;}readAsBoundedPng(file,700,function(data){if(!data){toast('هەڵە لە خوێندنەوەی وێنە','error');return;}frRawData=data;frReprocess();});}
+function previewFrUrl(){const u=document.getElementById('fr-url').value.trim();const pv=document.getElementById('fr-preview');if(!u){frRawData='';frImgData='';frUrlData='';pv.innerHTML='👑';frSetStatus('');return;}frRawData=u;frUrlData=u;frImgData='';pv.innerHTML=`<img src="${u}" onerror="this.style.display='none';this.parentElement.innerHTML='❌ لینک نەخوێندرایەوە'">`;frReprocess();}
 function loadPacks(){const tb=document.getElementById('pk-tb');tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--mut)">بارکردن...</td></tr>';db.collection('diamond_packs').orderBy('dinars','asc').get().then(snap=>{tb.innerHTML='';snap.forEach(doc=>{const d=doc.data();tb.innerHTML+=`<tr><td style="color:var(--violet);font-weight:700">💎 ${(d.diamonds||0).toLocaleString()}</td><td style="color:var(--green);font-weight:700">💵 ${(d.dinars||0).toLocaleString()}</td><td><button class="abtn abtn-d" onclick="delPack('${doc.id}')">🗑️</button></td></tr>`;});if(snap.empty)tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--mut)">هیچ پاکێجێک نییە</td></tr>';});}
 async function addPack(){const dia=parseInt(document.getElementById('pk-dia').value)||0,din=parseInt(document.getElementById('pk-din').value)||0;if(dia<=0||din<=0){toast('هەردوو بڕ پێویستە','warning');return;}try{await db.collection('diamond_packs').add({diamonds:dia,dinars:din});toast('✅ پاکێج زیادکرا','success');document.getElementById('pk-dia').value='100';document.getElementById('pk-din').value='1000';loadPacks();}catch(e){toast('هەڵە: '+e.message,'error');}}
 async function delPack(id){if(!(await showConfirm('ئەم پاکێجە بسڕمەوە؟','بسڕە','پاشگەزبوونەوە')))return;try{await db.collection('diamond_packs').doc(id).delete();toast('✅','success');loadPacks();}catch(e){toast('هەڵە','error');}}
