@@ -49,7 +49,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 .hdr .av-wrap{width:42px;height:42px}
 .hdr .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px;overflow:hidden}
 .hdr .av img{width:100%;height:100%;object-fit:cover;display:block}
-.av-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:135%;height:135%;object-fit:contain;pointer-events:none;z-index:4;display:none}
+.av-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:158%;height:158%;object-fit:contain;pointer-events:none;z-index:4;display:none}
 .sec{font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .games{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px}
 .gc{position:relative;border-radius:16px;overflow:hidden;height:150px;cursor:pointer;transition:.3s;border:1px solid rgba(255,255,255,.07)}
@@ -577,16 +577,12 @@ function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'
 function showPopup(msg,type,btn){type=type||'info';btn=btn||'باشە';const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText=POP_ICONS[type]||'ℹ️';ic.className='popup-icon '+type;document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn '+type+'" id="popup-ok">'+btn+'</button>';bg.classList.add('show');document.getElementById('popup-ok').onclick=function(){bg.classList.remove('show');};}
 function showConfirm(msg,okText,noText){okText=okText||'بەڵێ';noText=noText||'نەخێر';return new Promise(function(resolve){const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText='❓';ic.className='popup-icon info';document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn no" id="popup-no">'+noText+'</button><button class="popup-btn yes" id="popup-yes">'+okText+'</button>';bg.classList.add('show');document.getElementById('popup-yes').onclick=function(){bg.classList.remove('show');resolve(true);};document.getElementById('popup-no').onclick=function(){bg.classList.remove('show');resolve(false);};});}
 function showPrompt(msg,def,okText,noText){okText=okText||'پاشەکەوت';noText=noText||'پاشگەزبوونەوە';return new Promise(function(resolve){const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText='✏️';ic.className='popup-icon info';document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');const inp=document.getElementById('popup-input');inp.style.display='block';inp.value=(def==null?'':def);document.getElementById('popup-btns').innerHTML='<button class="popup-btn no" id="popup-no">'+noText+'</button><button class="popup-btn yes" id="popup-yes">'+okText+'</button>';bg.classList.add('show');setTimeout(function(){inp.focus();if(inp.select)inp.select();},60);document.getElementById('popup-yes').onclick=function(){const v=inp.value;bg.classList.remove('show');resolve(v);};document.getElementById('popup-no').onclick=function(){bg.classList.remove('show');resolve(null);};});}
-function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('show');}
-function closeLightbox(){const lb=document.getElementById('lightbox');lb.classList.remove('show');setTimeout(function(){document.getElementById('lightbox-img').src='';},200);}
-function openLightboxById(id){const src=PROOF_MAP[id];if(src)openLightbox(src);else toast('بەڵگە نییە','warning');}
 function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
 function copyText(t,btn){const done=function(){if(btn){const o=btn.innerText;btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.innerText=o;},1400);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(function(){fallbackCopy(t);done();});}else{fallbackCopy(t);done();}}
 function toast(msg,type){type=type||'info';const ic=POP_ICONS[type]||'ℹ️';const box=document.getElementById('toasts');const el=document.createElement('div');el.className='toast '+type;el.innerHTML='<span class="ti">'+ic+'</span><span>'+esc(msg)+'</span>';box.appendChild(el);setTimeout(function(){el.classList.add('out');setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},300);},3400);}
 function sm(t,type){toast(t,type);}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.8));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
-function readAsBoundedPng(file,maxW,cb){const r=new FileReader();r.onload=function(ev){const im=new Image();im.onload=function(){let w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);cb(c.toDataURL('image/png'));};im.onerror=function(){cb(null);};im.src=ev.target.result;};r.onerror=function(){cb(null);};r.readAsDataURL(file);}
-/* ===== ناسینەوەی پیکسڵەکانی پاشبنەمای شەترەنجی ===== */
+/* ===== ناسینەوەی پیکسڵەکانی پاشبنەمای شەترەنجی و کردنیان بە شەفافی ڕاستەقینە ===== */
 function cbPixels(ctx,w,h){
   const d=ctx.getImageData(0,0,w,h),p=d.data;
   const freq={};
@@ -607,7 +603,7 @@ function cbPixels(ctx,w,h){
   ctx.putImageData(d,0,0);
   return true;
 }
-/* ===== هێنانی وێنە (ڕاستەوخۆ یان لە ڕێی پرۆکسی) ===== */
+/* ===== هێنانی وێنە (ڕاستەوخۆ یان لە ڕێی پرۆکسی بۆ تێپەڕاندنی CORS) ===== */
 function loadImgForClean(src,cb){
   const PROXIES=['https://api.allorigins.win/raw?url=','https://corsproxy.io/?'];
   const tryProxy=function(idx){
@@ -625,76 +621,28 @@ function loadImgForClean(src,cb){
   im.onerror=function(){tryProxy(0);};
   im.src=src;
 }
-/* ===== پرۆسێسی چوارچێوە: سڕینەوەی شەترەنجی + بڕین + چوارگۆشەکردن + پێوانەی ناوەوە (بۆ قەبارەی زیرەک) ===== */
+/* ===== پرۆسێسی چوارچێوە: تەنها پاککردنەوەی شەترەنجی (قەبارە وەک خۆی ڕەسەن دەمێنێت) ===== */
 const frameCache={};
 function processFrame(src,cb){
-  if(!src){cb({url:src,innerRatio:0});return;}
+  if(!src){cb(src);return;}
   if(frameCache[src]){cb(frameCache[src]);return;}
-  const finish=function(res){frameCache[src]=res;cb(res);};
-  const measure=function(imageSrc){
-    const im2=new Image();
-    im2.onload=function(){
-      try{
-        const w=im2.naturalWidth||im2.width,h=im2.naturalHeight||im2.height;
-        if(!w||!h){finish({url:src,innerRatio:0});return;}
-        let workSrc=imageSrc,W=w,H=h;
-        if(w!==h){
-          const side=Math.max(w,h);
-          const c=document.createElement('canvas');c.width=side;c.height=side;
-          c.getContext('2d').drawImage(im2,Math.round((side-w)/2),Math.round((side-h)/2),w,h);
-          workSrc=c.toDataURL('image/png');W=side;H=side;
-        }
-        const im3=new Image();
-        im3.onload=function(){
-          try{
-            const WW=im3.naturalWidth||W,HH=im3.naturalHeight||H;
-            const c=document.createElement('canvas');c.width=WW;c.height=HH;
-            const x=c.getContext('2d');x.drawImage(im3,0,0,WW,HH);
-            const d=x.getImageData(0,0,WW,HH).data;
-            const midY=Math.floor(HH/2);
-            let leftT=0;for(let xx=0;xx<WW;xx++){if(d[(midY*WW+xx)*4+3]>12)break;leftT++;}
-            let rightT=0;for(let xx=WW-1;xx>=0;xx--){if(d[(midY*WW+xx)*4+3]>12)break;rightT++;}
-            const inner=WW-leftT-rightT;
-            const innerRatio=inner/WW;
-            finish({url:workSrc,innerRatio:(innerRatio>0.25&&innerRatio<0.98)?innerRatio:0});
-          }catch(e){finish({url:workSrc,innerRatio:0});}
-        };
-        im3.onerror=function(){finish({url:workSrc,innerRatio:0});};
-        im3.src=workSrc;
-      }catch(e){finish({url:src,innerRatio:0});}
-    };
-    im2.onerror=function(){finish({url:src,innerRatio:0});};
-    im2.src=imageSrc;
-  };
   loadImgForClean(function(im){
-    if(!im){measure(src);return;}
+    if(!im){cb(src);return;}
     try{
       const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;
-      if(!w||!h){measure(src);return;}
+      if(!w||!h){cb(src);return;}
       const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
       x.drawImage(im,0,0,w,h);
-      const didClean=cbPixels(x,w,h);
-      const d=x.getImageData(0,0,w,h),p=d.data;
-      let minX=w,minY=h,maxX=0,maxY=0,found=false;
-      for(let y=0;y<h;y++){for(let xx=0;xx<w;xx++){if(p[(y*w+xx)*4+3]>12){found=true;if(xx<minX)minX=xx;if(xx>maxX)maxX=xx;if(y<minY)minY=y;if(y>maxY)maxY=y;}}}
-      if(!found||maxX<=minX||maxY<=minY){measure(didClean?c.toDataURL('image/png'):src);return;}
-      const pad=Math.max(1,Math.round(Math.max(maxX-minX,maxY-minY)*0.02));
-      minX=Math.max(0,minX-pad);minY=Math.max(0,minY-pad);maxX=Math.min(w-1,maxX+pad);maxY=Math.min(h-1,maxY+pad);
-      const cw=maxX-minX+1,ch=maxY-minY+1;
-      const c2=document.createElement('canvas');c2.width=cw;c2.height=ch;
-      c2.getContext('2d').drawImage(c,minX,minY,cw,ch,0,0,cw,ch);
-      measure(c2.toDataURL('image/png'));
-    }catch(e){measure(src);}
+      const cleaned=cbPixels(x,w,h);
+      const out=cleaned?c.toDataURL('image/png'):src;
+      frameCache[src]=out;cb(out);
+    }catch(e){cb(src);}
   });
 }
-/* ===== دانانی چوارچێوە لەسەر ئاڤاتار — قەبارەی زیرەک بەپێی ناوەوە ===== */
-function applyFrameSize(el,ratio){
-  if(ratio>0){const pct=Math.round((1/ratio)*108);el.style.width=pct+'%';el.style.height=pct+'%';}
-  else{el.style.width='135%';el.style.height='135%';}
-}
+/* ===== دانانی چوارچێوە — قەبارەی ڕەسەن (CSS)، تەنها پاککردنەوەی شەترەنجی ===== */
 function setFrame(id,url){
   const el=document.getElementById(id);if(!el)return;
-  if(url){el.style.display='block';el.src=url;processFrame(url,function(res){el.src=res.url;applyFrameSize(el,res.innerRatio);});}
+  if(url){el.style.display='block';el.src=url;processFrame(url,function(cleaned){el.src=cleaned;});}
   else{el.style.display='none';}
 }
 function getLevel(s){return Math.floor((s||0)/500);}
@@ -922,7 +870,7 @@ function renderLB(){
       <div class="lb-scores"><div class="sc">⭐ ${(d.score||0).toLocaleString()}</div><div class="dm">💎 ${(d.diamonds||0).toLocaleString()}</div></div>
     </div>`;r++;
   });
-  list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(res){img.src=res.url;applyFrameSize(img,res.innerRatio);});});
+  list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});
 }
 async function renderCityBoards(){
   const hScore=cityScoresData.hawler||0,sScore=cityScoresData.slimany||0;
@@ -958,7 +906,7 @@ async function renderCityBoards(){
         <div class="lb-scores"><div class="sc">🏙️ ${d.cityPts||0}</div></div>
       </div>`;r++;
     });
-    el.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(res){img.src=res.url;applyFrameSize(img,res.innerRatio);});});
+    el.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});
   }
 }
 function viewUserByUid(uid){
@@ -1206,6 +1154,7 @@ function loadFrames(){
       const nmHtml=`<div class="si-nm">${d.name||'چوارچێوە'}</div>`;
       col.innerHTML+=`<div class="shop-item${isActive?' fr-active':''}" onclick="selectFrame('${doc.id}')">${badge}<div class="si-img frame"><img src="${d.avatar}"></div><div class="si-meta">${nmHtml}${priceHtml}</div></div>`;
     });
+    col.querySelectorAll('.si-img.frame img').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});
   }).catch(()=>{col.innerHTML='<div class="shop-empty">هەڵە</div>';});
 }
 async function selectFrame(id){
