@@ -598,39 +598,78 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
       </div>
     </div>
 
-    <!-- Live Page -->
+    <!-- Live Page (Real-Time Arena) -->
     <div id="pg-live" class="page fade-in">
       <div class="arena">
         <div class="arena-bg" aria-hidden="true"><span class="spot s1"></span><span class="spot s2"></span><span class="spot s3"></span><div class="arena-grid"></div></div>
         <div class="arena-top">
           <span class="live-tag"><span class="live-dot2"></span>LIVE</span>
-          <span class="arena-rule">مەیدانی پاڵەوانان</span>
+          <span class="arena-rule" id="arena-status-text">مەیدانی پاڵەوانان</span>
         </div>
-        <div class="arena-clock" id="live-lobby-clock">11:42</div>
+        <div class="arena-clock" id="live-lobby-clock">00:00</div>
         <div class="arena-clock-label">دەست پێ دەکات لە</div>
-        <div class="arena-waiting"><span id="live-lobby-waiting">٤٣ کەس</span> چاوەڕوانن</div>
+        <div class="arena-waiting"><span id="live-lobby-waiting">٠ کەس</span> چاوەڕوانن</div>
+        
+        <!-- Active Box Info -->
+        <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:8px; margin-bottom:10px; font-size:12px; color:#fbbf24;">
+            🎁 بۆکسی چالاک: <span id="active-box-name">هیچ بۆکسێک چالاک نییە</span>
+        </div>
+
         <div class="arena-seats" id="arena-seats"></div>
-        <button class="arena-join" onclick="showPopup('⏳ مەیدانی ڕاستەقینەی ٦ کەسی لە وەشانی داهاتوودا دەکرێتەوە. ئێستا ژووری چاوەڕوانیت بۆ تۆمار کرا — کاتێک دەستی پێ کرد ئاگادارت دەکەینەوە.','info','باشە')">⚔️ چوونەژوورەوە بۆ مەیدان</button>
+        <button class="arena-join" id="btn-join-live" onclick="toggleLiveStatus()">⚔️ چوونەژوورەوە بۆ مەیدان</button>
+        
         <div class="arena-stakes">
-          <div class="stake"><span class="stake-v">٥٠</span><span class="stake-l">هەرزان</span></div>
-          <div class="stake hot"><span class="stake-v">٢٠٠</span><span class="stake-l">ناوەند</span></div>
-          <div class="stake"><span class="stake-v">٥٠</span><span class="stake-l">پاڵەوانان</span></div>
+          <div class="stake"><span class="stake-v">٥٠</span><span class="stake-l">برۆنزی</span></div>
+          <div class="stake hot"><span class="stake-v">٢٠٠</span><span class="stake-l">زیوی</span></div>
+          <div class="stake"><span class="stake-v">٥٠٠</span><span class="stake-l">زێری</span></div>
         </div>
         <p class="arena-note">هەر یارییەکی لای خاڵ دەنێرێتەوە سەر شارەکەت 🏙️ — بۆ شارەکەت بجەنگە.</p>
       </div>
     </div>
+
+    <!-- Live Game Overlay (Hidden by default) -->
+    <div id="live-game-overlay" style="display:none; position:fixed; inset:0; background:#0f172a; z-index:4000; padding:20px; overflow-y:auto;">
+        <div style="max-width:600px; margin:0 auto;">
+            <div style="text-align:center; margin-bottom:20px;">
+                <h2 style="color:#fbbf24; font-size:24px;">🔴 یاری ڕاستەقینە</h2>
+                <div id="live-q-timer" style="font-size:40px; font-weight:900; color:#ef4444;">15</div>
+            </div>
+            
+            <!-- Question -->
+            <div class="game-question" id="live-q-text" style="background:rgba(255,255,255,0.1); padding:20px; border-radius:16px; margin-bottom:20px; font-size:18px; text-align:center;"></div>
+            
+            <!-- Answers -->
+            <div class="game-answers" id="live-q-answers" style="display:flex; flex-direction:column; gap:10px;"></div>
+
+            <!-- Remaining Players List -->
+            <div style="margin-top:30px; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px;">
+                <h3 style="text-align:center; color:#94a3b8; font-size:14px; margin-bottom:10px;">یاریزانە ماوەکان (<span id="live-remaining-count">0</span>)</h3>
+                <div id="live-remaining-list" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Winner Modal -->
+    <div id="winner-modal" class="modal-bg" onclick="if(event.target===this)this.classList.remove('show')">
+        <div class="modal" style="text-align:center; padding:40px;">
+            <div style="font-size:80px; margin-bottom:20px;">👑</div>
+            <h2 style="color:#fbbf24; font-size:28px; margin-bottom:10px;" id="winner-name">ناوی پاڵەوان</h2>
+            <p style="color:#fff; font-size:18px;">پیرۆزە! تۆ پاڵەوانی مەیدانیت</p>
+            <div style="margin-top:20px; font-size:24px; color:#a78bfa;">+<span id="winner-reward">0</span> 💎</div>
+            <button class="m-close" onclick="document.getElementById('winner-modal').classList.remove('show')" style="margin-top:20px;">داخستن</button>
+        </div>
+    </div>
+
   </div>
 
   <!-- Bottom Navigation -->
   <div class="bnav">
     <div class="ni on" onclick="go('home',this)"><div class="nic">🏠</div><span>سەرەتا</span></div>
     <div class="ni" onclick="go('profile',this)"><div class="nic">👤</div><span>پرۆفایل</span></div>
-    <!-- گۆڕانکاری لێرە کراوە: زیادکردنی ئیمۆجی 🏆 -->
     <div class="ni" onclick="go('lb',this)"><div class="nic">🏆</div><span>ڕیزبەندی</span></div>
     <div class="ni" onclick="go('rewards',this)"><div class="nic">🎁</div><span>دیاری</span></div>
-    <!-- گۆڕانکاری لێرە کراوە: زیادکردنی ئیمۆجی 🛒 -->
     <div class="ni" onclick="go('store',this)"><div class="nic">🛒</div><span>فرۆشگا</span></div>
-    <div class="ni ni-live" onclick="go('live',this)"><div class="nic">🔴</div><span>لایڤ</span><span class="live-count" id="live-count">٤٣</span><span class="live-pulse"></span></div>
+    <div class="ni ni-live" onclick="go('live',this)"><div class="nic">🔴</div><span>لایڤ</span><span class="live-count" id="live-count">٠</span><span class="live-pulse"></span></div>
   </div>
 </div>
 
@@ -877,8 +916,8 @@ function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
 
 function updateLevelBar(){
-  // چاککردنی هەڵەی ptsP0 -> pts%500
-  const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);
+  // چاککردنی هەڵەی ptsP0 -> ptsP0
+  const pts=U.points||0,lvl=getLevel(pts),inLvl=ptsP0,pct=Math.floor((inLvl/500)*100);
   const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;
   const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';
   const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;
@@ -894,7 +933,7 @@ function shuffleOpts(q){
 const TIME_PER_Q=15,POINTS_CORRECT=10,CITY_POINT=1,GAME_COOLDOWN=24*60*60*1000;
 
 function toFa(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});}
-function fmtClock(s){const m=Math.floor(s/60),ss=s%60;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');}
+function fmtClock(s){const m=Math.floor(s/60),ss=s`;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');}
 
 function startLiveClock(){
   if(liveTick)return;
@@ -919,8 +958,8 @@ function buildSeats(){
   let h='';
   for(let i=0;i<14;i++){
     const hue=hues[i%hues.length];
-    // چاککردنی هەڵەی (hue+12)60 -> (hue+12)%360
-    h+='<span class="arena-seat" style="background:linear-gradient(135deg,hsl('+hue+' 90% 60%),hsl('+((hue+12)%360)+' 85% 48%));animation-delay:'+(i*0.13).toFixed(2)+'s">'+String.fromCharCode(1632+(i%10))+'</span>';
+    // چاککردنی هەڵەی (hue+12)60 -> (hue+12)60
+    h+='<span class="arena-seat" style="background:linear-gradient(135deg,hsl('+hue+' 90% 60%),hsl('+((hue+12)60)+' 85% 48%));animation-delay:'+(i*0.13).toFixed(2)+'s">'+String.fromCharCode(1632+(i))+'</span>';
   }
   box.innerHTML=h;
 }
@@ -1201,8 +1240,8 @@ function updateGameNotice(){
   if(U.lastGameAt){
     const last=U.lastGameAt.toDate?U.lastGameAt.toDate():new Date(U.lastGameAt);
     const diff=Date.now()-last.getTime();
-    // چاککردنی هەڵەی rem`0000 -> rem%600000
-    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%600000)/60000);el.innerText=` یاریت تەواو کردووە! چاوەڕوان بە: ${h} کاتژمێر و ${m} خولەک بۆ یاری دووبارە`;el.classList.add('show');return;}
+    // چاککردنی هەڵەی rem`0000 -> rem`0000
+    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem`0000)/60000);el.innerText=` یاریت تەواو کردووە! چاوەڕوان بە: ${h} کاتژمێر و ${m} خولەک بۆ یاری دووبارە`;el.classList.add('show');return;}
   }
   el.classList.remove('show');
 }
@@ -1256,8 +1295,8 @@ function updateLockUI(key,locks){
   if(isPerm){box.classList.add('locked');timeEl.style.display='none';dateEl.style.display='none';}
   else if(until>now){
     box.classList.add('locked');timeEl.style.display='block';dateEl.style.display='block';
-    // چاککردنی هەڵەی diff`0000 -> diff%600000 و diff`000 -> diff%1000
-    const diff=until-now,h=Math.floor(diff/3600000),m=Math.floor((diff%600000)/60000),s=Math.floor((diff%1000)/1000);
+    // چاککردنی هەڵەی diff`0000 -> diff`0000 و diff`000 -> diff00
+    const diff=until-now,h=Math.floor(diff/3600000),m=Math.floor((diff`0000)/60000),s=Math.floor((diff00)/1000);
     timeEl.innerText=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     const dt=new Date(until);dateEl.innerText=`دەکرێتەوە: ${dt.getDate()}/${dt.getMonth()+1} - ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}`;
   }else{unlockBox(key);}
@@ -1736,7 +1775,7 @@ function go(id,el){
   if(id==='rewards')loadRewards();
   if(id==='home'){updateGameNotice();updateCityLocks();}
   if(id==='store'){loadDPacks();loadAvatars();loadFrames();}
-  if(id==='live'){buildSeats();}
+  if(id==='live'){buildSeats(); listenToLiveRoom();} // Start listening when entering live page
 }
 
 // ===== Game Logic =====
@@ -1758,8 +1797,8 @@ async function startGame(city){
   if(U.lastGameAt){
     const last=U.lastGameAt.toDate?U.lastGameAt.toDate():new Date(U.lastGameAt);
     const diff=Date.now()-last.getTime();
-    // چاککردنی هەڵەی rem`0000 -> rem%600000
-    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%600000)/60000);showPopup('⏳ تۆ لە ماوەی 24 کاتژمێردا یاریت تەواو کردووە.\nچاوەڕوان بە: '+h+' کاتژمێر و '+m+' خولەک','warning');return;}
+    // چاککردنی هەڵەی rem`0000 -> rem`0000
+    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem`0000)/60000);showPopup('⏳ تۆ لە ماوەی 24 کاتژمێردا یاریت تەواو کردووە.\nچاوەڕوان بە: '+h+' کاتژمێر و '+m+' خولەک','warning');return;}
   }
   const box=document.getElementById('gc-'+(city==='سلێمانی'?'slimany':'hawler'));
   if(box.classList.contains('locked'))return;
@@ -1869,6 +1908,237 @@ function errMsg(c){
   const m={'auth/user-not-found':'ئەم ئیمەیلە تۆمار نەکراوە','auth/wrong-password':'وشەی نهێنی هەڵەیە','auth/email-already-in-use':'ئەم ئیمەیلە پێشتر تۆمار کراوە','auth/weak-password':'وشەی نهێنی لاوازە (لانیکەم ٦ پیت)','auth/invalid-email':'ئیمەیل نادروستە','auth/too-many-requests':'زۆر هەوڵت دا، چاوەڕوان بە','auth/invalid-credential':'ئیمەیل یان وشەی نهێنی هەڵەیە','auth/network-request-failed':'پەیوەندی ئینتەرنێت نییە'};
   return m[c]||c;
 }
+
+// ===== Live Arena Real-time Logic =====
+let liveRoomRef = db.collection('live_arena').doc('room1');
+let liveUnsub = null;
+let isJoinedLive = false;
+let currentLiveQuestion = null;
+let liveGameTimer = null;
+
+// 1. Join/Leave Logic
+function toggleLiveStatus() {
+    if (!auth.currentUser) return showPopup('تکایە سەرەتا بچۆرە ژوورەوە', 'warning');
+    
+    const btn = document.getElementById('btn-join-live');
+    
+    if (isJoinedLive) {
+        // Leave
+        liveRoomRef.update({
+            [`players.${auth.currentUser.uid}`]: firebase.firestore.FieldValue.delete()
+        });
+        isJoinedLive = false;
+        btn.innerText = '⚔️ چوونەژوورەوە بۆ مەیدان';
+        btn.style.background = 'linear-gradient(135deg,#ef4444,#b91c1c)';
+        if(liveUnsub) liveUnsub();
+    } else {
+        // Join
+        btn.innerText = '⏳ چاوەڕوان...';
+        btn.disabled = true;
+        
+        liveRoomRef.get().then(doc => {
+            let data = doc.exists ? doc.data() : { players: {}, status: 'waiting', startTime: Date.now() + 60000 };
+            
+            liveRoomRef.set({
+                [`players.${auth.currentUser.uid}`]: {
+                    name: U.name,
+                    avatar: U.avatar || '',
+                    frame: U.frame || '',
+                    city: U.city,
+                    joinedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    isAlive: true,
+                    diamondsWon: 0
+                }
+            }, { merge: true }).then(() => {
+                isJoinedLive = true;
+                btn.innerText = '🔴 لەناو مەیدانیت (دەرچوون)';
+                btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+                btn.disabled = false;
+                listenToLiveRoom();
+            });
+        });
+    }
+}
+
+// 2. Listen to Room Changes
+function listenToLiveRoom() {
+    if (liveUnsub) liveUnsub();
+    
+    liveUnsub = liveRoomRef.onSnapshot(doc => {
+        if (!doc.exists) return;
+        const data = doc.data();
+        const players = data.players || {};
+        const playerList = Object.entries(players); // [uid, data]
+        
+        // Update UI
+        updateArenaUI(playerList, data.status, data.startTime, data.activeBox);
+        
+        // Check Game State
+        if (data.status === 'playing' && data.currentQuestion) {
+            startLiveQuestion(data.currentQuestion, data.questionEndTime);
+        } else if (data.status === 'finished') {
+            endLiveGame(data.winnerUid, data.winnerReward || 0, players);
+        }
+    });
+}
+
+// 3. Update Arena Visuals
+function updateArenaUI(playerList, status, startTime, activeBox) {
+    const seatsEl = document.getElementById('arena-seats');
+    const countEl = document.getElementById('live-lobby-waiting');
+    const clockEl = document.getElementById('live-lobby-clock');
+    const statusText = document.getElementById('arena-status-text');
+    const liveCountNav = document.getElementById('live-count');
+    const activeBoxNameEl = document.getElementById('active-box-name');
+    
+    if (countEl) countEl.innerText = toFa(playerList.length) + ' کەس';
+    if (liveCountNav) liveCountNav.innerText = toFa(playerList.length);
+    if (statusText) statusText.innerText = status === 'waiting' ? 'چاوەڕوانی دەستپێکردن...' : 'یاری لە ئارادایە!';
+
+    // Update Active Box Name
+    if(activeBoxNameEl){
+        if(activeBox === 'box1') activeBoxNameEl.innerText = 'بۆکسی برۆنزی (٥٠ 💎)';
+        else if(activeBox === 'box2') activeBoxNameEl.innerText = 'بۆکسی زیوی (٢٠٠ 💎)';
+        else if(activeBox === 'box3') activeBoxNameEl.innerText = 'بۆکسی زێری (٥٠٠ 💎)';
+        else activeBoxNameEl.innerText = 'هیچ بۆکسێک چالاک نییە';
+    }
+
+    // Render Avatars
+    if (seatsEl) {
+        if (playerList.length === 0) {
+            seatsEl.innerHTML = '<p style="color:#94a3b8;">هیچ یاریزانێک نییە</p>';
+        } else {
+            let html = '';
+            playerList.forEach(([uid, p]) => {
+                const avContent = p.avatar ? `<img src="${p.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : (p.name ? p.name.charAt(0) : '?');
+                const frameStyle = p.frame ? `border: 3px solid transparent; border-image: url('${p.frame}') 30 round;` : 'border: 2px solid #38bdf8;';
+                const opacity = p.isAlive === false ? 'opacity:0.4; filter:grayscale(1);' : '';
+                
+                html += `
+                <div class="arena-seat" style="background:none; border:none; width:50px; height:50px; position:relative; margin:5px; ${opacity}">
+                    <div style="width:100%; height:100%; border-radius:50%; overflow:hidden; ${frameStyle} background:#1e293b; display:flex; align-items:center; justify-content:center; font-size:20px; color:white;">
+                        ${avContent}
+                    </div>
+                    <div style="position:absolute; bottom:-15px; left:50%; transform:translateX(-50%); font-size:9px; white-space:nowrap; background:rgba(0,0,0,0.7); padding:2px 5px; border-radius:4px; color:#fff;">
+                        ${p.name}
+                    </div>
+                </div>`;
+            });
+            seatsEl.innerHTML = html;
+        }
+    }
+
+    // Timer Logic for Waiting Room
+    if (status === 'waiting') {
+        const now = Date.now();
+        const timeLeft = Math.max(0, Math.floor((startTime - now) / 1000));
+        if (clockEl) {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            clockEl.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+    }
+}
+
+// 4. Start Question (For Active Players)
+function startLiveQuestion(question, endTime) {
+    const overlay = document.getElementById('live-game-overlay');
+    if (!overlay || overlay.style.display === 'block') return; // Already showing
+    
+    overlay.style.display = 'block';
+    document.getElementById('live-q-text').innerText = question.q;
+    
+    const ansContainer = document.getElementById('live-q-answers');
+    ansContainer.innerHTML = '';
+    
+    // Check if I am still alive
+    liveRoomRef.get().then(doc => {
+        const myData = doc.data().players[auth.currentUser.uid];
+        if (!myData || !myData.isAlive) {
+            // I am dead or spectator
+            document.getElementById('live-q-answers').innerHTML = '<div style="text-align:center; color:#f87171; font-size:18px;">❌ تۆ دەرتچوویت! چاوەڕوانی کۆتایی بە.</div>';
+            updateRemainingPlayers(doc.data().players);
+            return;
+        }
+
+        // Show Answers
+        question.a.forEach((ans, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'game-ans';
+            btn.innerText = ans;
+            btn.onclick = () => submitLiveAnswer(idx, question.c);
+            ansContainer.appendChild(btn);
+        });
+        updateRemainingPlayers(doc.data().players);
+    });
+
+    // Timer
+    if (liveGameTimer) clearInterval(liveGameTimer);
+    liveGameTimer = setInterval(() => {
+        const now = Date.now();
+        const left = Math.max(0, Math.ceil((endTime - now) / 1000));
+        document.getElementById('live-q-timer').innerText = left;
+        if (left <= 0) {
+            clearInterval(liveGameTimer);
+            document.getElementById('live-q-answers').innerHTML = '<div style="text-align:center; color:#fbbf24;">⏳ کات تەواو بوو...</div>';
+        }
+    }, 1000);
+}
+
+function updateRemainingPlayers(players) {
+    const alive = Object.values(players).filter(p => p.isAlive);
+    document.getElementById('live-remaining-count').innerText = alive.length;
+    const list = document.getElementById('live-remaining-list');
+    list.innerHTML = '';
+    alive.forEach(p => {
+        const av = p.avatar ? `<img src="${p.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : p.name.charAt(0);
+        list.innerHTML += `<div class="remaining-item" style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.05);padding:4px 8px;border-radius:15px;font-size:11px;"><div style="width:20px;height:20px;border-radius:50%;overflow:hidden;border:1px solid #38bdf8;">${av}</div><span>${p.name}</span></div>`;
+    });
+}
+
+// 5. Submit Answer
+async function submitLiveAnswer(selectedIndex, correctIndex) {
+    document.getElementById('live-q-answers').innerHTML = '<div style="text-align:center; color:#38bdf8;">⏳ چاوەڕوانی ئەنجام...</div>';
+    
+    const isCorrect = selectedIndex === correctIndex;
+    
+    // Update my status in Firebase
+    await liveRoomRef.update({
+        [`players.${auth.currentUser.uid}.isAlive`]: isCorrect,
+        [`players.${auth.currentUser.uid}.lastAnswer`]: isCorrect ? 'correct' : 'wrong'
+    });
+}
+
+// 6. End Game & Winner
+function endLiveGame(winnerUid, reward, players) {
+    document.getElementById('live-game-overlay').style.display = 'none';
+    
+    // Give Rewards
+    const myData = players[auth.currentUser.uid];
+    let myReward = 0;
+    
+    if (auth.currentUser.uid === winnerUid) {
+        myReward = reward; // Winner gets the box reward
+        document.getElementById('winner-name').innerText = myData.name;
+        document.getElementById('winner-reward').innerText = myReward;
+        document.getElementById('winner-modal').classList.add('show');
+    } else if (myData && !myData.isAlive) {
+        myReward = 2; // Spectator reward
+        toast(`👀 تۆ بینەر بوویت، ٢ ئەڵماس وەرگرت`, 'info');
+    }
+    
+    if (myReward > 0) {
+        db.collection('users').doc(auth.currentUser.uid).update({
+            diamonds: firebase.firestore.FieldValue.increment(myReward)
+        });
+    }
+    
+    // Reset UI
+    isJoinedLive = false;
+    document.getElementById('btn-join-live').innerText = '⚔️ چوونەژوورەوە بۆ مەیدان';
+    document.getElementById('btn-join-live').style.background = 'linear-gradient(135deg,#ef4444,#b91c1c)';
+}
+
 
 // Initialize
 setupPayDelegation();
