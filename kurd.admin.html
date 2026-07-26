@@ -103,11 +103,11 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
 .qr-prev{width:150px;height:150px;border-radius:14px;background:#fff;padding:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.3)}
 .qr-prev img{width:100%;height:100%;object-fit:contain}
 .qr-prev.empty{background:rgba(255,255,255,.03);border:1.5px dashed var(--line2);color:var(--mut2);font-size:11px}
-.trans-bg{background:#be185d}
+.checker-bg{background-color:#fff;background-image:linear-gradient(45deg,#cfcfcf 25%,transparent 25%),linear-gradient(-45deg,#cfcfcf 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#cfcfcf 75%),linear-gradient(-45deg,transparent 75%,#cfcfcf 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0}
 .clean-toggle{display:inline-flex;align-items:center;gap:7px;margin-top:8px;font-size:11px;color:var(--txt);cursor:pointer;user-select:none;padding:6px 10px;border:1px solid var(--line);border-radius:20px;transition:border-color .15s,background .15s}
 .clean-toggle:hover{border-color:var(--green);background:rgba(34,197,94,.06)}
 .clean-toggle input{width:16px;height:16px;accent-color:var(--green);cursor:pointer}
-.fr-status{font-size:10px;margin-top:6px;min-height:14px;font-weight:700;transition:color .2s;max-width:300px;line-height:1.6}
+.fr-status{font-size:10px;margin-top:6px;min-height:14px;font-weight:700;transition:color .2s}
 .pay-list{display:flex;flex-direction:column;gap:10px}
 .pay-card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:14px;transition:border-color .15s,transform .15s}
 .pay-card:hover{border-color:var(--line2);transform:translateY(-2px)}
@@ -239,8 +239,6 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
     <button class="tb on" onclick="sp('users',this)">👤 بەکارهێنەران</button>
     <button class="tb" onclick="sp('scores',this)">🏆 ڕیزبەندی</button>
     <button class="tb" onclick="sp('history',this)">📊 مێژوو</button>
-    <!-- ===== زیادکراوی نوێ: بەشی لایڤ ===== -->
-    <button class="tb" onclick="sp('live',this)">🔴 لایڤ <span class="tb-badge" id="live-badge">0</span></button>
     <button class="tb" id="tab-pay" onclick="sp('payments',this)">💳 داواکارییەکان <span class="tb-badge" id="pay-badge">0</span></button>
     <button class="tb" onclick="sp('paycfg',this)">🏦 ڕێکخستنی پارەدان</button>
     <button class="tb" onclick="sp('cityscore',this)">🏙️ خاڵی شار</button>
@@ -254,25 +252,6 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
     <button class="tb" onclick="sp('packs',this)">💎 پاکێج</button>
     <button class="tb" onclick="doLogout()" style="margin-inline-start:auto;background:rgba(244,63,94,.12);color:#fda4af">⏻</button>
   </div>
-
-  <!-- ===== پانێلی نوێی لایڤ ===== -->
-  <div id="p-live" class="pnl">
-    <div class="card">
-      <h3>🔴 دۆخی ڕاستەقینەی یاری (Live Arena)</h3>
-      <div class="city-score-box">
-        <div class="city-score-card"><div class="cs-nm">👥 یاریزانی چالاک ئێستا</div><div class="cs-v" id="live-active-players">0</div></div>
-        <div class="city-score-card"><div class="cs-nm">🎮 یارییەکان لە ١٥ خولەکی ڕابردوو</div><div class="cs-v" id="live-recent-games">0</div></div>
-      </div>
-      <div class="tbl-wrap" style="max-height:400px;overflow-y:auto">
-        <table class="tbl">
-          <thead><tr><th>کات</th><th>ناوی یاریزان</th><th>شار</th><th>خاڵ</th><th>ئەڵماس</th></tr></thead>
-          <tbody id="live-tb"></tbody>
-        </table>
-      </div>
-      <p class="hint">💡 ئەم بەشە بە شێوەی ڕاستەقینە (Real-time) نوێ دەبێتەوە. هەر یاریزانێک لە ماوەی ١٥ خولەکی ڕابردوودا یاری کردبێت، لێرە دەردەکەوێت وەک "چالاک".</p>
-    </div>
-  </div>
-
   <div id="p-users" class="pnl on">
     <div class="card"><h3>📊 تەختەی ئامار</h3>
       <div class="stats-grid" id="user-stats"><div class="stat-card"><div class="st-v">-</div><div class="st-l">بارکردن...</div></div></div>
@@ -374,9 +353,9 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
         <button onclick="adjCity('hawler',1)">➕١</button>
         <button onclick="adjCity('hawler',-1)">➖١</button>
         <button onclick="adjCity('hawler',10)">➕١٠</button>
-        <button onclick="adjCity('hawler',-10)">➖١٠</button>
+        <button onclick="adjCity('hawler',-10)">➖١</button>
         <button onclick="adjCity('hawler',100)">➕١٠٠</button>
-        <button onclick="adjCity('hawler',-100)">➖١٠٠</button>
+        <button onclick="adjCity('hawler',-100)">➖١٠</button>
         <input id="cs-set-hawler" type="number" placeholder="بڕ">
         <button class="green" onclick="setCity('hawler')">📥 دانان</button>
         <button class="red" onclick="zeroCity('hawler')">🗑️ سفر</button>
@@ -520,15 +499,15 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
   <div id="p-frames" class="pnl">
     <div class="card"><h3>👑 چوارچێوەکانی پرۆفایل</h3>
       <div class="adm-av-grid" id="adm-fr-grid"><p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">بارکردن...</p></div>
-      <p class="hint">💡 بۆ چوارچێوەی شەفاف: باشترین ڕێگا ئەوەیە وێنەیەکی PNGـی شەفافی ڕەسەن دابەزێنیت (Download) و وەک فایل بار بکەیت. ئەگەر پاشبنەمای خانەخانە/شەترەنجی هەبوو، سیستەم خۆکار دەیسڕێتەوە. لە پێشبینیندا ڕەنگی سوور = شوێنی شەفاف (درستە). ئەگەر هێشتا خانەخانەی خۆڵەمێشی/سپی دەبینیت = پاک نەکراوە → وێنەکە دابەزێنە و وەک فایل بار بکە.</p>
+      <p class="hint">💡 باشترین وێنە: PNG شەفاف کە ناوەڕاستەکەی بەتاڵ بێت. ئەگەر چوارچێوەکەت پاشبنەمای شەترەنجی هەبوو، لە خوارەوە چەکباکسی «🧹 پاککردنەوە» چالاک بکە — پێشبینینەکە لەسەر پاشبنەمای شەترەنجی پیشان دەدرێت تا دڵنیا بیت شەفافییەکە کاری کرد.</p>
     </div>
     <div class="card">
       <h3>➕ زیادکردنی چوارچێوە</h3>
       <div style="text-align:center;margin-bottom:10px">
-        <div class="avatar-preview trans-bg" id="fr-preview" onclick="document.getElementById('fr-img').click()">👑</div>
+        <div class="avatar-preview checker-bg" id="fr-preview" onclick="document.getElementById('fr-img').click()">👑</div>
         <input type="file" id="fr-img" accept="image/*" style="display:none" onchange="previewFrImg(event)">
-        <p style="font-size:10px;color:var(--mut)">کلیک بکە بۆ هەڵبژاردنی وێنە — 🟥 سوور = شوێنی شەفاف</p>
-        <label class="clean-toggle"><input type="checkbox" id="fr-clean" checked onchange="frReprocess()">🧹 پاشبنەمای خانەخانە/شەترەنجی بسڕەوە</label>
+        <p style="font-size:10px;color:var(--mut)">کلیک بکە بۆ هەڵبژاردنی وێنە — پاشبنەمای شەترەنجی لە پشتەوە = بەڵگەی شەفافی</p>
+        <label class="clean-toggle"><input type="checkbox" id="fr-clean" checked onchange="frReprocess()">🧹 پاشبنەمای شەترەنجی بسڕەوە (بۆ چوارچێوەی شەفاف)</label>
         <div class="fr-status" id="fr-status"></div>
       </div>
       <div class="or-div">— یان لینک —</div>
@@ -538,11 +517,12 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
         <input type="number" id="fr-price" placeholder="💎 نرخ بە ئەڵماس" value="100" class="full">
         <button class="sbtn" onclick="addFrame()">➕ زیادکردنی چوارچێوە</button>
       </div>
-      <p class="hint"> چۆن کار دەکات:
-• سیستەم پاشبنەمای خانەخانە/شەترەنجی دەناسێتەوە و دەیسڕێتەوە، بەڵام ڕەنگ و وێنەی ناوەوە (ئەژدیها، ەور) دەپارێزێت.
-• بۆ لینک: ئەگەر براوزەر ڕێگای نەدا، خۆکار لە ڕێی پرۆکسییەوە هەوڵ دەدات.
-• ئەگەر هێشتا خانەخانە ما (پەیامی زەرد): وێنەکە دابەزێنە (Download PNG) و وەک فایل بار بکە — ئەمە هەمیشە کار دەکات.
-• ئەگەر چوارچێوەکەت پاشبنەمای ڕەنگی تێری هەیە (نەک شەفاف)، چەکباکسەکە لابە.</p>
+      <p class="hint">💡 چۆن شەفافی ڕاستەقینە دابنێیت (چارەی کێشەی شەترەنجی):
+• باشترین ڕێگا: وێنەکە دابەزێنە (Download PNG) پاشان وەک فایل بار بکە — شەفافی ڕاستەقینە دەبێت، بێ کێشە.
+• لینک: ئەگەر هۆستەکە ڕێگا بدات (وەک i.ibb.co) پاشبنەمای شەترەنجی خۆکار دەسڕدرێتەوە و پەیامی سەوز دەردەکەوێت.
+• ئەگەر پەیامی زەرد/ئاگاداری دەرکەوت (هۆستەکە ڕێگای نەدا): وێنەکە دابەزێنە بۆ مۆبایل/کۆمپیوتەرەکەت و وەک فایل بار بکە — ئەمە هەمیشە کار دەکات.
+• لە پێشبینیندا شەترەنجی لە پشتی چوارچێوەکە دەبینیت = ئەمە باشە (واتە شەفافە). لە ئەپەکەدا پاشبنەماکە لە پشتی دەردەکەوێت.
+• ئەگەر چوارچێوەکە پاشبنەمای ڕەنگی تێری هەبوو (نەک شەفاف)، چەکباکسەکە لابە تا بەشی ڕووناکی نەسڕدرێتەوە.</p>
     </div>
   </div>
   <div id="p-packs" class="pnl">
@@ -611,123 +591,17 @@ function openLightboxById(id){const src=PROOF_MAP[id];if(src)openLightbox(src);e
 function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
 function copyText(t,btn){const done=function(){if(btn){const o=btn.innerText;btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.innerText=o;},1400);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(function(){fallbackCopy(t);done();});}else{fallbackCopy(t);done();}}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.8));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
+/* ===== خوێندنەوەی وێنە وەک PNG (پاراستنی شەفافی) ===== */
 function readAsBoundedPng(file,maxW,cb){const r=new FileReader();r.onload=function(ev){const im=new Image();im.onload=function(){let w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);cb(c.toDataURL('image/png'));};im.onerror=function(){cb(null);};im.src=ev.target.result;};r.onerror=function(){cb(null);};r.readAsDataURL(file);}
-function cbPixels(ctx,w,h){
-  const d=ctx.getImageData(0,0,w,h),p=d.data;
-  const freq={};
-  const addB=function(x,y){const i=(y*w+x)*4;if(p[i+3]<128)return;const k=(p[i]&248)+','+(p[i+1]&248)+','+(p[i+2]&248);freq[k]=(freq[k]||0)+1;};
-  for(let x=0;x<w;x++){addB(x,0);addB(x,h-1);}
-  for(let y=1;y<h-1;y++){addB(0,y);addB(w-1,y);}
-  let bins=Object.keys(freq).map(function(k){return{k:k,n:freq[k]};}).sort(function(a,b){return b.n-a.n;}).slice(0,2);
-  if(bins.length<2)return false;
-  const parse=function(k){return k.split(',').map(Number);};
-  const c1=parse(bins[0].k),c2=parse(bins[1].k);
-  const sat=function(c){return Math.max(c[0],c[1],c[2])-Math.min(c[0],c[1],c[2]);};
-  const lgt=function(c){return Math.max(c[0],c[1],c[2]);};
-  if(!(sat(c1)<=24&&sat(c2)<=24&&lgt(c1)>=150&&lgt(c2)>=120))return false;
-  const totalBorder=Object.keys(freq).reduce(function(a,k){return a+freq[k];},0);
-  if((bins[0].n+bins[1].n)<totalBorder*0.5)return false;
-  const set={};set[bins[0].k]=1;set[bins[1].k]=1;
-  for(let i=0;i<p.length;i+=4){if(p[i+3]===0)continue;const k=(p[i]&248)+','+(p[i+1]&248)+','+(p[i+2]&248);if(set[k])p[i+3]=0;}
-  ctx.putImageData(d,0,0);
-  return true;
-}
-function loadImgForClean(src,cb){
-  const PROXIES=['https://api.allorigins.win/raw?url=','https://corsproxy.io/?'];
-  const tryProxy=function(idx){
-    if(idx>=PROXIES.length){cb(null);return;}
-    fetch(PROXIES[idx]+encodeURIComponent(src)).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){
-      const u=URL.createObjectURL(b);const im=new Image();
-      im.onload=function(){cb(im);};
-      im.onerror=function(){URL.revokeObjectURL(u);tryProxy(idx+1);};
-      im.src=u;
-    }).catch(function(){tryProxy(idx+1);});
-  };
-  const im=new Image();
-  im.crossOrigin='anonymous';
-  im.onload=function(){cb(im);};
-  im.onerror=function(){tryProxy(0);};
-  im.src=src;
-}
-function cleanCheckerboard(src,cb){
-  loadImgForClean(function(im){
-    if(!im){cb(src,false);return;}
-    try{
-      const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;
-      if(!w||!h){cb(src,false);return;}
-      const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
-      x.drawImage(im,0,0,w,h);
-      const ok=cbPixels(x,w,h);
-      cb(c.toDataURL('image/png'),ok);
-    }catch(e){cb(src,false);}
-  });
-}
+/* ===== سڕینەوەی پاشبنەمای شەترەنجی (checkerboard) -> شەفافی ڕاستەقینە ===== */
+function cleanCheckerboard(src,cb){const im=new Image();im.onload=function(){try{const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(!w||!h){cb(src,false);return;}const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(im,0,0,w,h);const d=x.getImageData(0,0,w,h),p=d.data;let removed=0;for(let i=0;i<p.length;i+=4){const r=p[i],g=p[i+1],b=p[i+2];const mx=Math.max(r,g,b),mn=Math.min(r,g,b);if((mx-mn)<=8&&mn>=170){p[i+3]=0;removed++;}}x.putImageData(d,0,0);cb(c.toDataURL('image/png'),removed>0);}catch(e){cb(src,false);}};im.onerror=function(){cb(src,false);};im.crossOrigin='anonymous';im.src=src;}
 function frSetStatus(txt,color){const s=document.getElementById('fr-status');if(s){s.innerText=txt||'';s.style.color=color||'var(--mut)';}}
-function frReprocess(){
-  if(!frRawData){frSetStatus('');return;}
-  const want=document.getElementById('fr-clean').checked;
-  const pv=document.getElementById('fr-preview');
-  if(!want){frImgData=frRawData;frUrlData=(frRawData.startsWith('data:')?'':frRawData);pv.innerHTML=`<img src="${frRawData}">`;frSetStatus('بێ پاککردنەوە — وێنەی ڕەسەن هەڵگیرا','var(--mut)');return;}
-  frSetStatus('⏳ شیکاری وێنە و سڕینەوەی پاشبنەمای خانەخانە...','var(--blue)');
-  cleanCheckerboard(frRawData,function(cleaned,ok){
-    if(ok){frImgData=cleaned;frUrlData='';pv.innerHTML=`<img src="${cleaned}">`;frSetStatus('✅ پاشبنەمای خانەخانە سڕایەوە — ئێستا شەفافە (🟥 سوور = شوێنی شەفاف)','var(--green)');}
-    else{
-      frImgData=frRawData;frUrlData=(frRawData.startsWith('data:')?'':frRawData);pv.innerHTML=`<img src="${frRawData}">`;
-      if(frRawData.startsWith('data:')){frSetStatus('ℹ️ پاشبنەمای خانەخانە نەدۆزرایەوە بۆ سڕینەوە. وێنەکە وەک خۆی پاشەکەوت کرا — ئەگەر PNGـی شەفافی ڕەسەن بێت، لە ئەپەکەدا درست دەردەکەوێت.','var(--mut)');}
-      else{frSetStatus('⚠️ نەتوانرا لە ڕێی لینکەوە پاک بکرێتەوە. تکایە وێنەکە دابەزێنە (Download PNG) و وەک فایل بار بکە — ئەمە هەمیشە کار دەکات.','var(--gold)');}
-    }
-  });
-}
+function frReprocess(){if(!frRawData)return;const want=document.getElementById('fr-clean').checked;const pv=document.getElementById('fr-preview');if(!want){frImgData=frRawData;frUrlData=(frRawData.startsWith('data:')?'':frRawData);pv.innerHTML=`<img src="${frRawData}">`;frSetStatus('بێ پاککردنەوە — وێنەی ڕەسەن هەڵگیرا','var(--mut)');return;}frSetStatus('⏳ پاککردنەوەی پاشبنەمای شەترەنجی...','var(--blue)');cleanCheckerboard(frRawData,function(cleaned,ok){if(ok){frImgData=cleaned;frUrlData='';pv.innerHTML=`<img src="${cleaned}">`;frSetStatus('✅ پاشبنەمای شەترەنجی سڕایەوە — ئێستا شەفافە','var(--green)');}else{frImgData='';frUrlData=frRawData;pv.innerHTML=`<img src="${frRawData}">`;frSetStatus('⚠️ نەتوانرا بسڕدرێتەوە (لینکەکە ڕێگای پێ نەدا، یان پاشبنەما شەترەنجی نییە). وێنەکە دابەزێنە و وەک فایل بار بکە.','var(--gold)');}});}
 function frUrlDebounced(){clearTimeout(window.__frt);window.__frt=setTimeout(previewFrUrl,700);}
 function doLogin(){const user=document.getElementById('a-user').value.trim(),pass=document.getElementById('a-pass').value;const btn=document.getElementById('a-btn'),err=document.getElementById('a-err');err.innerText='';if(!user||!pass){err.innerText='❌ ناو و وشەی نهێنی پێویستە';return;}btn.innerText='پشکنین...';btn.disabled=true;setTimeout(()=>{if(user===ADMIN_USER&&pass===ADMIN_PASS){document.getElementById('a-login').style.display='none';document.getElementById('a-panel').style.display='block';loadAll();}else{err.innerText='❌ ناو یان وشەی نهێنی هەڵەیە';}btn.innerText='چوونەژوورەوە';btn.disabled=false;},400);}
 function doLogout(){document.getElementById('a-login').style.display='block';document.getElementById('a-panel').style.display='none';document.getElementById('a-user').value='';document.getElementById('a-pass').value='';document.getElementById('a-err').innerText='';}
 function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();if(id==='questions')loadQuestions();if(id==='history')loadHistory();if(id==='payments')loadPayments();if(id==='paycfg')loadPayCfg();}
-function loadAll(){loadUsers();loadScores();loadHistory();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();loadPayments();startPayBadge();startLiveTracker();}
-
-// ===== زیادکراوی نوێ: کۆنترۆڵی لایڤ =====
-function startLiveTracker() {
-  db.collection('gameHistory').orderBy('date', 'desc').limit(50).onSnapshot(snap => {
-    const now = Date.now();
-    const fifteenMins = 15 * 60 * 1000;
-    let activeCount = 0;
-    let recentGames = 0;
-    let html = '';
-    
-    snap.forEach(doc => {
-      const d = doc.data();
-      const gameTime = d.date && d.date.toDate ? d.date.toDate().getTime() : (d.date ? new Date(d.date).getTime() : 0);
-      const isActive = (now - gameTime) < fifteenMins;
-      
-      if (isActive) {
-        activeCount++;
-        recentGames++;
-        html += `<tr>
-          <td style="font-size:10px">${fmtDate(d.date)}</td>
-          <td>${esc(d.name || 'یاریزان')}</td>
-          <td>${esc(d.city || '-')}</td>
-          <td style="color:var(--gold);font-weight:700">+${(d.points || 0).toLocaleString()}</td>
-          <td style="color:var(--violet)">+${(d.diamonds || 0).toLocaleString()}</td>
-        </tr>`;
-      }
-    });
-    
-    const acEl = document.getElementById('live-active-players');
-    const rgEl = document.getElementById('live-recent-games');
-    const badgeEl = document.getElementById('live-badge');
-    const tbEl = document.getElementById('live-tb');
-    
-    if(acEl) acEl.innerText = activeCount;
-    if(rgEl) rgEl.innerText = recentGames;
-    if(badgeEl) {
-      badgeEl.innerText = activeCount;
-      badgeEl.style.display = activeCount > 0 ? 'inline-flex' : 'none';
-    }
-    if(tbEl) {
-      tbEl.innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:20px">ئێستا هیچ یارییەکی چالاک نییە</td></tr>';
-    }
-  });
-}
-
+function loadAll(){loadUsers();loadScores();loadHistory();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();loadPayments();startPayBadge();}
 function loadUsers(){const tb=document.getElementById('u-tb');tb.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--mut)">بارکردن...</td></tr>';db.collection('users').get().then(snap=>{allUsers=[];userMap={};snap.forEach(doc=>{allUsers.push({id:doc.id,...doc.data()});userMap[doc.id]=doc.data().name||doc.data().email||doc.id;});renderUserStats();renderUsers();});}
 function renderUserStats(){const el=document.getElementById('user-stats');const total=allUsers.length;const haw=allUsers.filter(u=>u.city==='هەولێر').length;const sli=allUsers.filter(u=>u.city==='سلێمانی').length;el.innerHTML=`<div class="stat-card s-total"><div class="st-ic">👥</div><div class="st-v" id="st-total">0</div><div class="st-l">کۆی تۆمارکراو</div></div><div class="stat-card s-haw"><div class="st-ic">🏙️</div><div class="st-v" id="st-haw">0</div><div class="st-l">هەولێر</div></div><div class="stat-card s-sli"><div class="st-ic">🏙️</div><div class="st-v" id="st-sli">0</div><div class="st-l">سلێمانی</div></div><div class="stat-card s-pay"><div class="st-ic">💳</div><div class="st-v" id="st-pending">0</div><div class="st-l">داواکاری چاوەڕوان</div></div>`;animateNum(document.getElementById('st-total'),total);animateNum(document.getElementById('st-haw'),haw);animateNum(document.getElementById('st-sli'),sli);const sp2=document.getElementById('st-pending');if(sp2)sp2.innerText=payPendingCount.toLocaleString();}
 function animateNum(el,to){if(!el)return;to=to||0;const from=parseInt(String(el.innerText).replace(/[^0-9-]/g,''))||0;if(from===to){el.innerText=to.toLocaleString();return;}const dur=650,st=performance.now();function step(now){const p=Math.min(1,(now-st)/dur);const e=1-Math.pow(1-p,3);el.innerText=Math.round(from+(to-from)*e).toLocaleString();if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
@@ -829,7 +703,7 @@ async function delAvatar(id){if(!(await showConfirm('ئەم پاشبنەمایە
 function previewAvImg(e){const file=e.target.files[0];if(!file)return;if(file.size>3*1024*1024){toast('وێنەکە زۆر گەورەیە (زۆرتر لە 3MB)','warning');return;}compressImage(file,600,0.8).then(function(data){avImgData=data;avUrlData='';document.getElementById('av-preview').innerHTML=`<img src="${data}">`;}).catch(function(){toast('هەڵە لە خوێندنەوەی وێنە','error');});}
 function previewAvUrl(){const u=document.getElementById('av-url').value.trim();avUrlData=u;if(u){avImgData='';document.getElementById('av-preview').innerHTML=`<img src="${u}" onerror="this.style.display='none';this.parentElement.innerHTML='❌'">`;}}
 function loadFrames(){const grid=document.getElementById('adm-fr-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">بارکردن...</p>';db.collection('frames').get().then(snap=>{if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--mut);font-size:11px;padding:14px">هیچ چوارچێوەیەک نییە</p>';return;}grid.innerHTML='';snap.forEach(doc=>{const d=doc.data();const nmHtml=d.name?`<div class="aai-nm">${esc(d.name)}</div>`:'';grid.innerHTML+=`<div class="adm-av-item"><button class="aai-del" onclick="delFrame('${doc.id}')">✕</button><div class="aai-img contain"><img src="${d.avatar}"></div><div class="aai-info">${nmHtml}<div class="aai-price">💎 ${d.price||0}</div></div></div>`;});});}
-async function addFrame(){const price=parseInt(document.getElementById('fr-price').value)||0;const frName=document.getElementById('fr-name').value.trim();let frData=frUrlData||frImgData;if(!frData){toast('وێنەی چوارچێوە پێویستە (فایل یان لینک)','warning');return;}if(price<=0){toast('نرخ بنووسە','warning');return;}try{await db.collection('frames').add({avatar:frData,price:price,name:frName});toast('✅ چوارچێوە زیادکرا','success');document.getElementById('fr-price').value='100';document.getElementById('fr-url').value='';document.getElementById('fr-name').value='';frImgData='';frUrlData='';frRawData='';frSetStatus('');document.getElementById('fr-preview').innerHTML='👑';loadFrames();}catch(e){toast('هەڵە: '+e.message,'error');}}
+async function addFrame(){const price=parseInt(document.getElementById('fr-price').value)||0;const frName=document.getElementById('fr-name').value.trim();let frData=frUrlData||frImgData;if(!frData){toast('وێنەی چوارچێوە پێویستە (فایل یان لینک)','warning');return;}if(price<=0){toast('نرخ بنووسە','warning');return;}try{await db.collection('frames').add({avatar:frData,price:price,name:frName});toast('✅ چوارچێوە زیادکرا — ئێستا شەفافە','success');document.getElementById('fr-price').value='100';document.getElementById('fr-url').value='';document.getElementById('fr-name').value='';frImgData='';frUrlData='';frRawData='';frSetStatus('');document.getElementById('fr-preview').innerHTML='👑';loadFrames();}catch(e){toast('هەڵە: '+e.message,'error');}}
 async function delFrame(id){if(!(await showConfirm('ئەم چوارچێوەیە بسڕمەوە؟','بسڕە','پاشگەزبوونەوە')))return;try{await db.collection('frames').doc(id).delete();toast('✅','success');loadFrames();}catch(e){toast('هەڵە','error');}}
 function previewFrImg(e){const file=e.target.files[0];if(!file)return;if(file.size>3*1024*1024){toast('وێنەکە زۆر گەورەیە (زۆرتر لە 3MB)','warning');return;}readAsBoundedPng(file,700,function(data){if(!data){toast('هەڵە لە خوێندنەوەی وێنە','error');return;}frRawData=data;frReprocess();});}
 function previewFrUrl(){const u=document.getElementById('fr-url').value.trim();const pv=document.getElementById('fr-preview');if(!u){frRawData='';frImgData='';frUrlData='';pv.innerHTML='👑';frSetStatus('');return;}frRawData=u;frUrlData=u;frImgData='';pv.innerHTML=`<img src="${u}" onerror="this.style.display='none';this.parentElement.innerHTML='❌ لینک نەخوێندرایەوە'">`;frReprocess();}
