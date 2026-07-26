@@ -877,8 +877,8 @@ function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
 
 function updateLevelBar(){
-  // چاککردنی هەڵەی ptsP0 -> ptsP0
-  const pts=U.points||0,lvl=getLevel(pts),inLvl=ptsP0,pct=Math.floor((inLvl/500)*100);
+  // چاککردنی هەڵەی ptsP0 -> pts%500
+  const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);
   const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;
   const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';
   const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;
@@ -894,7 +894,7 @@ function shuffleOpts(q){
 const TIME_PER_Q=15,POINTS_CORRECT=10,CITY_POINT=1,GAME_COOLDOWN=24*60*60*1000;
 
 function toFa(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});}
-function fmtClock(s){const m=Math.floor(s/60),ss=s`;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');}
+function fmtClock(s){const m=Math.floor(s/60),ss=s%60;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');}
 
 function startLiveClock(){
   if(liveTick)return;
@@ -919,8 +919,8 @@ function buildSeats(){
   let h='';
   for(let i=0;i<14;i++){
     const hue=hues[i%hues.length];
-    // چاککردنی هەڵەی (hue+12)60 -> (hue+12)60
-    h+='<span class="arena-seat" style="background:linear-gradient(135deg,hsl('+hue+' 90% 60%),hsl('+((hue+12)60)+' 85% 48%));animation-delay:'+(i*0.13).toFixed(2)+'s">'+String.fromCharCode(1632+(i))+'</span>';
+    // چاککردنی هەڵەی (hue+12)60 -> (hue+12)%360
+    h+='<span class="arena-seat" style="background:linear-gradient(135deg,hsl('+hue+' 90% 60%),hsl('+((hue+12)%360)+' 85% 48%));animation-delay:'+(i*0.13).toFixed(2)+'s">'+String.fromCharCode(1632+(i%10))+'</span>';
   }
   box.innerHTML=h;
 }
@@ -1201,8 +1201,8 @@ function updateGameNotice(){
   if(U.lastGameAt){
     const last=U.lastGameAt.toDate?U.lastGameAt.toDate():new Date(U.lastGameAt);
     const diff=Date.now()-last.getTime();
-    // چاککردنی هەڵەی rem`0000 -> rem`0000
-    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem`0000)/60000);el.innerText=` یاریت تەواو کردووە! چاوەڕوان بە: ${h} کاتژمێر و ${m} خولەک بۆ یاری دووبارە`;el.classList.add('show');return;}
+    // چاککردنی هەڵەی rem`0000 -> rem%600000
+    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%600000)/60000);el.innerText=` یاریت تەواو کردووە! چاوەڕوان بە: ${h} کاتژمێر و ${m} خولەک بۆ یاری دووبارە`;el.classList.add('show');return;}
   }
   el.classList.remove('show');
 }
@@ -1256,8 +1256,8 @@ function updateLockUI(key,locks){
   if(isPerm){box.classList.add('locked');timeEl.style.display='none';dateEl.style.display='none';}
   else if(until>now){
     box.classList.add('locked');timeEl.style.display='block';dateEl.style.display='block';
-    // چاککردنی هەڵەی diff`0000 -> diff`0000 و diff`000 -> diff00
-    const diff=until-now,h=Math.floor(diff/3600000),m=Math.floor((diff`0000)/60000),s=Math.floor((diff00)/1000);
+    // چاککردنی هەڵەی diff`0000 -> diff%600000 و diff`000 -> diff%1000
+    const diff=until-now,h=Math.floor(diff/3600000),m=Math.floor((diff%600000)/60000),s=Math.floor((diff%1000)/1000);
     timeEl.innerText=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     const dt=new Date(until);dateEl.innerText=`دەکرێتەوە: ${dt.getDate()}/${dt.getMonth()+1} - ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}`;
   }else{unlockBox(key);}
@@ -1758,8 +1758,8 @@ async function startGame(city){
   if(U.lastGameAt){
     const last=U.lastGameAt.toDate?U.lastGameAt.toDate():new Date(U.lastGameAt);
     const diff=Date.now()-last.getTime();
-    // چاککردنی هەڵەی rem`0000 -> rem`0000
-    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem`0000)/60000);showPopup('⏳ تۆ لە ماوەی 24 کاتژمێردا یاریت تەواو کردووە.\nچاوەڕوان بە: '+h+' کاتژمێر و '+m+' خولەک','warning');return;}
+    // چاککردنی هەڵەی rem`0000 -> rem%600000
+    if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%600000)/60000);showPopup('⏳ تۆ لە ماوەی 24 کاتژمێردا یاریت تەواو کردووە.\nچاوەڕوان بە: '+h+' کاتژمێر و '+m+' خولەک','warning');return;}
   }
   const box=document.getElementById('gc-'+(city==='سلێمانی'?'slimany':'hawler'));
   if(box.classList.contains('locked'))return;
