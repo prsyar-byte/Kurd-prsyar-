@@ -239,6 +239,8 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
     <button class="tb on" onclick="sp('users',this)">👤 بەکارهێنەران</button>
     <button class="tb" onclick="sp('scores',this)">🏆 ڕیزبەندی</button>
     <button class="tb" onclick="sp('history',this)">📊 مێژوو</button>
+    <!-- ===== زیادکراوی نوێ: بەشی لایڤ ===== -->
+    <button class="tb" onclick="sp('live',this)">🔴 لایڤ <span class="tb-badge" id="live-badge">0</span></button>
     <button class="tb" id="tab-pay" onclick="sp('payments',this)">💳 داواکارییەکان <span class="tb-badge" id="pay-badge">0</span></button>
     <button class="tb" onclick="sp('paycfg',this)">🏦 ڕێکخستنی پارەدان</button>
     <button class="tb" onclick="sp('cityscore',this)">🏙️ خاڵی شار</button>
@@ -252,6 +254,25 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
     <button class="tb" onclick="sp('packs',this)">💎 پاکێج</button>
     <button class="tb" onclick="doLogout()" style="margin-inline-start:auto;background:rgba(244,63,94,.12);color:#fda4af">⏻</button>
   </div>
+
+  <!-- ===== پانێلی نوێی لایڤ ===== -->
+  <div id="p-live" class="pnl">
+    <div class="card">
+      <h3>🔴 دۆخی ڕاستەقینەی یاری (Live Arena)</h3>
+      <div class="city-score-box">
+        <div class="city-score-card"><div class="cs-nm">👥 یاریزانی چالاک ئێستا</div><div class="cs-v" id="live-active-players">0</div></div>
+        <div class="city-score-card"><div class="cs-nm">🎮 یارییەکان لە ١٥ خولەکی ڕابردوو</div><div class="cs-v" id="live-recent-games">0</div></div>
+      </div>
+      <div class="tbl-wrap" style="max-height:400px;overflow-y:auto">
+        <table class="tbl">
+          <thead><tr><th>کات</th><th>ناوی یاریزان</th><th>شار</th><th>خاڵ</th><th>ئەڵماس</th></tr></thead>
+          <tbody id="live-tb"></tbody>
+        </table>
+      </div>
+      <p class="hint">💡 ئەم بەشە بە شێوەی ڕاستەقینە (Real-time) نوێ دەبێتەوە. هەر یاریزانێک لە ماوەی ١٥ خولەکی ڕابردوودا یاری کردبێت، لێرە دەردەکەوێت وەک "چالاک".</p>
+    </div>
+  </div>
+
   <div id="p-users" class="pnl on">
     <div class="card"><h3>📊 تەختەی ئامار</h3>
       <div class="stats-grid" id="user-stats"><div class="stat-card"><div class="st-v">-</div><div class="st-l">بارکردن...</div></div></div>
@@ -352,10 +373,10 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
       <div class="cs-controls">
         <button onclick="adjCity('hawler',1)">➕١</button>
         <button onclick="adjCity('hawler',-1)">➖١</button>
-        <button onclick="adjCity('hawler',10)">➕١</button>
+        <button onclick="adjCity('hawler',10)">➕١٠</button>
         <button onclick="adjCity('hawler',-10)">➖١٠</button>
         <button onclick="adjCity('hawler',100)">➕١٠٠</button>
-        <button onclick="adjCity('hawler',-100)">➖١٠</button>
+        <button onclick="adjCity('hawler',-100)">➖١٠٠</button>
         <input id="cs-set-hawler" type="number" placeholder="بڕ">
         <button class="green" onclick="setCity('hawler')">📥 دانان</button>
         <button class="red" onclick="zeroCity('hawler')">🗑️ سفر</button>
@@ -369,7 +390,7 @@ body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg0);color:va
         <button onclick="adjCity('slimany',-1)">➖١</button>
         <button onclick="adjCity('slimany',10)">➕١٠</button>
         <button onclick="adjCity('slimany',-10)">➖١٠</button>
-        <button onclick="adjCity('slimany',100)">➕١٠</button>
+        <button onclick="adjCity('slimany',100)">➕١٠٠</button>
         <button onclick="adjCity('slimany',-100)">➖١٠٠</button>
         <input id="cs-set-slimany" type="number" placeholder="بڕ">
         <button class="green" onclick="setCity('slimany')">📥 دانان</button>
@@ -591,7 +612,6 @@ function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;
 function copyText(t,btn){const done=function(){if(btn){const o=btn.innerText;btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.innerText=o;},1400);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(function(){fallbackCopy(t);done();});}else{fallbackCopy(t);done();}}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.8));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
 function readAsBoundedPng(file,maxW,cb){const r=new FileReader();r.onload=function(ev){const im=new Image();im.onload=function(){let w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);cb(c.toDataURL('image/png'));};im.onerror=function(){cb(null);};im.src=ev.target.result;};r.onerror=function(){cb(null);};r.readAsDataURL(file);}
-/* ===== ناسینەوەی پاشبنەمای خانەخانە/شەترەنجی و سڕینەوەی (پاراستنی وێنەی ناوەوە) ===== */
 function cbPixels(ctx,w,h){
   const d=ctx.getImageData(0,0,w,h),p=d.data;
   const freq={};
@@ -662,7 +682,52 @@ function frUrlDebounced(){clearTimeout(window.__frt);window.__frt=setTimeout(pre
 function doLogin(){const user=document.getElementById('a-user').value.trim(),pass=document.getElementById('a-pass').value;const btn=document.getElementById('a-btn'),err=document.getElementById('a-err');err.innerText='';if(!user||!pass){err.innerText='❌ ناو و وشەی نهێنی پێویستە';return;}btn.innerText='پشکنین...';btn.disabled=true;setTimeout(()=>{if(user===ADMIN_USER&&pass===ADMIN_PASS){document.getElementById('a-login').style.display='none';document.getElementById('a-panel').style.display='block';loadAll();}else{err.innerText='❌ ناو یان وشەی نهێنی هەڵەیە';}btn.innerText='چوونەژوورەوە';btn.disabled=false;},400);}
 function doLogout(){document.getElementById('a-login').style.display='block';document.getElementById('a-panel').style.display='none';document.getElementById('a-user').value='';document.getElementById('a-pass').value='';document.getElementById('a-err').innerText='';}
 function sp(id,el){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');if(id==='msgs')loadSent();if(id==='questions')loadQuestions();if(id==='history')loadHistory();if(id==='payments')loadPayments();if(id==='paycfg')loadPayCfg();}
-function loadAll(){loadUsers();loadScores();loadHistory();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();loadPayments();startPayBadge();}
+function loadAll(){loadUsers();loadScores();loadHistory();loadAvatars();loadFrames();loadPacks();loadLockState();loadCityScores();loadLevelReward();loadRewards();loadQuestions();loadUserSelect();loadSent();loadPayments();startPayBadge();startLiveTracker();}
+
+// ===== زیادکراوی نوێ: کۆنترۆڵی لایڤ =====
+function startLiveTracker() {
+  db.collection('gameHistory').orderBy('date', 'desc').limit(50).onSnapshot(snap => {
+    const now = Date.now();
+    const fifteenMins = 15 * 60 * 1000;
+    let activeCount = 0;
+    let recentGames = 0;
+    let html = '';
+    
+    snap.forEach(doc => {
+      const d = doc.data();
+      const gameTime = d.date && d.date.toDate ? d.date.toDate().getTime() : (d.date ? new Date(d.date).getTime() : 0);
+      const isActive = (now - gameTime) < fifteenMins;
+      
+      if (isActive) {
+        activeCount++;
+        recentGames++;
+        html += `<tr>
+          <td style="font-size:10px">${fmtDate(d.date)}</td>
+          <td>${esc(d.name || 'یاریزان')}</td>
+          <td>${esc(d.city || '-')}</td>
+          <td style="color:var(--gold);font-weight:700">+${(d.points || 0).toLocaleString()}</td>
+          <td style="color:var(--violet)">+${(d.diamonds || 0).toLocaleString()}</td>
+        </tr>`;
+      }
+    });
+    
+    const acEl = document.getElementById('live-active-players');
+    const rgEl = document.getElementById('live-recent-games');
+    const badgeEl = document.getElementById('live-badge');
+    const tbEl = document.getElementById('live-tb');
+    
+    if(acEl) acEl.innerText = activeCount;
+    if(rgEl) rgEl.innerText = recentGames;
+    if(badgeEl) {
+      badgeEl.innerText = activeCount;
+      badgeEl.style.display = activeCount > 0 ? 'inline-flex' : 'none';
+    }
+    if(tbEl) {
+      tbEl.innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:20px">ئێستا هیچ یارییەکی چالاک نییە</td></tr>';
+    }
+  });
+}
+
 function loadUsers(){const tb=document.getElementById('u-tb');tb.innerHTML='<tr><td colspan="11" style="text-align:center;color:var(--mut)">بارکردن...</td></tr>';db.collection('users').get().then(snap=>{allUsers=[];userMap={};snap.forEach(doc=>{allUsers.push({id:doc.id,...doc.data()});userMap[doc.id]=doc.data().name||doc.data().email||doc.id;});renderUserStats();renderUsers();});}
 function renderUserStats(){const el=document.getElementById('user-stats');const total=allUsers.length;const haw=allUsers.filter(u=>u.city==='هەولێر').length;const sli=allUsers.filter(u=>u.city==='سلێمانی').length;el.innerHTML=`<div class="stat-card s-total"><div class="st-ic">👥</div><div class="st-v" id="st-total">0</div><div class="st-l">کۆی تۆمارکراو</div></div><div class="stat-card s-haw"><div class="st-ic">🏙️</div><div class="st-v" id="st-haw">0</div><div class="st-l">هەولێر</div></div><div class="stat-card s-sli"><div class="st-ic">🏙️</div><div class="st-v" id="st-sli">0</div><div class="st-l">سلێمانی</div></div><div class="stat-card s-pay"><div class="st-ic">💳</div><div class="st-v" id="st-pending">0</div><div class="st-l">داواکاری چاوەڕوان</div></div>`;animateNum(document.getElementById('st-total'),total);animateNum(document.getElementById('st-haw'),haw);animateNum(document.getElementById('st-sli'),sli);const sp2=document.getElementById('st-pending');if(sp2)sp2.innerText=payPendingCount.toLocaleString();}
 function animateNum(el,to){if(!el)return;to=to||0;const from=parseInt(String(el.innerText).replace(/[^0-9-]/g,''))||0;if(from===to){el.innerText=to.toLocaleString();return;}const dur=650,st=performance.now();function step(now){const p=Math.min(1,(now-st)/dur);const e=1-Math.pow(1-p,3);el.innerText=Math.round(from+(to-from)*e).toLocaleString();if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
