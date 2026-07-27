@@ -850,4 +850,4 @@ function errMsg(c){const m={'auth/user-not-found':'ئەم ئیمەیلە تۆم�
 (function(){var lastMod='';function check(){try{var gs=document.getElementById('game-screen');if(gs&&gs.classList.contains('show'))return;var ms=document.getElementById('memory-screen');if(ms&&ms.classList.contains('show'))return;var ws=document.getElementById('word-screen');if(ws&&ws.classList.contains('show'))return;fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){var m=r.headers.get('last-modified')||r.headers.get('etag')||'';if(!m)return;if(!lastMod){lastMod=m;return;}if(m!==lastMod){location.reload();}}).catch(function(){});}catch(e){}}setTimeout(function(){try{fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){lastMod=r.headers.get('last-modified')||r.headers.get('etag')||'';}).catch(function(){});}catch(e){}},5000);setInterval(check,30000);document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});window.addEventListener('online',check);})();
 </script>
 </body>
-</html>
+</html
