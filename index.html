@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>یاری پرسیارۆ - ئۆڵۆمپیاد</title>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>یاری پرسیارۆ</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <style>
-/* ... (هەمان ستایلی پێشوو) ... */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172a,#1e1b4b 55%,#312e81);min-height:100vh;color:#fff;overflow-x:hidden;touch-action:pan-x pan-y}
 #login-screen{position:fixed;inset:0;background:linear-gradient(160deg,#0f172a,#1e1b4b 55%,#312e81);display:flex;align-items:flex-start;justify-content:center;z-index:1000;padding:30px 20px;overflow-y:auto}
@@ -350,24 +351,48 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 @keyframes popFade{from{opacity:0}to{opacity:1}}
 @keyframes popScale{from{opacity:0;transform:scale(.82) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .fade-in{animation:fadeUp .5s ease forwards}
+
+/* ===== ستایلی ئۆڵۆمپیاد ===== */
 .olympiad-matchmaking{text-align:center;padding:40px 20px}
-.olympiad-matchmaking .spinner{width:60px;height:60px;border:4px solid rgba(255,255,255,.1);border-top-color:#38bdf8;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
-.olympiad-matchmaking h2{font-size:20px;font-weight:800;margin-bottom:10px}
-.olympiad-matchmaking p{font-size:13px;color:#94a3b8;line-height:1.8}
-.olympiad-vs{display:flex;align-items:center;justify-content:center;gap:20px;margin:20px 0}
-.olympiad-vs .player{flex:1;text-align:center}
-.olympiad-vs .player .av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 8px;overflow:hidden}
-.olympiad-vs .player .av img{width:100%;height:100%;object-fit:cover}
-.olympiad-vs .player .nm{font-size:13px;font-weight:700}
-.olympiad-vs .vs{font-size:24px;font-weight:900;color:#fbbf24}
-.olympiad-live-score{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px;margin-bottom:16px;display:flex;justify-content:space-around}
-.olympiad-live-score .score-item{text-align:center}
-.olympiad-live-score .score-item .lbl{font-size:10px;color:#94a3b8;margin-bottom:4px}
-.olympiad-live-score .score-item .val{font-size:18px;font-weight:800}
-.olympiad-live-score .score-item.me .val{color:#38bdf8}
-.olympiad-live-score .score-item.opp .val{color:#ef4444}
-.waiting-msg{text-align:center;color:#fbbf24;font-size:14px;margin-top:20px;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.olympiad-matchmaking .spinner{width:70px;height:70px;border:5px solid rgba(255,255,255,.1);border-top-color:#38bdf8;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 25px}
+.olympiad-matchmaking-text{font-size:18px;font-weight:700;margin-bottom:10px}
+.olympiad-matchmaking-sub{font-size:13px;color:#94a3b8;line-height:1.8}
+.olympiad-vs-display{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);border-radius:12px;padding:15px;margin-bottom:15px;gap:10px}
+.olympiad-player{flex:1;text-align:center;cursor:pointer}
+.olympiad-player:active{transform:scale(.95)}
+.olympiad-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 8px;overflow:hidden;border:3px solid rgba(255,255,255,.2);position:relative}
+.olympiad-avatar img{width:100%;height:100%;object-fit:cover}
+.olympiad-frame{position:absolute;top:-15%;left:-15%;width:130%;height:130%;pointer-events:none;z-index:2}
+.olympiad-pname{font-size:12px;font-weight:700;margin-bottom:4px}
+.olympiad-pscore{font-size:20px;font-weight:900;color:#fbbf24}
+.olympiad-vs-text{font-size:24px;font-weight:900;color:#fbbf24;padding:0 10px}
+.olympiad-result-screen{text-align:center;padding:30px 20px}
+.olympiad-result-scores{display:flex;justify-content:center;gap:30px;margin-bottom:30px}
+.olympiad-result-player{text-align:center}
+.olympiad-result-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 10px;overflow:hidden}
+.olympiad-result-avatar img{width:100%;height:100%;object-fit:cover}
+.olympiad-result-pname{font-size:13px;font-weight:700;margin-bottom:8px}
+.olympiad-result-pscore{font-size:28px;font-weight:900}
+.olympiad-rewards{background:rgba(255,255,255,.05);border-radius:12px;padding:15px;margin-bottom:25px}
+.olympiad-reward-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.olympiad-reward-item:last-child{border-bottom:none}
+.olympiad-reward-label{font-size:13px;color:#94a3b8}
+.olympiad-reward-value{font-size:16px;font-weight:800}
+.olympiad-home-btn{background:linear-gradient(135deg,#38bdf8,#2563eb);border:none;border-radius:12px;padding:14px 40px;color:#fff;font-family:'Vazirmatn';font-size:15px;font-weight:800;cursor:pointer;width:100%}
+.olympiad-profile-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.olympiad-profile-modal.show{display:flex}
+.olympiad-profile-card{background:linear-gradient(160deg,#1e293b,#0f172a);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:25px;width:100%;max-width:320px;position:relative;animation:slideUp .3s ease}
+.olympiad-profile-close{position:absolute;top:15px;left:15px;background:rgba(255,255,255,.1);border:none;border-radius:50%;width:32px;height:32px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.olympiad-profile-header{text-align:center;margin-bottom:20px}
+.olympiad-profile-avatar-large{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;overflow:hidden;border:4px solid rgba(255,255,255,.15)}
+.olympiad-profile-avatar-large img{width:100%;height:100%;object-fit:cover}
+.olympiad-profile-name{font-size:20px;font-weight:800;margin-bottom:5px}
+.olympiad-profile-city{font-size:12px;color:#94a3b8}
+.olympiad-profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
+.olympiad-profile-stat{background:rgba(255,255,255,.05);border-radius:10px;padding:12px;text-align:center}
+.olympiad-profile-stat-value{font-size:20px;font-weight:800;margin-bottom:3px}
+.olympiad-profile-stat-label{font-size:10px;color:#94a3b8}
+.olympiad-profile-medal{text-align:center;font-size:32px;margin:10px 0}
 </style>
 </head>
 <body>
@@ -544,6 +569,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="ni" onclick="go('store',this)"><div class="nic">🛒</div><span>فرۆشگا</span></div>
   </div>
 </div>
+
+<!-- شاشەی یاری پرسیار -->
 <div id="game-screen">
   <div id="game-play" style="max-width:480px;margin:0 auto;width:100%">
     <div class="game-top"><button class="game-close" onclick="exitGame()">✕ دەرچوون</button><div class="game-city" id="g-city">سلێمانی</div></div>
@@ -570,6 +597,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     </div>
   </div>
 </div>
+
+<!-- شاشەی یادی کارتی -->
 <div id="memory-screen">
   <div id="mem-play" style="max-width:480px;margin:0 auto;width:100%">
     <div class="game-top"><button class="game-close" onclick="exitMemory()">✕ دەرچوون</button><div class="game-city" id="mem-city">🧠 یادی کارتی</div></div>
@@ -603,6 +632,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
   </div>
 </div>
 <div id="mem-peek"></div>
+
+<!-- شاشەی وشەکە بدۆزەرەوە -->
 <div id="word-screen">
   <div id="word-play" style="max-width:480px;margin:0 auto;width:100%">
     <div class="game-top"><button class="game-close" onclick="exitWord()">✕ دەرچوون</button><div class="game-city" id="w-city">🔤 وشەکە بدۆزەرەوە</div></div>
@@ -639,69 +670,111 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     </div>
   </div>
 </div>
+
+<!-- ================= شاشەی ئۆڵۆمپیاد 1v1 ================= -->
 <div id="olympiad-screen">
-  <div id="olympiad-matchmaking" style="max-width:480px;margin:auto;width:100%">
-    <div class="olympiad-matchmaking">
-      <div class="spinner"></div>
-      <h2>🎓 گەڕان بۆ ڕکابەر...</h2>
-      <p>چاوەڕوان بە تا یاریزانێکی تر دۆزرێتەوە</p>
-      <button class="game-close" onclick="exitOlympiad()" style="margin-top:20px">✕ پاشگەزبوونەوە</button>
-    </div>
+  <div id="olympiad-matchmaking" class="olympiad-matchmaking">
+    <div class="spinner"></div>
+    <div class="olympiad-matchmaking-text">🎓 گەڕان بۆ ڕکابەر...</div>
+    <div class="olympiad-matchmaking-sub">چاوەڕوان بە تا یاریزانێکی تر دۆزرێتەوە</div>
+    <button class="game-close" onclick="exitOlympiad()" style="margin-top:30px">✕ دەرچوون</button>
   </div>
-  <div id="olympiad-vs" style="max-width:480px;margin:auto;width:100%;display:none">
-    <div class="olympiad-vs">
-      <div class="player">
-        <div class="av" id="oly-me-av">?</div>
-        <div class="nm" id="oly-me-name">تۆ</div>
-      </div>
-      <div class="vs">VS</div>
-      <div class="player">
-        <div class="av" id="oly-opp-av">?</div>
-        <div class="nm" id="oly-opp-name">ڕکابەر</div>
-      </div>
-    </div>
-    <p style="text-align:center;color:#94a3b8;font-size:13px;margin-top:20px">یاری دەست پێ دەکات...</p>
-  </div>
+
   <div id="olympiad-play" style="max-width:480px;margin:0 auto;width:100%;display:none">
     <div class="game-top"><button class="game-close" onclick="exitOlympiad()">✕ دەرچوون</button><div class="game-city">🎓 ئۆڵۆمپیاد 1v1</div></div>
-    <div class="olympiad-live-score">
-      <div class="score-item me"><div class="lbl">تۆ</div><div class="val" id="oly-my-score">0</div></div>
-      <div class="score-item"><div class="lbl">پرسیار</div><div class="val"><span id="oly-qnum">1</span>/10</div></div>
-      <div class="score-item opp"><div class="lbl">ڕکابەر</div><div class="val" id="oly-opp-score">0</div></div>
+    
+    <div class="olympiad-vs-display">
+      <div class="olympiad-player" onclick="viewOlympiadProfile('me')">
+        <div class="olympiad-avatar" id="oly-my-av">?</div>
+        <div class="olympiad-pname" id="oly-my-name">تۆ</div>
+        <div class="olympiad-pscore" id="oly-my-score">0</div>
+      </div>
+      <div class="olympiad-vs-text">VS</div>
+      <div class="olympiad-player" onclick="viewOlympiadProfile('opponent')">
+        <div class="olympiad-avatar" id="oly-opp-av">?</div>
+        <div class="olympiad-pname" id="oly-opp-name">ڕکابەر</div>
+        <div class="olympiad-pscore" id="oly-opp-score">0</div>
+      </div>
     </div>
+
     <div class="game-stats">
-      <div class="game-stat timer" id="oly-timer-box"><div class="lbl">⏱️ کات</div><div class="val" id="oly-timer">10</div></div>
+      <div class="game-stat qnum"><div class="lbl">پرسیار</div><div class="val"><span id="oly-qnum">1</span>/10</div></div>
     </div>
+
+    <div class="game-stat timer" id="oly-timer-box" style="margin:0 auto 15px;width:100%;max-width:200px">
+      <div class="lbl">⏱️ کات</div>
+      <div class="val" id="oly-timer">10</div>
+    </div>
+
     <div class="game-question"><p id="oly-question">...</p></div>
     <div class="game-answers" id="oly-answers"></div>
-    <div class="waiting-msg" id="oly-waiting" style="display:none">چاوەڕوانی ڕکابەر بە...</div>
   </div>
-  <div id="olympiad-result" style="max-width:480px;margin:auto;width:100%;display:none">
-    <div class="game-result">
-      <div class="trophy" id="olyr-trophy">🏆</div>
-      <h2 id="olyr-title">ئەنجام</h2>
-      <div class="sub" id="olyr-sub">یاری تەواو بوو</div>
-      <div class="olympiad-vs" style="margin:20px 0">
-        <div class="player">
-          <div class="av" id="olyr-me-av">?</div>
-          <div class="nm" id="olyr-me-name">تۆ</div>
-          <div style="font-size:20px;font-weight:900;color:#38bdf8;margin-top:6px" id="olyr-my-score">0</div>
-        </div>
-        <div class="vs">VS</div>
-        <div class="player">
-          <div class="av" id="olyr-opp-av">?</div>
-          <div class="nm" id="olyr-opp-name">ڕکابەر</div>
-          <div style="font-size:20px;font-weight:900;color:#ef4444;margin-top:6px" id="olyr-opp-score">0</div>
-        </div>
+
+  <div id="olympiad-result" class="olympiad-result-screen" style="max-width:480px;margin:auto;width:100%;display:none">
+    <div class="trophy" id="olyr-trophy" style="font-size:70px;margin-bottom:14px;animation:bounce 1s infinite">🏆</div>
+    <h2 id="olyr-title" style="font-size:24px;font-weight:900;margin-bottom:8px">ئەنجام</h2>
+    <div class="sub" id="olyr-sub" style="font-size:13px;color:#94a3b8;margin-bottom:24px">یاری تەواو بوو</div>
+    
+    <div class="olympiad-result-scores">
+      <div class="olympiad-result-player">
+        <div class="olympiad-result-avatar" id="olyr-my-av">?</div>
+        <div class="olympiad-result-pname" id="olyr-my-name">تۆ</div>
+        <div class="olympiad-result-pscore" id="olyr-my-score" style="color:#38bdf8">0</div>
       </div>
-      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:22px;flex-wrap:wrap">
-        <div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:800;color:#fbbf24">⭐ <span id="olyr-pts">+0</span> خاڵ</div>
-        <div id="olyr-dia-row" style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:800;color:#a78bfa;display:none">💎 <span id="olyr-dia">+0</span> ئەڵماس</div>
+      <div class="olympiad-result-player">
+        <div class="olympiad-result-avatar" id="olyr-opp-av">?</div>
+        <div class="olympiad-result-pname" id="olyr-opp-name">ڕکابەر</div>
+        <div class="olympiad-result-pscore" id="olyr-opp-score" style="color:#ef4444">0</div>
       </div>
-      <div class="result-btns"><button class="rb-home" onclick="exitOlympiad()">🏠 گەڕانەوە</button></div>
+    </div>
+
+    <div class="olympiad-rewards">
+      <div class="olympiad-reward-item">
+        <span class="olympiad-reward-label">⭐ خاڵ</span>
+        <span class="olympiad-reward-value" id="olyr-pts" style="color:#fbbf24">+0</span>
+      </div>
+      <div class="olympiad-reward-item" id="olyr-dia-row" style="display:none">
+        <span class="olympiad-reward-label">💎 ئەڵماس</span>
+        <span class="olympiad-reward-value" id="olyr-dia" style="color:#a78bfa">+0</span>
+      </div>
+    </div>
+
+    <button class="olympiad-home-btn" onclick="exitOlympiad()">🏠 گەڕانەوە بۆ سەرەتا</button>
+  </div>
+</div>
+
+<!-- مۆدالی پرۆفایلی ئۆڵۆمپیاد -->
+<div id="olympiad-profile-modal" class="olympiad-profile-modal" onclick="if(event.target===this)closeOlympiadProfile()">
+  <div class="olympiad-profile-card">
+    <button class="olympiad-profile-close" onclick="closeOlympiadProfile()">✕</button>
+    <div class="olympiad-profile-header">
+      <div class="olympiad-profile-avatar-large" id="oly-modal-av">?</div>
+      <div class="olympiad-profile-name" id="oly-modal-name">-</div>
+      <div class="olympiad-profile-city" id="oly-modal-city">-</div>
+    </div>
+    <div id="oly-modal-medal" style="text-align:center;font-size:32px;margin:10px 0"></div>
+    <div class="olympiad-profile-stats">
+      <div class="olympiad-profile-stat">
+        <div class="olympiad-profile-stat-value" id="oly-modal-lvl" style="color:#38bdf8">0</div>
+        <div class="olympiad-profile-stat-label">🎖️ ئاست</div>
+      </div>
+      <div class="olympiad-profile-stat">
+        <div class="olympiad-profile-stat-value" id="oly-modal-pts" style="color:#fbbf24">0</div>
+        <div class="olympiad-profile-stat-label">⭐ خاڵ</div>
+      </div>
+      <div class="olympiad-profile-stat">
+        <div class="olympiad-profile-stat-value" id="oly-modal-dia" style="color:#a78bfa">0</div>
+        <div class="olympiad-profile-stat-label">💎 ئەڵماس</div>
+      </div>
+      <div class="olympiad-profile-stat">
+        <div class="olympiad-profile-stat-value" id="oly-modal-wins" style="color:#22c55e">0</div>
+        <div class="olympiad-profile-stat-label">🏆 بردنەوە</div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- مۆدالەکانی تر -->
 <div class="modal-bg" id="name-modal">
   <div class="modal">
     <div class="um-inner">
@@ -737,6 +810,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="popup-btns" id="popup-btns"></div>
   </div>
 </div>
+
 <script>
 const firebaseConfig={apiKey:"AIzaSyC3qMjhPB9hUbY8z6ebMKqHIWLdFO1Sfhs",authDomain:"prsyar-walam-90198.firebaseapp.com",projectId:"prsyar-walam-90198",storageBucket:"prsyar-walam-90198.firebasestorage.app",messagingSenderId:"860935258194",appId:"1:860935258194:web:8608971a55df56bb4d5f8b",measurementId:"G-ZEVJ0VMJXJ"};
 firebase.initializeApp(firebaseConfig);
@@ -747,9 +821,9 @@ let cityScoresData={hawler:0,slimany:0};
 let PAY_CFG={},PAY_PACK=null,PAY_METHOD='',PAY_PROOF='',PAY_STEP='method';
 let userDocUnsub=null,payLockUnsub=null,hasPendingPay=false;
 let gameLBType='memory';
-let olympiadCfg={timeLimit:10,questionCount:10,winnerPoints:100,loserPoints:30,winnerDiamonds:5,loserDiamonds:0,boxImage:'',locked:false};
-const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,answeredQuestions:[],cityPoints:{},memoryPoints:0,wordPoints:0,olympiadPoints:0};
+const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,answeredQuestions:[],cityPoints:{},memoryPoints:0,wordPoints:0,olympiadPoints:0,wins:0};
 const POP_ICONS={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️',reward:'🎉'};
+
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showPopup(msg,type,btn){type=type||'info';btn=btn||'باشە';const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText=POP_ICONS[type]||'ℹ️';ic.className='popup-icon '+type;document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn '+type+'" id="popup-ok">'+btn+'</button>';bg.classList.add('show');document.getElementById('popup-ok').onclick=function(){bg.classList.remove('show');};}
 function showConfirm(msg,okText,noText){okText=okText||'بەڵێ';noText=noText||'نەخێر';return new Promise(function(resolve){const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText='❓';ic.className='popup-icon info';document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn no" id="popup-no">'+noText+'</button><button class="popup-btn yes" id="popup-yes">'+okText+'</button>';bg.classList.add('show');document.getElementById('popup-yes').onclick=function(){bg.classList.remove('show');resolve(true);};document.getElementById('popup-no').onclick=function(){bg.classList.remove('show');resolve(false);};});}
@@ -767,6 +841,7 @@ function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
 function updateLevelBar(){const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;const pt=document.getElementById('profile-lvl-txt');if(pt)pt.innerText=txt;}
 const TIME_PER_Q=15,POINTS_CORRECT=10,CITY_POINT=1,GAME_COOLDOWN=24*60*60*1000;
+
 function startVerifyPolling(){stopVerifyPolling();verifyPollTimer=setInterval(async()=>{const user=auth.currentUser;if(!user){stopVerifyPolling();return;}try{await user.reload();}catch(e){}if(user.emailVerified){stopVerifyPolling();try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}const er=document.getElementById('err');if(er){er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';}setTimeout(()=>location.reload(),800);}},3500);}
 function stopVerifyPolling(){if(verifyPollTimer){clearInterval(verifyPollTimer);verifyPollTimer=null;}}
 async function checkVerifyDone(){const er=document.getElementById('err');const btn=document.getElementById('v-btn');const user=auth.currentUser;if(!user){er.style.color='#f87171';er.innerText='هیچ هەژمارێک چالاک نییە';return;}btn.disabled=true;btn.innerText='پشکنین...';try{await user.reload();}catch(e){}if(user.emailVerified){try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';stopVerifyPolling();setTimeout(()=>location.reload(),800);}else{er.style.color='#fbbf24';er.innerText='هێشتا پشتڕاست نەکراوەتەوە. تکایە کلیک لە لینکەکەی ناو ئیمەییلەکە بکە، ئینجا دووبارە هەوڵ بدە.';btn.disabled=false;btn.innerText='✅ پشتڕاستکردنەوە تەواو بوو';}}
@@ -786,7 +861,7 @@ function setAvatarUI(){const av=U.avatar||'',cov=U.cover||'',fr=U.frame||'',ini=
 function updateGameBoxPoints(){const mp=document.getElementById('membox-pts');if(mp)mp.innerText=(U.memoryPoints||0).toLocaleString();const wp=document.getElementById('wordbox-pts');if(wp)wp.innerText=(U.wordPoints||0).toLocaleString();const op=document.getElementById('olympiad-pts');if(op)op.innerText=(U.olympiadPoints||0).toLocaleString();}
 function loadMemoryBox(){db.collection('settings').doc('memoryConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const def='https://i.ibb.co/X092D1P/file-00000000e04c8243871d159694789881.png';const city=U?U.city:'';let img=def;if(city==='هەولێر')img=d.boxImageHawler||def;else if(city==='سلێمانی')img=d.boxImageSlimany||def;const el=document.getElementById('membox-img');if(el){if(img){el.src=img;el.classList.add('on');}else{el.classList.remove('on');}}},function(e){});}
 function loadWordBox(){db.collection('settings').doc('wordConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const city=U?U.city:'';let img='';if(city==='هەولێر')img=d.boxImageHawler||'';else if(city==='سلێمانی')img=d.boxImageSlimany||'';const el=document.getElementById('wordbox-img');if(el){if(img){el.src=img;el.classList.add('on');}else{el.classList.remove('on');}}const lb=document.getElementById('word-lock-badge');if(lb)lb.style.display=(d.locked===true)?'block':'none';},function(e){});}
-function loadOlympiadBox(){db.collection('settings').doc('olympiadConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};olympiadCfg=d||{timeLimit:10,questionCount:10,winnerPoints:100,loserPoints:30,winnerDiamonds:5,loserDiamonds:0,boxImage:'',locked:false};const def='https://i.ibb.co/X092D1P/file-00000000e04c8243871d159694789881.png';const el=document.getElementById('olympiadbox-img');if(el){if(d.boxImage){el.src=d.boxImage;el.classList.add('on');}else{el.src=def;el.classList.add('on');}}},function(e){});}
+function loadOlympiadBox(){db.collection('settings').doc('olympiadConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const def='https://i.ibb.co/X092D1P/file-00000000e04c8243871d159694789881.png';const el=document.getElementById('olympiadbox-img');if(el){if(d.boxImage){el.src=d.boxImage;el.classList.add('on');}else{el.src=def;el.classList.add('on');}}},function(e){});}
 function loadGameBoxImages(){db.collection('settings').doc('gameBoxImages').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const defH='https://i.ibb.co/q3bj1T0X/images.jpg',defS='https://i.ibb.co/cX8TKy0t/slimania-33-w900-h900.jpg';const ih=document.getElementById('gcimg-hawler');if(ih)ih.src=d.hawler||defH;const is=document.getElementById('gcimg-slimany');if(is)is.src=d.slimany||defS;},function(e){});}
 function loadCityScores(){db.collection('settings').doc('cityScores').onSnapshot(doc=>{const d=doc.exists?doc.data():{};cityScoresData.hawler=d.hawler||0;cityScoresData.slimany=d.slimany||0;const ehp=document.getElementById('pts-hawler');if(ehp)ehp.innerText=(d.hawler||0).toLocaleString();const esp=document.getElementById('pts-slimany');if(esp)esp.innerText=(d.slimany||0).toLocaleString();});}
 function updateCityLocks(){['slimany','hawler'].forEach(k=>{const cityName=k==='slimany'?'سلێمانی':'هەولێر';const box=document.getElementById('gc-'+k);if(!box)return;let badge=box.querySelector('.city-lock-badge');if(U.city&&U.city!==cityName){if(!badge){badge=document.createElement('div');badge.className='city-lock-badge';box.appendChild(badge);}badge.innerHTML='🔒 تەنها شاری خۆت<br><span style="font-size:9px;color:#94a3b8">('+U.city+')</span>';}else if(badge){badge.remove();}});}
@@ -811,12 +886,16 @@ async function renderGameLB(){const list=document.getElementById('lb-games-list'
 function viewUserByUid(uid){let d=lbData.find(x=>x.uid===uid);if(!d)d=gameLBUsers.find(x=>x.uid===uid);if(!d)return;if(uid&&auth.currentUser&&uid===auth.currentUser.uid){go('profile');return;}const cov=d.cover||'';document.getElementById('um-cover').style.backgroundImage=isImg(cov)?`url('${cov}')`:'';const tEl=document.getElementById('um-time');if(d.coverSetAt){const ts=fmtTS(d.coverSetAt);if(ts){tEl.innerText='🕐 '+ts;tEl.style.display='block';}else{tEl.style.display='none';}}else{tEl.style.display='none';}setFrame('um-frame',d.frame||'');document.getElementById('um-av').innerHTML=avHtml(d.avatar,d.name);const allSorted=[...lbData].sort((a,b)=>(b.score||0)-(a.score||0));const gRank=allSorted.findIndex(x=>x.uid===d.uid)+1;const medalEl=document.getElementById('um-medal');if(medalEl){if(gRank>0){const em=gRank===1?'🥇':(gRank===2?'🥈':(gRank===3?'🥉':''));medalEl.innerHTML='#'+gRank+(em?' '+em:'');}else{medalEl.innerHTML='';}}const score=(d.score!=null?d.score:(d.points||0));document.getElementById('um-name').innerText=d.name||'یاریزان';document.getElementById('um-city').innerText=d.city||'-';document.getElementById('um-lvl').innerText=getLevel(score);document.getElementById('um-pts').innerText=score.toLocaleString();document.getElementById('um-dia').innerText=(d.diamonds||0).toLocaleString();document.getElementById('user-modal').classList.add('show');}
 function closeUserModal(){document.getElementById('user-modal').classList.remove('show');}
 function go(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('pg-'+id).classList.add('active');document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));if(el){el.classList.add('on');}else{const navMap={home:0,citygame:1,profile:2,lb:3,rewards:4,store:5};const nis=document.querySelectorAll('.ni');if(nis[navMap[id]]!==undefined)nis[navMap[id]].classList.add('on');}if(id==='lb')loadLB();if(id==='rewards')loadRewards();if(id==='home'){updateGameNotice();}if(id==='citygame'){updateGameNotice();updateCityLocks();}if(id==='store'){loadDPacks();loadAvatars();loadFrames();}}
+
+/* ================= یاری پرسیار ================= */
 let gameCity='',gameQs=[],gameIdx=0,gameScore=0,gameCorrect=0,gameDiamonds=0,gameCityScore=0,gameTimer=null,gameTimeLeft=0,gameLogged=false;
 async function startGame(city){if(city!==U.city){showPopup('🚫 تەنها دەتوانیت یاری شاری خۆت ('+(U.city||'-')+') بکەیت!','warning');return;}if(U.lastGameAt){const last=U.lastGameAt.toDate?U.lastGameAt.toDate():new Date(U.lastGameAt);const diff=Date.now()-last.getTime();if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%3600000)/60000);showPopup('⏳ چاوەڕوان بە: '+h+' کاتژمێر و '+m+' خولەک','warning');return;}}const box=document.getElementById('gc-'+(city==='سلێمانی'?'slimany':'hawler'));if(box&&box.classList.contains('locked'))return;let qs=[];try{const snap=await db.collection('questions').where('city','==',city).get();snap.forEach(d=>qs.push(Object.assign({id:d.id},d.data())));}catch(e){}if(qs.length<1){showPopup('⚠️ هیچ پرسیارێک بۆ "'+city+'" نییە.','warning');return;}const answered=U.answeredQuestions||[];qs=qs.filter(q=>!answered.includes(q.id));if(qs.length<1){showPopup('🎉 هەموو پرسیارەکانی "'+city+'"ـت وەڵام دایەوە!','reward');return;}gameCity=city;gameQs=qs.sort(()=>Math.random()-0.5).map(q=>{const ca=q.a[q.c];const sh=[...q.a].sort(()=>Math.random()-0.5);return{id:q.id,q:q.q,a:sh,c:sh.indexOf(ca)};});gameIdx=0;gameScore=0;gameCorrect=0;gameCityScore=0;gameLogged=false;document.getElementById('g-city').innerText=city;document.getElementById('g-qtotal').innerText=gameQs.length;document.getElementById('game-screen').classList.add('show');document.getElementById('game-play').style.display='block';document.getElementById('game-result').style.display='none';showQuestion();}
 function showQuestion(){if(gameIdx>=gameQs.length){endGame();return;}const q=gameQs[gameIdx];document.getElementById('g-qnum').innerText=gameIdx+1;document.getElementById('g-score').innerText=gameScore;document.getElementById('g-progress').style.width=((gameIdx)/gameQs.length*100)+'%';document.getElementById('g-question').innerText=q.q;const ans=document.getElementById('g-answers');ans.innerHTML='';q.a.forEach((a,i)=>{const b=document.createElement('button');b.className='game-ans';b.innerText=a;b.onclick=()=>answerQ(i,b);ans.appendChild(b);});gameTimeLeft=TIME_PER_Q;document.getElementById('g-timer').innerText=gameTimeLeft;document.getElementById('g-timer-box').classList.remove('warn');if(gameTimer)clearInterval(gameTimer);gameTimer=setInterval(()=>{gameTimeLeft--;document.getElementById('g-timer').innerText=gameTimeLeft;if(gameTimeLeft<=5)document.getElementById('g-timer-box').classList.add('warn');if(gameTimeLeft<=0){clearInterval(gameTimer);answerQ(-1,null);}},1000);}
 function answerQ(idx,btn){clearInterval(gameTimer);const q=gameQs[gameIdx];const btns=document.querySelectorAll('.game-ans');btns.forEach(b=>b.disabled=true);if(idx===q.c){if(btn)btn.classList.add('correct');gameCorrect++;gameScore+=POINTS_CORRECT;gameCityScore+=CITY_POINT;U.points=(U.points||0)+POINTS_CORRECT;refreshUI();const ck=gameCity==='سلێمانی'?'slimany':'hawler';try{db.collection('settings').doc('cityScores').set({[ck]:firebase.firestore.FieldValue.increment(CITY_POINT)},{merge:true});db.collection('users').doc(auth.currentUser.uid).update({points:firebase.firestore.FieldValue.increment(POINTS_CORRECT),[`cityPoints.${ck}`]:firebase.firestore.FieldValue.increment(CITY_POINT)});}catch(e){}if(!U.cityPoints)U.cityPoints={};U.cityPoints[ck]=(U.cityPoints[ck]||0)+CITY_POINT;}else{if(btn)btn.classList.add('wrong');btns[q.c].classList.add('correct');}document.getElementById('g-score').innerText=gameScore;setTimeout(()=>{gameIdx++;showQuestion();},1200);}
 async function endGame(){if(gameTimer)clearInterval(gameTimer);gameDiamonds=Math.floor(gameCorrect/10);document.getElementById('game-play').style.display='none';document.getElementById('game-result').style.display='block';document.getElementById('r-correct').innerText=gameCorrect;document.getElementById('r-points').innerText=gameScore;document.getElementById('r-diamonds').innerText=gameDiamonds;const pct=gameCorrect/gameQs.length;document.getElementById('r-trophy').innerText=pct>=0.8?'🏆':(pct>=0.5?'🥈':'');document.getElementById('r-title').innerText=pct>=0.8?'نایاب!':(pct>=0.5?'باشە!':'هەوڵ بدەرەوە');document.getElementById('r-sub').innerText='یاری تەواو بوو | بۆ شاری '+gameCity+': +'+gameCityScore+' خاڵ 🏙️';try{const newD=(U.diamonds||0)+gameDiamonds;await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,lastGameAt:firebase.firestore.FieldValue.serverTimestamp()});U.diamonds=newD;U.lastGameAt=new Date();const set=new Set(U.answeredQuestions||[]);gameQs.forEach(q=>set.add(q.id));U.answeredQuestions=[...set];await db.collection('users').doc(auth.currentUser.uid).update({answeredQuestions:U.answeredQuestions});await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:gameCity,type:'quiz',correct:gameCorrect,total:gameQs.length,points:gameScore,diamonds:gameDiamonds,date:firebase.firestore.FieldValue.serverTimestamp()});refreshUI();await syncProfileToScores();updateGameNotice();await checkLevelReward();}catch(e){console.error(e);}}
 async function exitGame(){if(gameTimer)clearInterval(gameTimer);document.getElementById('game-screen').classList.remove('show');refreshUI();await syncProfileToScores();updateGameNotice();loadLB();}
+
+/* ================= یادی کارتی ================= */
 let memCards=[],memFirst=null,memLock=false,memMatchedCount=0,memPairs=0,memMoves=0,memTimeLeft=0,memTimerInt=null,memStartTime=0,memActive=false,memCfg={},memEnded=false,memReveal2Used=false,memReveal4Used=false;
 const MEM_EMOJIS=['🏰','🕌','🌳','','📚','','🎵',''];
 async function loadMemCfg(){try{const d=await db.collection('settings').doc('memoryConfig').get();memCfg=d.exists?d.data():{};}catch(e){memCfg={};}if(typeof memCfg.timerEnabled!=='boolean')memCfg.timerEnabled=true;memCfg.timeLimit=memCfg.timeLimit||60;memCfg.diamondReward=(memCfg.diamondReward==null)?1:memCfg.diamondReward;memCfg.diamondTimeLimit=memCfg.diamondTimeLimit||30;memCfg.peekSeconds=memCfg.peekSeconds||3;}
@@ -828,6 +907,8 @@ function memFlip(i){if(memLock||!memActive)return;const card=document.querySelec
 async function memReveal(n,cost){if(!memActive||memLock||memEnded)return;if(n===2&&memReveal2Used){showPopup('ئەم یارمەتیدەرە بەکارهاتووە لەم یارییەدا 👀','warning');return;}if(n===4&&memReveal4Used){showPopup('ئەم یارمەتیدەرە بەکارهاتووە لەم یارییەدا 👀','warning');return;}if((U.diamonds||0)<cost){showPopup('ئەڵماسی پێویستت نییە! 💎\n('+cost+' ئەڵماس پێویستە)','warning');return;}let unmatched=[];document.querySelectorAll('.mem-card').forEach(c=>{if(!c.classList.contains('matched')&&!c.classList.contains('flipped'))unmatched.push(c);});if(unmatched.length===0)return;try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:firebase.firestore.FieldValue.increment(-cost)});U.diamonds=(U.diamonds||0)-cost;refreshUI();}catch(e){showPopup('هەڵە','error');return;}if(n===2)memReveal2Used=true;else memReveal4Used=true;const toShow=unmatched.sort(()=>Math.random()-0.5).slice(0,n);memLock=true;toShow.forEach(c=>c.classList.add('flipped'));setTimeout(()=>{toShow.forEach(c=>{if(!c.classList.contains('matched'))c.classList.remove('flipped');});memLock=false;},1500);}
 async function endMemory(win){if(memEnded)return;memEnded=true;if(memTimerInt)clearInterval(memTimerInt);memActive=false;const elapsed=Math.round((Date.now()-memStartTime)/1000);document.getElementById('mem-play').style.display='none';document.getElementById('mem-result').style.display='block';let gainedPts=0,gainedDia=0;if(win){gainedPts=50;const fast=memCfg.timerEnabled&&(elapsed<=(memCfg.diamondTimeLimit||30));if(fast)gainedDia=memCfg.diamondReward||0;try{const upd={points:firebase.firestore.FieldValue.increment(gainedPts),memoryPoints:firebase.firestore.FieldValue.increment(gainedPts)};if(gainedDia>0)upd.diamonds=firebase.firestore.FieldValue.increment(gainedDia);await db.collection('users').doc(auth.currentUser.uid).update(upd);U.points=(U.points||0)+gainedPts;U.memoryPoints=(U.memoryPoints||0)+gainedPts;if(gainedDia>0)U.diamonds=(U.diamonds||0)+gainedDia;refreshUI();await syncProfileToScores();await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:U.city||'',type:'memory',correct:memPairs,total:memPairs,points:gainedPts,diamonds:gainedDia,time:elapsed,date:firebase.firestore.FieldValue.serverTimestamp()});await checkLevelReward();}catch(e){console.error(e);}}document.getElementById('memr-trophy').innerText=win?'🎉':'';document.getElementById('memr-title').innerText=win?'تەواوت کرد!':'کاتەکە تەواو بوو!';document.getElementById('memr-sub').innerText=win?('بە '+elapsed+' چرکە تەواوت کرد 🧠'):'هەوڵێکی تر بدەرەوە 💪';document.getElementById('memr-time').innerText=elapsed;document.getElementById('memr-moves').innerText=memMoves;document.getElementById('memr-found').innerText=memMatchedCount+'/'+memPairs;document.getElementById('memr-pts').innerText='+'+gainedPts;document.getElementById('memr-dia').innerText='+'+gainedDia;document.getElementById('memr-dia-row').style.display=gainedDia>0?'block':'none';}
 function exitMemory(){if(memTimerInt)clearInterval(memTimerInt);memActive=false;document.getElementById('mem-peek').style.display='none';document.getElementById('memory-screen').classList.remove('show');}
+
+/* ================= وشەکە بدۆزەرەوە ================= */
 let wordList=[],wordIdx=0,wordCorrect=0,wordTimerInt=null,wordTimeLeft=0,wordStartTime=0,wordActive=false,wordEnded=false,wordCfg={};
 let curWord='',curHint='',curSlots=[],curTiles=[];
 const WORD_FALLBACK=['هەولێر','سلێمانی','قەڵا','بازاڕ','چیا','ڕووبار','کتێب','مامۆستا','نان','ئاو','خۆر','مانگ','ئاسمان','درەخت','گوڵ','هاوڕێ','شار','گوند','خێزان','یاری'];
@@ -845,356 +926,177 @@ function startWordTimer(){if(!wordCfg.timerEnabled){document.getElementById('w-t
 async function endWord(win){if(wordEnded)return;wordEnded=true;if(wordTimerInt)clearInterval(wordTimerInt);wordActive=false;const elapsed=Math.round((Date.now()-wordStartTime)/1000);document.getElementById('word-play').style.display='none';document.getElementById('word-result').style.display='block';let gainedPts=0,gainedDia=0;const perfect=(wordCorrect===wordList.length);if(win&&perfect){gainedPts=50;const fast=wordCfg.timerEnabled&&(elapsed<=(wordCfg.diamondTimeLimit||90));if(fast)gainedDia=wordCfg.diamondReward||0;try{const upd={points:firebase.firestore.FieldValue.increment(gainedPts),wordPoints:firebase.firestore.FieldValue.increment(gainedPts)};if(gainedDia>0)upd.diamonds=firebase.firestore.FieldValue.increment(gainedDia);await db.collection('users').doc(auth.currentUser.uid).update(upd);U.points=(U.points||0)+gainedPts;U.wordPoints=(U.wordPoints||0)+gainedPts;if(gainedDia>0)U.diamonds=(U.diamonds||0)+gainedDia;refreshUI();await syncProfileToScores();await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:U.city||'',type:'word',correct:wordCorrect,total:wordList.length,points:gainedPts,diamonds:gainedDia,time:elapsed,date:firebase.firestore.FieldValue.serverTimestamp()});await checkLevelReward();}catch(e){console.error(e);}}document.getElementById('wordr-trophy').innerText=(win&&perfect)?'🎉':'⏰';document.getElementById('wordr-title').innerText=(win&&perfect)?'تەواوت کرد!':'تەواو نەبوو!';document.getElementById('wordr-sub').innerText=(win&&perfect)?('بە '+elapsed+' چرکە تەواوت کرد 🔤'):'هەوڵێکی تر بدەرەوە 💪';document.getElementById('wordr-time').innerText=elapsed;document.getElementById('wordr-correct').innerText=wordCorrect+'/'+wordList.length;document.getElementById('wordr-total').innerText=wordList.length;document.getElementById('wordr-pts').innerText='+'+gainedPts;document.getElementById('wordr-dia').innerText='+'+gainedDia;document.getElementById('wordr-dia-row').style.display=gainedDia>0?'block':'none';}
 function exitWord(){if(wordTimerInt)clearInterval(wordTimerInt);wordActive=false;document.getElementById('word-screen').classList.remove('show');}
 
-// ================= ئۆڵۆمپیاد 1v1 ڕاستەقینە =================
-let olympiadMatchId=null,olympiadOpponent=null,olympiadQuestions=[],olympiadIdx=0,olympiadMyScore=0,olympiadOppScore=0,olympiadTimer=null,olympiadTimeLeft=0,olympiadActive=false,olympiadEnded=false,olympiadUnsub=null,myAnswers=[];
+/* ================= ئۆڵۆمپیاد 1v1 ================= */
+let olympiadMatchId=null,olympiadOpponent=null,olympiadQuestions=[],olympiadIdx=0,olympiadMyScore=0,olympiadOppScore=0,olympiadTimer=null,olympiadTimeLeft=0,olympiadActive=false,olympiadEnded=false,olympiadUnsub=null;
+
 async function startOlympiad(){
   if(!auth.currentUser){showPopup('تکایە سەرەتا چوونەژوورەوە بکە','warning');return;}
-  // Check if locked
-  if(olympiadCfg.locked){showPopup('🔒 یاری ئۆڵۆمپیاد لەلایەن بەڕێوەبەرەوە قوفڵ کراوە','warning');return;}
-  
   document.getElementById('olympiad-screen').classList.add('show');
   document.getElementById('olympiad-matchmaking').style.display='block';
-  document.getElementById('olympiad-vs').style.display='none';
   document.getElementById('olympiad-play').style.display='none';
   document.getElementById('olympiad-result').style.display='none';
   
-  // 1. گەڕان بۆ یارییەکی چاوەڕوان (Waiting)
   try{
-    const waitingSnap = await db.collection('olympiad_matches').where('status','==','waiting').limit(1).get();
-    
+    const waitingSnap=await db.collection('olympiad_matches').where('status','==','waiting').limit(1).get();
     if(!waitingSnap.empty){
-      // یارییەکی چاوەڕوان هەیە، پەیوەندی پێوە دەکەین
-      const matchDoc = waitingSnap.docs[0];
-      olympiadMatchId = matchDoc.id;
-      const matchData = matchDoc.data();
-      
-      // ئەگەر خۆم نیم (بۆ ڕێگری لە یاریکردن لەگەڵ خۆم)
-      if(matchData.player1 === auth.currentUser.uid){
-         // ئەگەر خۆم بووم، دانەیەکی نوێ دروست دەکەم
-         createNewMatch();
-         return;
-      }
-
-      // پەیوەندیکردن و گۆڕینی دۆخ بۆ matched
-      await db.collection('olympiad_matches').doc(olympiadMatchId).update({
-        status:'matched',
-        player2:auth.currentUser.uid,
-        player2Name:U.name||'یاریزان',
-        player2Avatar:U.avatar||'',
-        player2Frame:U.frame||''
-      });
-      
-      olympiadOpponent={
-          uid:matchData.player1,
-          name:matchData.player1Name||'ڕکابەر',
-          avatar:matchData.player1Avatar||'',
-          frame:matchData.player1Frame||''
-      };
-      
-      // پرسیارەکان لەسەر داواکارییەکەن
-      startOlympiadGame(matchData.questions || []);
-      
-    } else {
-      // هیچ یارییەکی چاوەڕوان نییە، دانەیەکی نوێ دروست دەکەم
-      createNewMatch();
+      const matchDoc=waitingSnap.docs[0];
+      if(matchDoc.data().player1===auth.currentUser.uid){await createNewOlympiadMatch();return;}
+      olympiadMatchId=matchDoc.id;
+      await db.collection('olympiad_matches').doc(olympiadMatchId).update({status:'matched',player2:auth.currentUser.uid,player2Name:U.name||'یاریزان',player2Avatar:U.avatar||'',player2Frame:U.frame||''});
+      olympiadOpponent={uid:matchDoc.data().player1,name:matchDoc.data().player1Name||'ڕکابەر',avatar:matchDoc.data().player1Avatar||'',frame:matchDoc.data().player1Frame||'',city:matchDoc.data().player1City||''};
+      startOlympiadGame(matchDoc.data().questions||[]);
+    }else{
+      await createNewOlympiadMatch();
     }
-    
-  }catch(e){
-    console.error(e);
-    showPopup('هەڵە لە دەستپێکردنی یاری','error');
-    exitOlympiad();
-  }
+  }catch(e){console.error(e);showPopup('هەڵە لە دەستپێکردنی یاری','error');exitOlympiad();}
 }
 
-async function createNewMatch(){
-  // هەڵبژاردنی ١٠ پرسیار
-  let qs=[];
+async function createNewOlympiadMatch(){
+  let qs=[];try{const snap=await db.collection('olympiad_questions').get();snap.forEach(d=>qs.push({id:d.id,...d.data()}));}catch(e){}
+  if(qs.length<10){showPopup('پرسیاری پێویست نییە (لانیکەم ١٠ پێویستە)','error');exitOlympiad();return;}
+  const selectedQuestions=qs.sort(()=>Math.random()-0.5).slice(0,10);
   try{
-    const snap=await db.collection('olympiad_questions').get();
-    snap.forEach(d=>qs.push(Object.assign({id:d.id},d.data())));
-  }catch(e){}
-  
-  if(qs.length<10){
-     showPopup('پرسیاری پێویست نییە بۆ ئۆڵۆمپیاد (لانیکەم ١٠ پێویستە)','error');
-     exitOlympiad();
-     return;
-  }
-  
-  const selectedQuestions = qs.sort(()=>Math.random()-0.5).slice(0,10);
-  
-  try{
-    const matchRef=await db.collection('olympiad_matches').add({
-      status:'waiting',
-      player1:auth.currentUser.uid,
-      player1Name:U.name||'یاریزان',
-      player1Avatar:U.avatar||'',
-      player1Frame:U.frame||'',
-      questions:selectedQuestions,
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
-    });
+    const matchRef=await db.collection('olympiad_matches').add({status:'waiting',player1:auth.currentUser.uid,player1Name:U.name||'یاریزان',player1Avatar:U.avatar||'',player1Frame:U.frame||'',player1City:U.city||'',questions:selectedQuestions,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     olympiadMatchId=matchRef.id;
-    
-    // گوێگرتن لە گۆڕانکاری
     olympiadUnsub=db.collection('olympiad_matches').doc(olympiadMatchId).onSnapshot(async doc=>{
       if(!doc.exists)return;
       const data=doc.data();
       if(data.status==='matched'&&data.player2){
-        // ڕکابەر پەیوەندی کرد!
-        olympiadOpponent={
-          uid:data.player2,
-          name:data.player2Name||'ڕکابەر',
-          avatar:data.player2Avatar||'',
-          frame:data.player2Frame||''
-        };
+        olympiadOpponent={uid:data.player2,name:data.player2Name||'ڕکابەر',avatar:data.player2Avatar||'',frame:data.player2Frame||'',city:data.player2City||''};
         startOlympiadGame(data.questions||[]);
       }
     });
-  }catch(e){
-    showPopup('هەڵە لە دروستکردنی یاری','error');
-    exitOlympiad();
-  }
+  }catch(e){showPopup('هەڵە لە دروستکردنی یاری','error');exitOlympiad();}
 }
 
-async function startOlympiadGame(questions){
+function startOlympiadGame(questions){
   if(olympiadUnsub)olympiadUnsub();
-  
   document.getElementById('olympiad-matchmaking').style.display='none';
-  document.getElementById('olympiad-vs').style.display='block';
+  document.getElementById('olympiad-play').style.display='block';
   
-  // Show VS screen
-  const meAv=document.getElementById('oly-me-av');
-  meAv.innerHTML=isImg(U.avatar)?`<img src="${U.avatar}">`:(U.name||'?').charAt(0);
-  document.getElementById('oly-me-name').innerText=U.name||'تۆ';
-  if(U.frame){
-      const f=document.getElementById('oly-me-frame'); // Note: ID might need adjustment if not present in HTML structure correctly, but assuming standard av-frame logic
-      // For simplicity in this demo, we just show avatar. Frame logic is complex in VS screen without specific IDs.
-  }
+  const myAv=document.getElementById('oly-my-av');
+  myAv.innerHTML=U.avatar?`<img src="${U.avatar}">`:(U.name||'?').charAt(0);
+  document.getElementById('oly-my-name').innerText=U.name||'تۆ';
+  if(U.frame){const fr=document.createElement('img');fr.className='olympiad-frame';fr.src=U.frame;myAv.appendChild(fr);}
   
   const oppAv=document.getElementById('oly-opp-av');
-  oppAv.innerHTML=isImg(olympiadOpponent.avatar)?`<img src="${olympiadOpponent.avatar}">`:olympiadOpponent.name.charAt(0);
+  oppAv.innerHTML=olympiadOpponent.avatar?`<img src="${olympiadOpponent.avatar}">`:olympiadOpponent.name.charAt(0);
   document.getElementById('oly-opp-name').innerText=olympiadOpponent.name;
+  if(olympiadOpponent.frame){const fr=document.createElement('img');fr.className='olympiad-frame';fr.src=olympiadOpponent.frame;oppAv.appendChild(fr);}
   
-  olympiadQuestions=questions;
-  olympiadIdx=0;
-  olympiadMyScore=0;
-  olympiadOppScore=0;
-  myAnswers=[];
-  olympiadActive=true;
-  olympiadEnded=false;
-  
-  setTimeout(()=>{
-    document.getElementById('olympiad-vs').style.display='none';
-    document.getElementById('olympiad-play').style.display='block';
-    showOlympiadQuestion();
-  },2000);
+  olympiadQuestions=questions;olympiadIdx=0;olympiadMyScore=0;olympiadOppScore=0;olympiadActive=true;olympiadEnded=false;
+  setTimeout(()=>{showOlympiadQuestion();},1500);
 }
 
 function showOlympiadQuestion(){
-  if(olympiadIdx>=olympiadQuestions.length){
-    finishOlympiadGame();
-    return;
-  }
-  
+  if(olympiadIdx>=olympiadQuestions.length){finishOlympiadGame();return;}
   const q=olympiadQuestions[olympiadIdx];
   document.getElementById('oly-qnum').innerText=olympiadIdx+1;
   document.getElementById('oly-my-score').innerText=olympiadMyScore;
-  // Note: Opponent score is not real-time synced in this simple version, 
-  // but we simulate it or wait for end. For simplicity, we keep it 0 or static until end.
-  // To make it real-time, we'd need a sub-collection for scores.
-  
   document.getElementById('oly-question').innerText=q.q;
-  
-  const ans=document.getElementById('oly-answers');
-  ans.innerHTML='';
-  
-  // Shuffle answers for display but keep track of correct one
-  let answersWithIndex = q.a.map((ans, idx) => ({text: ans, originalIndex: idx}));
-  answersWithIndex.sort(() => Math.random() - 0.5);
-  
-  answersWithIndex.forEach((item) => {
-    const b=document.createElement('button');
-    b.className='game-ans';
-    b.innerText=item.text;
-    b.onclick=()=>answerOlympiad(item.originalIndex, b, q);
-    ans.appendChild(b);
+  const ans=document.getElementById('oly-answers');ans.innerHTML='';
+  let answersWithIndex=q.a.map((ans,idx)=>({text:ans,originalIndex:idx}));
+  answersWithIndex.sort(()=>Math.random()-0.5);
+  answersWithIndex.forEach(item=>{
+    const b=document.createElement('button');b.className='game-ans';b.innerText=item.text;b.onclick=()=>answerOlympiad(item.originalIndex,b,q);ans.appendChild(b);
   });
-  
-  olympiadTimeLeft = (olympiadCfg && olympiadCfg.timeLimit) ? olympiadCfg.timeLimit : 10;
-  document.getElementById('oly-timer').innerText=olympiadTimeLeft;
-  document.getElementById('oly-timer-box').classList.remove('warn');
-  
+  olympiadTimeLeft=10;document.getElementById('oly-timer').innerText=olympiadTimeLeft;document.getElementById('oly-timer-box').classList.remove('warn');
   if(olympiadTimer)clearInterval(olympiadTimer);
   olympiadTimer=setInterval(()=>{
-    olympiadTimeLeft--;
-    document.getElementById('oly-timer').innerText=olympiadTimeLeft;
+    olympiadTimeLeft--;document.getElementById('oly-timer').innerText=olympiadTimeLeft;
     if(olympiadTimeLeft<=3)document.getElementById('oly-timer-box').classList.add('warn');
-    if(olympiadTimeLeft<=0){
-      clearInterval(olympiadTimer);
-      answerOlympiad(-1,null,olympiadQuestions[olympiadIdx]);
-    }
+    if(olympiadTimeLeft<=0){clearInterval(olympiadTimer);answerOlympiad(-1,null,q);}
   },1000);
 }
 
 function answerOlympiad(idx,btn,q){
   clearInterval(olympiadTimer);
-  const btns=document.querySelectorAll('#oly-answers .game-ans');
-  btns.forEach(b=>b.disabled=true);
-  
+  const btns=document.querySelectorAll('#oly-answers .game-ans');btns.forEach(b=>b.disabled=true);
   let points=0;
   if(idx===q.c){
     if(btn)btn.classList.add('correct');
-    // خاڵی زیاتر ئەگەر خێرا بێت
-    if(olympiadTimeLeft>7)points=15;
-    else if(olympiadTimeLeft>4)points=12;
-    else points=10;
-    
-    olympiadMyScore+=points;
-    document.getElementById('oly-my-score').innerText=olympiadMyScore;
+    if(olympiadTimeLeft>7)points=15;else if(olympiadTimeLeft>4)points=12;else points=10;
+    olympiadMyScore+=points;document.getElementById('oly-my-score').innerText=olympiadMyScore;
   }else{
     if(btn)btn.classList.add('wrong');
-    // Find and highlight correct answer
-    btns.forEach(b => {
-        if(b.innerText === q.a[q.c]) b.classList.add('correct');
-    });
+    btns.forEach(b=>{if(b.innerText===q.a[q.c])b.classList.add('correct');});
   }
-  
-  myAnswers.push({qId:q.id, correct: idx===q.c, points: points});
-  
-  // Wait for opponent or just move next? 
-  // In a real-time sync, we would wait. Here we just move next for simplicity of the demo code structure.
-  // To implement "wait for both", we'd need more complex Firestore listeners.
-  // For this request, we'll proceed to next question immediately to keep the flow.
-  
-  setTimeout(()=>{
-    olympiadIdx++;
-    showOlympiadQuestion();
-  },1500);
+  setTimeout(()=>{olympiadIdx++;showOlympiadQuestion();},1500);
 }
 
 async function finishOlympiadGame(){
-  olympiadActive=false;
-  olympiadEnded=true;
-  if(olympiadTimer)clearInterval(olympiadTimer);
-  
-  // Read opponent score from DB if available, otherwise assume 0 for this demo
-  // In a full app, opponent would write their score to the match doc.
-  // Here we just finalize based on MY score and give rewards.
-  
-  let finalOppScore = 0; 
-  // Try to read latest match data
+  olympiadActive=false;olympiadEnded=true;if(olympiadTimer)clearInterval(olympiadTimer);
+  let finalOppScore=0;
   try{
-     const doc = await db.collection('olympiad_matches').doc(olympiadMatchId).get();
-     if(doc.exists && doc.data().player2Score){
-         finalOppScore = doc.data().player2Score;
-     }
-     // Also write my score so opponent can see it if they finish later
-     await db.collection('olympiad_matches').doc(olympiadMatchId).update({
-        player1Score: olympiadMyScore
-     });
+    const doc=await db.collection('olympiad_matches').doc(olympiadMatchId).get();
+    if(doc.exists&&doc.data().player2Score)finalOppScore=doc.data().player2Score;
+    await db.collection('olympiad_matches').doc(olympiadMatchId).update({player1Score:olympiadMyScore});
   }catch(e){}
-
-  // Determine Winner
-  const iWon = olympiadMyScore > finalOppScore;
-  
-  let gainedPts = iWon ? (olympiadCfg.winnerPoints || 100) : (olympiadCfg.loserPoints || 30);
-  let gainedDia = iWon ? (olympiadCfg.winnerDiamonds || 5) : (olympiadCfg.loserDiamonds || 0);
-  
+  const iWon=olympiadMyScore>finalOppScore;
+  const gainedPts=iWon?100:30;
+  const gainedDia=iWon?5:0;
   try{
-    // Update User Stats
-    await db.collection('users').doc(auth.currentUser.uid).update({
-      points:firebase.firestore.FieldValue.increment(gainedPts),
-      olympiadPoints:firebase.firestore.FieldValue.increment(gainedPts),
-      diamonds:firebase.firestore.FieldValue.increment(gainedDia)
-    });
-    
-    U.points=(U.points||0)+gainedPts;
-    U.olympiadPoints=(U.olympiadPoints||0)+gainedPts;
-    U.diamonds=(U.diamonds||0)+gainedDia;
-    
-    // Add History
-    await db.collection('gameHistory').add({
-        uid:auth.currentUser.uid,
-        name:U.name||'یاریزان',
-        city:'ئۆڵۆمپیاد',
-        type:'olympiad',
-        correct:Math.floor(olympiadMyScore/15), // Approximate
-        total:10,
-        points:gainedPts,
-        diamonds:gainedDia,
-        date:firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    refreshUI();
-    await syncProfileToScores();
-    
-  }catch(e){console.error(e);}
-  
-  endOlympiadGame({player1Score:olympiadMyScore, player2Score:finalOppScore});
+    await db.collection('users').doc(auth.currentUser.uid).update({points:firebase.firestore.FieldValue.increment(gainedPts),olympiadPoints:firebase.firestore.FieldValue.increment(gainedPts),diamonds:firebase.firestore.FieldValue.increment(gainedDia),wins:firebase.firestore.FieldValue.increment(iWon?1:0)});
+    U.points=(U.points||0)+gainedPts;U.olympiadPoints=(U.olympiadPoints||0)+gainedPts;U.diamonds=(U.diamonds||0)+gainedDia;U.wins=(U.wins||0)+(iWon?1:0);
+    refreshUI();await syncProfileToScores();
+  }catch(e){}
+  showOlympiadResult({player1Score:olympiadMyScore,player2Score:finalOppScore},gainedPts,gainedDia,iWon);
 }
 
-function endOlympiadGame(data){
-  if(olympiadUnsub){olympiadUnsub();olympiadUnsub=null;}
-  
+function showOlympiadResult(data,pts,dia,won){
   document.getElementById('olympiad-play').style.display='none';
-  document.getElementById('olympiad-vs').style.display='none';
-  document.getElementById('olympiad-matchmaking').style.display='none';
   document.getElementById('olympiad-result').style.display='block';
-  
-  const p1Score=data.player1Score||0;
-  const p2Score=data.player2Score||0;
-  
-  // Determine who is me (assuming I am player 1 for this demo logic, or checking UID)
-  // For simplicity, we show My Score vs Opp Score
-  
-  document.getElementById('olyr-me-av').innerHTML=isImg(U.avatar)?`<img src="${U.avatar}">`:(U.name||'?').charAt(0);
-  document.getElementById('olyr-me-name').innerText=U.name||'تۆ';
-  document.getElementById('olyr-my-score').innerText=p1Score; // Assuming I am P1
-  
-  document.getElementById('olyr-opp-av').innerHTML=isImg(olympiadOpponent.avatar)?`<img src="${olympiadOpponent.avatar}">`:olympiadOpponent.name.charAt(0);
+  document.getElementById('olyr-my-av').innerHTML=U.avatar?`<img src="${U.avatar}">`:(U.name||'?').charAt(0);
+  document.getElementById('olyr-my-name').innerText=U.name||'تۆ';
+  document.getElementById('olyr-my-score').innerText=data.player1Score;
+  document.getElementById('olyr-opp-av').innerHTML=olympiadOpponent.avatar?`<img src="${olympiadOpponent.avatar}">`:olympiadOpponent.name.charAt(0);
   document.getElementById('olyr-opp-name').innerText=olympiadOpponent.name;
-  document.getElementById('olyr-opp-score').innerText=p2Score;
-  
-  const won=p1Score>p2Score;
+  document.getElementById('olyr-opp-score').innerText=data.player2Score;
   document.getElementById('olyr-trophy').innerText=won?'🏆':'😔';
   document.getElementById('olyr-title').innerText=won?'پیرۆزە! بردنتەوە!':'بەختت باش نەبوو!';
-  document.getElementById('olyr-sub').innerText=won?'ئاستەکەت بەرزتر بوو لە ڕکابەرەکەت':'جارێکی تر هەوڵ بدەرەوە';
-  
-  document.getElementById('olyr-pts').innerText='+'+(won?(olympiadCfg.winnerPoints||100):(olympiadCfg.loserPoints||30));
-  
-  const diaRow=document.getElementById('olyr-dia-row');
-  if(won){
-    diaRow.style.display='block';
-    document.getElementById('olyr-dia').innerText='+'+(olympiadCfg.winnerDiamonds||5);
-  }else{
-    diaRow.style.display='none';
-  }
+  document.getElementById('olyr-sub').innerText=won?'ئاستەکەت بەرزتر بوو':'جارێکی تر هەوڵ بدەرەوە';
+  document.getElementById('olyr-pts').innerText='+'+pts;
+  if(dia>0){document.getElementById('olyr-dia-row').style.display='flex';document.getElementById('olyr-dia').innerText='+'+dia;}
+  else{document.getElementById('olyr-dia-row').style.display='none';}
 }
+
+async function viewOlympiadProfile(type){
+  let userData;
+  if(type==='me'){userData=U;}
+  else{try{const doc=await db.collection('users').doc(olympiadOpponent.uid).get();userData=doc.exists?doc.data():olympiadOpponent;}catch(e){userData=olympiadOpponent;}}
+  document.getElementById('oly-modal-av').innerHTML=userData.avatar?`<img src="${userData.avatar}">`:(userData.name||'?').charAt(0);
+  document.getElementById('oly-modal-name').innerText=userData.name||'یاریزان';
+  document.getElementById('oly-modal-city').innerText=userData.city||'-';
+  document.getElementById('oly-modal-lvl').innerText=Math.floor((userData.points||0)/500);
+  document.getElementById('oly-modal-pts').innerText=(userData.points||0).toLocaleString();
+  document.getElementById('oly-modal-dia').innerText=(userData.diamonds||0).toLocaleString();
+  document.getElementById('oly-modal-wins').innerText=(userData.wins||0);
+  const rank=userData.points>=1000?'🥇':(userData.points>=500?'🥈':(userData.points>=100?'🥉':''));
+  document.getElementById('oly-modal-medal').innerText=rank;
+  document.getElementById('olympiad-profile-modal').classList.add('show');
+}
+function closeOlympiadProfile(){document.getElementById('olympiad-profile-modal').classList.remove('show');}
 
 function exitOlympiad(){
   if(olympiadTimer)clearInterval(olympiadTimer);
   if(olympiadUnsub){olympiadUnsub();olympiadUnsub=null;}
-  
-  // If match was waiting and I created it, delete it
   if(olympiadMatchId){
-     // Check status before deleting
-     db.collection('olympiad_matches').doc(olympiadMatchId).get().then(doc=>{
-        if(doc.exists && doc.data().status==='waiting' && doc.data().player1===auth.currentUser.uid){
-            doc.ref.delete();
-        }
-     }).catch(()=>{});
-     olympiadMatchId=null;
+    db.collection('olympiad_matches').doc(olympiadMatchId).get().then(doc=>{
+      if(doc.exists&&doc.data().status==='waiting'&&doc.data().player1===auth.currentUser.uid){doc.ref.delete();}
+    }).catch(()=>{});
+    olympiadMatchId=null;
   }
-  
   olympiadActive=false;
   document.getElementById('olympiad-screen').classList.remove('show');
 }
 
+/* ================= دیاری و فرۆشگا ================= */
 function loadRewards(){const grid=document.getElementById('rewards-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p>';db.collection('rewards').get().then(snap=>{if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">هیچ بۆکسێک نییە.</p>';return;}grid.innerHTML='';const claimed=U.claimedRewards||[];snap.forEach(doc=>{const d=doc.data();const lvlNeed=d.reqLevel||0,scNeed=d.reqScore||0;const lvlOk=getLevel(U.points)>=lvlNeed,scOk=(U.points||0)>=scNeed;const unlocked=lvlOk&&scOk,isClaimed=claimed.includes(doc.id);let cls='rw-box',btnHtml='',lockOv='';if(isClaimed){cls+=' claimed';btnHtml='<button class="rw-btn done">✅ وەرگیراوە</button>';}else if(unlocked){cls+=' unlocked';btnHtml='<button class="rw-btn open">🎁 وەرگرتن</button>';}else{cls+=' locked';lockOv='<div class="rw-lock-ov">🔒</div>';btnHtml='<button class="rw-btn lock">قفڵە</button>';}const reqHtml='<div class="rw-req">'+(lvlNeed>0?('<div>🎖️ ئاست: <span class="'+(lvlOk?'ok':'no')+'">'+getLevel(U.points)+'/'+lvlNeed+'</span></div>'):'')+(scNeed>0?('<div>⭐ خاڵ: <span class="'+(scOk?'ok':'no')+'">'+(U.points||0)+'/'+scNeed+'</span></div>'):'')+'</div>';let gift=[];if(d.rewardPoints)gift.push('⭐'+d.rewardPoints);if(d.rewardDiamonds)gift.push('💎'+d.rewardDiamonds);if(d.rewardDinars)gift.push('💵'+d.rewardDinars);grid.innerHTML+='<div class="'+cls+'" onclick="'+(unlocked&&!isClaimed?("claimReward('"+doc.id+"')"):'')+'">'+lockOv+'<div class="rw-ic">'+(d.icon||'🎁')+'</div><div class="rw-nm">'+(d.name||'بۆکس')+'</div>'+reqHtml+'<div class="rw-gift">خەڵات: '+(gift.join(' ')||'-')+'</div>'+btnHtml+'</div>';});}).catch(()=>{grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#f87171;font-size:12px;padding:20px">هەڵە</p>';});}
 async function claimReward(id){const doc=await db.collection('rewards').doc(id).get();if(!doc.exists)return;const d=doc.data(),claimed=U.claimedRewards||[];if(claimed.includes(id)){showPopup('ئەم خەڵاتە پێشتر وەرگیراوە ✅','info');return;}const lvlOk=getLevel(U.points)>=(d.reqLevel||0),scOk=(U.points||0)>=(d.reqScore||0);if(!lvlOk||!scOk){showPopup('🔒 مەرجەکانت هێشتا تەواو نین!','warning');return;}try{const newP=(U.points||0)+(d.rewardPoints||0),newD=(U.diamonds||0)+(d.rewardDiamonds||0),newDin=(U.dinars||0)+(d.rewardDinars||0),newClaimed=[...claimed,id];await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,dinars:newDin,claimedRewards:newClaimed});U.points=newP;U.diamonds=newD;U.dinars=newDin;U.claimedRewards=newClaimed;refreshUI();await syncProfileToScores();loadRewards();await checkLevelReward();let g=[];if(d.rewardPoints)g.push('⭐ '+d.rewardPoints+' خاڵ');if(d.rewardDiamonds)g.push('💎 '+d.rewardDiamonds+' ئەڵماس');if(d.rewardDinars)g.push('💵 '+d.rewardDinars+' دینار');showPopup('🎉 پیرۆز! خەڵاتەکەت وەرگرت:\n'+g.join('\n'),'reward','سوپاس');}catch(e){showPopup('هەڵە لە وەرگرتنی خەڵات','error');}}
 function loadDPacks(){const grid=document.getElementById('dpacks-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p>';db.collection('diamond_packs').orderBy('dinars','asc').get().then(snap=>{db.collection('payment_settings').doc('config').get().then(c=>{PAY_CFG=c.exists?c.data():{};buildPacks(snap);}).catch(()=>{PAY_CFG={};buildPacks(snap);});}).catch(()=>{grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#f87171;font-size:12px;padding:20px">هەڵە</p>';});}
 function buildPacks(snap){const grid=document.getElementById('dpacks-grid');if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">هیچ پاکێجێک نییە</p>';return;}grid.innerHTML='';const qr=PAY_CFG.fibQR||'';snap.forEach(doc=>{const d=doc.data();const dia=d.diamonds||0,din=d.dinars||0;const badge=qr?('<img class="dp-qr" src="'+qr+'">'):'<div class="dp-qr-emoji">🏦</div>';grid.innerHTML+='<div class="dpack" data-act="buy" data-id="'+doc.id+'" data-dia="'+dia+'" data-din="'+din+'">'+badge+'<div class="dp-dia">💎 '+dia+' <small>ئەڵماس</small></div><div class="dp-arrow">⬇️</div><div class="dp-din">💵 '+din+' دینار</div><button class="dp-buy" type="button">کڕین</button></div>';});}
 function setupPayDelegation(){const inner=document.getElementById('pay-inner');const grid=document.getElementById('dpacks-grid');if(inner&&!inner.getAttribute('data-deleg')){inner.setAttribute('data-deleg','1');inner.addEventListener('click',function(e){const el=e.target.closest('[data-act]');if(!el)return;const act=el.getAttribute('data-act');if(act==='choose-fib'){payChoose('fib');}else if(act==='choose-asy'){payChoose('asyacell');}else if(act==='back'){payBack();}else if(act==='close'){closePayModal();}else if(act==='copy'){payCopy();}else if(act==='copy-acc'){copyText(el.getAttribute('data-val')||'',el);}else if(act==='proof-camera'){const fi=document.getElementById('pay-proof-camera');if(fi){e.preventDefault();e.stopPropagation();fi.value='';fi.click();}}else if(act==='proof-gallery'){const fi=document.getElementById('pay-proof-gallery');if(fi){e.preventDefault();e.stopPropagation();fi.value='';fi.click();}}else if(act==='submit'){paySubmit();}});inner.addEventListener('change',function(e){if(e.target&&(e.target.id==='pay-proof-camera'||e.target.id==='pay-proof-gallery')){payProofPick(e);}});}if(grid&&!grid.getAttribute('data-deleg')){grid.setAttribute('data-deleg','1');grid.addEventListener('click',function(e){const el=e.target.closest('[data-act="buy"]');if(!el)return;const id=el.getAttribute('data-id'),dia=parseInt(el.getAttribute('data-dia'))||0,din=parseInt(el.getAttribute('data-din'))||0;buyDPack(id,dia,din);});}}
-function payCopy(){const code=PAY_CFG.fibCode||'';if(!code)return;const btn=document.getElementById('pay-copy-btn');const done=function(){if(btn){btn.classList.add('copied');btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.innerText=o;},1500);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(done).catch(function(){fallbackCopy(code);done();});}else{fallbackCopy(code);done();}}
+function payCopy(){const code=PAY_CFG.fibCode||'';if(!code)return;const btn=document.getElementById('pay-copy-btn');const done=function(){if(btn){btn.classList.add('copied');btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.classList.remove('copied');btn.innerText='📋 کۆپی';},1500);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(done).catch(function(){fallbackCopy(code);done();});}else{fallbackCopy(code);done();}}
 function buyDPack(id,dia,din){if(hasPendingPay){showPopup('⏳ داواکارییەکی پارەدانت هەیە کە هێشتا چاوەڕوانە.','warning','باشە');return;}PAY_PACK={id:id,dia:dia,din:din};PAY_PROOF='';PAY_METHOD='';PAY_STEP='method';document.getElementById('pay-modal').classList.add('show');renderPay();}
 function closePayModal(){document.getElementById('pay-modal').classList.remove('show');PAY_PROOF='';}
 function payChoose(m){PAY_METHOD=m;PAY_PROOF='';PAY_STEP=m;renderPay();}
