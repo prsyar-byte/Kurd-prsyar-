@@ -264,8 +264,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 .ni:hover,.ni.on{color:#38bdf8}
 .ni .nic{font-size:18px}
 .ni span{font-weight:700}
-#game-screen,#memory-screen,#word-screen,#olympiad-screen{position:fixed;inset:0;background:linear-gradient(160deg,#0f172a,#1e1b4b 55%,#312e81);z-index:1500;display:none;flex-direction:column;padding:20px;overflow-y:auto}
-#game-screen.show,#memory-screen.show,#word-screen.show,#olympiad-screen.show{display:flex}
+#game-screen,#memory-screen,#word-screen{position:fixed;inset:0;background:linear-gradient(160deg,#0f172a,#1e1b4b 55%,#312e81);z-index:1500;display:none;flex-direction:column;padding:20px;overflow-y:auto}
+#game-screen.show,#memory-screen.show,#word-screen.show{display:flex}
 .game-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .game-close{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:8px 14px;border-radius:10px;font-family:'Vazirmatn';font-weight:700;font-size:12px;cursor:pointer}
 .game-city{font-size:14px;font-weight:800;color:#38bdf8}
@@ -351,49 +351,6 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
 @keyframes popFade{from{opacity:0}to{opacity:1}}
 @keyframes popScale{from{opacity:0;transform:scale(.82) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .fade-in{animation:fadeUp .5s ease forwards}
-
-/* ===== ئۆڵۆمپیاد ===== */
-.olympiad-vs-display{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);border-radius:12px;padding:15px;margin-bottom:15px;gap:10px}
-.olympiad-player{flex:1;text-align:center;cursor:pointer;transition:.3s}
-.olympiad-player:active{transform:scale(.95)}
-.olympiad-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 8px;overflow:hidden;border:3px solid rgba(255,255,255,.2);position:relative}
-.olympiad-avatar img{width:100%;height:100%;object-fit:cover}
-.olympiad-frame{position:absolute;top:-15%;left:-15%;width:130%;height:130%;pointer-events:none;z-index:2}
-.olympiad-pname{font-size:12px;font-weight:700;margin-bottom:4px}
-.olympiad-pscore{font-size:20px;font-weight:900;color:#fbbf24}
-.olympiad-vs-text{font-size:24px;font-weight:900;color:#fbbf24;padding:0 10px}
-.olympiad-matchmaking{text-align:center;padding:40px 20px}
-.olympiad-matchmaking .spinner{width:70px;height:70px;border:5px solid rgba(255,255,255,.1);border-top-color:#38bdf8;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 25px}
-.olympiad-matchmaking-text{font-size:18px;font-weight:700;margin-bottom:10px}
-.olympiad-matchmaking-sub{font-size:13px;color:#94a3b8;line-height:1.8}
-.olympiad-result-screen{text-align:center;padding:30px 20px}
-.olympiad-result-scores{display:flex;justify-content:center;gap:30px;margin-bottom:30px}
-.olympiad-result-player{text-align:center}
-.olympiad-result-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 10px;overflow:hidden}
-.olympiad-result-avatar img{width:100%;height:100%;object-fit:cover}
-.olympiad-result-pname{font-size:13px;font-weight:700;margin-bottom:8px}
-.olympiad-result-pscore{font-size:28px;font-weight:900}
-.olympiad-rewards{background:rgba(255,255,255,.05);border-radius:12px;padding:15px;margin-bottom:25px}
-.olympiad-reward-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
-.olympiad-reward-item:last-child{border-bottom:none}
-.olympiad-reward-label{font-size:13px;color:#94a3b8}
-.olympiad-reward-value{font-size:16px;font-weight:800}
-.olympiad-home-btn{background:linear-gradient(135deg,#38bdf8,#2563eb);border:none;border-radius:12px;padding:14px 40px;color:#fff;font-family:'Vazirmatn';font-size:15px;font-weight:800;cursor:pointer;width:100%}
-.olympiad-profile-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
-.olympiad-profile-modal.show{display:flex}
-.olympiad-profile-card{background:linear-gradient(160deg,#1e293b,#0f172a);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:25px;width:100%;max-width:320px;position:relative;animation:slideUp .3s ease}
-.olympiad-profile-close{position:absolute;top:15px;left:15px;background:rgba(255,255,255,.1);border:none;border-radius:50%;width:32px;height:32px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.olympiad-profile-header{text-align:center;margin-bottom:20px}
-.olympiad-profile-avatar-large{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 12px;overflow:hidden;border:4px solid rgba(255,255,255,.15)}
-.olympiad-profile-avatar-large img{width:100%;height:100%;object-fit:cover}
-.olympiad-profile-name{font-size:20px;font-weight:800;margin-bottom:5px}
-.olympiad-profile-city{font-size:12px;color:#94a3b8}
-.olympiad-profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
-.olympiad-profile-stat{background:rgba(255,255,255,.05);border-radius:10px;padding:12px;text-align:center}
-.olympiad-profile-stat-value{font-size:20px;font-weight:800;margin-bottom:3px}
-.olympiad-profile-stat-label{font-size:10px;color:#94a3b8}
-.waiting-opponent-msg{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:15px;text-align:center;margin:20px 0;animation:pulse 1.5s infinite}
-.waiting-opponent-msg .spinner-small{width:30px;height:30px;border:3px solid rgba(251,191,36,.3);border-top-color:#fbbf24;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px}
 </style>
 </head>
 <body>
@@ -415,7 +372,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
         <div class="fg"><label>👤 ناو</label><input type="text" id="r-name" placeholder="ناوی تەواوت" required minlength="3"></div>
         <div class="fg"><label>📧 ئیمەیل</label><input type="email" id="r-email" placeholder="example@email.com" required></div>
         <div class="fg"><label>📱 مۆبایل</label><input type="tel" id="r-phone" placeholder="07XXXXXXXXX" required pattern="[0-9]{11}"></div>
-        <div class="fg"><label>️ شار</label><select id="r-city" required><option value="" disabled selected>هەڵبژێرە</option><option value="هەولێر">هەولێر</option><option value="سلێمانی">سلێمانی</option></select></div>
+        <div class="fg"><label>🏙️ شار</label><select id="r-city" required><option value="" disabled selected>هەڵبژێرە</option><option value="هەولێر">هەولێر</option><option value="سلێمانی">سلێمانی</option></select></div>
         <div class="fg"><label>🔑 وشەی نهێنی</label><input type="password" id="r-pass" placeholder="بەلایەنی کەمەوە ٦ پیت" required minlength="6"></div>
         <button type="submit" class="btn" id="r-btn">تۆمارکردن</button>
         <div class="switch-link">هەژمارت هەیە؟ <a onclick="switchAuth('login')">چوونەژوورەوە بکە</a></div>
@@ -462,14 +419,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
           <img id="wordbox-img" class="gc-img">
           <div class="card-name">🔤 وشەکە بدۆزەرەوە</div>
           <div class="card-pts">⭐ <span id="wordbox-pts">0</span></div>
-          <div class="glock-badge" id="word-lock-badge"> قوفڵە</div>
+          <div class="glock-badge" id="word-lock-badge">🔒 قوفڵە</div>
           <div class="ov"><button class="pb">یاری بکە</button></div>
-        </div>
-        <div class="gc-sq" onclick="startOlympiad()" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">
-          <img id="olympiadbox-img" class="gc-img" src="https://i.ibb.co/X092D1P/file-00000000e04c8243871d159694789881.png">
-          <div class="card-name"> ئۆڵۆمپیاد</div>
-          <div class="card-pts">⭐ <span id="olympiad-pts">0</span></div>
-          <div class="ov"><button class="pb">یاری 1v1</button></div>
         </div>
       </div>
     </div>
@@ -497,16 +448,16 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
       <div class="pcard">
         <div class="profile-cover" id="p-cover" onclick="go('store')"><div class="cover-hint">🛒 کلیک بکە بۆ گۆڕینی پاشبنەما</div></div>
         <div class="pc-body">
-          <div class="pav-wrap"><div class="pav" id="p-av">?</div><img class="av-frame" id="p-frame"><div class="pav-edit" onclick="document.getElementById('avatar-input').click()"></div></div>
+          <div class="pav-wrap"><div class="pav" id="p-av">?</div><img class="av-frame" id="p-frame"><div class="pav-edit" onclick="document.getElementById('avatar-input').click()">📷</div></div>
           <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="uploadAvatar(event)">
           <div class="pname" id="p-name">...</div>
           <div class="pname-edit" onclick="openNameModal()">✏️ گۆڕینی ناو</div>
           <div class="cooldown-msg" id="cooldown-msg" style="display:none"></div>
           <div class="lvl-card" style="text-align:right">
-            <div class="lvl-card-top"><span>️ ئاست <b id="profile-lvl">0</b></span><span class="next" id="profile-lvl-txt">0 / 500</span></div>
+            <div class="lvl-card-top"><span>🎖️ ئاست <b id="profile-lvl">0</b></span><span class="next" id="profile-lvl-txt">0 / 500</span></div>
             <div class="lvl-bar"><div class="lvl-bar-fill" id="profile-lvl-fill" style="width:0%"></div></div>
           </div>
-          <div class="prow"><span class="lbl"> ئیمەیل</span><span class="val" id="p-email">-</span></div>
+          <div class="prow"><span class="lbl">📧 ئیمەیل</span><span class="val" id="p-email">-</span></div>
           <div class="prow"><span class="lbl">📱 مۆبایل</span><span class="val" id="p-phone">-</span></div>
           <div class="prow"><span class="lbl">🏙️ شار</span><span class="val" id="p-city">-</span></div>
           <div class="prow"><span class="lbl">⭐ خاڵ</span><span class="val" id="p-pts" style="color:#fbbf24">0</span></div>
@@ -517,10 +468,10 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
             <div class="stl">
               <div class="sti" onclick="this.querySelector('.tg').classList.toggle('on')"><span class="sl">🔊 دەنگ</span><div class="tg on"></div></div>
               <div class="sti" onclick="this.querySelector('.tg').classList.toggle('on')"><span class="sl">🎵 میوزیک</span><div class="tg"></div></div>
-              <div class="sti" onclick="this.querySelector('.tg').classList.toggle('on')"><span class="sl"> لەرزین</span><div class="tg on"></div></div>
+              <div class="sti" onclick="this.querySelector('.tg').classList.toggle('on')"><span class="sl">📳 لەرزین</span><div class="tg on"></div></div>
             </div>
           </div>
-          <button class="logout-profile" onclick="logout()">چوونەدەرەوە </button>
+          <button class="logout-profile" onclick="logout()">چوونەدەرەوە ⏻</button>
         </div>
       </div>
     </div>
@@ -538,17 +489,16 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
           <button class="lb-tab on" id="lbg-memory" onclick="setGameLB('memory',this)">🧠 یادی کارتی</button>
           <button class="lb-tab" id="lbg-word" onclick="setGameLB('word',this)">🔤 وشە</button>
           <button class="lb-tab" id="lbg-city" onclick="setGameLB('city',this)">🏙️ خاڵی شار</button>
-          <button class="lb-tab" id="lbg-olympiad" onclick="setGameLB('olympiad',this)"> ئۆڵۆمپیاد</button>
         </div>
         <div class="lb" id="lb-games-list"></div>
       </div>
     </div>
     <div id="pg-rewards" class="page fade-in">
-      <div class="sec"> بۆکسی خەڵات</div>
+      <div class="sec">🎁 بۆکسی خەڵات</div>
       <div class="rw-grid" id="rewards-grid"><p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p></div>
     </div>
     <div id="pg-store" class="page fade-in">
-      <div class="sec"> کڕینی ئەڵماس بە دینار</div>
+      <div class="sec">💎 کڕینی ئەڵماس بە دینار</div>
       <div class="pay-lock-banner" id="pay-lock-banner"><span class="plb-ic">⏳</span><span>داواکارییەکی پارەدانت هەیە کە هێشتا چاوەڕوانە.</span></div>
       <div class="dpacks-center"><div class="dpacks" id="dpacks-grid"><p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p></div></div>
       <div class="shop-heads">
@@ -566,8 +516,8 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="ni" onclick="go('citygame',this)"><div class="nic">🏙️</div><span>یاری شار</span></div>
     <div class="ni" onclick="go('profile',this)"><div class="nic">👤</div><span>پرۆفایل</span></div>
     <div class="ni" onclick="go('lb',this)"><div class="nic">🏆</div><span>ڕیزبەندی</span></div>
-    <div class="ni" onclick="go('rewards',this)"><div class="nic"></div><span>دیاری</span></div>
-    <div class="ni" onclick="go('store',this)"><div class="nic"></div><span>فرۆشگا</span></div>
+    <div class="ni" onclick="go('rewards',this)"><div class="nic">🎁</div><span>دیاری</span></div>
+    <div class="ni" onclick="go('store',this)"><div class="nic">🛒</div><span>فرۆشگا</span></div>
   </div>
 </div>
 <div id="game-screen">
@@ -584,7 +534,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
   </div>
   <div id="game-result" style="max-width:480px;margin:auto;width:100%;display:none">
     <div class="game-result">
-      <div class="trophy" id="r-trophy"></div>
+      <div class="trophy" id="r-trophy">🏆</div>
       <h2 id="r-title">ئافەرین!</h2>
       <div class="sub" id="r-sub">یاری تەواو بوو</div>
       <div class="result-stats">
@@ -607,7 +557,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="mem-grid" id="mem-grid"></div>
     <div class="game-actions">
       <button class="power-btn" onclick="memReveal(2,10)">👀 ٢ کارت (١٠💎)</button>
-      <button class="power-btn" onclick="memReveal(4,20)">👀 ٤ کارت (٢٠💎)</button>
+      <button class="power-btn" onclick="memReveal(4,20)">👀👀 ٤ کارت (٢٠💎)</button>
     </div>
   </div>
   <div id="mem-result" style="max-width:480px;margin:auto;width:100%;display:none">
@@ -616,7 +566,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
       <h2 id="memr-title">تەواوت کرد!</h2>
       <div class="sub" id="memr-sub">یادی کارتی تەواو بوو</div>
       <div class="result-stats">
-        <div class="result-stat"><div class="ic">️</div><div class="v" id="memr-time">0</div><div class="l">چرکە</div></div>
+        <div class="result-stat"><div class="ic">⏱️</div><div class="v" id="memr-time">0</div><div class="l">چرکە</div></div>
         <div class="result-stat"><div class="ic">🎯</div><div class="v" id="memr-moves">0</div><div class="l">هەوڵ</div></div>
         <div class="result-stat"><div class="ic">✅</div><div class="v" id="memr-found">0/0</div><div class="l">جووت</div></div>
       </div>
@@ -643,7 +593,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="word-tiles" id="w-tiles"></div>
     <div class="game-actions">
       <button class="word-clear" onclick="wordClear()">🔄 پاککردنەوە</button>
-      <button class="power-btn" onclick="wordReveal2()">💡 ٢ پیت (١💎)</button>
+      <button class="power-btn" onclick="wordReveal2()">💡 ٢ پیت (١٠💎)</button>
       <button class="power-btn" onclick="wordSkip()">⏭️ بەزاندن (٢٠💎)</button>
     </div>
   </div>
@@ -655,7 +605,7 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
       <div class="result-stats">
         <div class="result-stat"><div class="ic">⏱️</div><div class="v" id="wordr-time">0</div><div class="l">چرکە</div></div>
         <div class="result-stat"><div class="ic">✅</div><div class="v" id="wordr-correct">0/0</div><div class="l">وشە</div></div>
-        <div class="result-stat"><div class="ic"></div><div class="v" id="wordr-total">0</div><div class="l">کۆ</div></div>
+        <div class="result-stat"><div class="ic">🔤</div><div class="v" id="wordr-total">0</div><div class="l">کۆ</div></div>
       </div>
       <div style="display:flex;gap:10px;justify-content:center;margin-bottom:22px;flex-wrap:wrap">
         <div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:800;color:#fbbf24">⭐ <span id="wordr-pts">+0</span> خاڵ</div>
@@ -665,121 +615,10 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     </div>
   </div>
 </div>
-
-<!-- شاشەی ئۆڵۆمپیاد -->
-<div id="olympiad-screen">
-  <div id="olympiad-matchmaking" class="olympiad-matchmaking">
-    <div class="spinner"></div>
-    <div class="olympiad-matchmaking-text">🎓 گەڕان بۆ ڕکابەر...</div>
-    <div class="olympiad-matchmaking-sub">چاوەڕوان بە تا یاریزانێکی تر دۆزرێتەوە</div>
-    <button class="game-close" onclick="exitOlympiad()" style="margin-top:30px">✕ دەرچوون</button>
-  </div>
-
-  <div id="olympiad-play" style="max-width:480px;margin:0 auto;width:100%;display:none">
-    <div class="game-top"><button class="game-close" onclick="exitOlympiad()">✕ دەرچوون</button><div class="game-city">🎓 ئۆڵۆمپیاد 1v1</div></div>
-    
-    <div class="olympiad-vs-display">
-      <div class="olympiad-player" onclick="viewOlympiadProfile('me')">
-        <div class="olympiad-avatar" id="oly-my-av">?</div>
-        <div class="olympiad-pname" id="oly-my-name">تۆ</div>
-        <div class="olympiad-pscore" id="oly-my-score">0</div>
-      </div>
-      <div class="olympiad-vs-text">VS</div>
-      <div class="olympiad-player" onclick="viewOlympiadProfile('opponent')">
-        <div class="olympiad-avatar" id="oly-opp-av">?</div>
-        <div class="olympiad-pname" id="oly-opp-name">ڕکابەر</div>
-        <div class="olympiad-pscore" id="oly-opp-score">0</div>
-      </div>
-    </div>
-
-    <div class="game-stats">
-      <div class="game-stat qnum"><div class="lbl">پرسیار</div><div class="val"><span id="oly-qnum">1</span>/10</div></div>
-    </div>
-
-    <div class="game-stat timer" id="oly-timer-box" style="margin:0 auto 15px;width:100%;max-width:200px">
-      <div class="lbl">⏱️ کات</div>
-      <div class="val" id="oly-timer">10</div>
-    </div>
-
-    <div class="game-question"><p id="oly-question">...</p></div>
-    <div class="game-answers" id="oly-answers"></div>
-    
-    <div id="waiting-opponent" class="waiting-opponent-msg" style="display:none">
-      <div class="spinner-small"></div>
-      <div style="font-size:14px;font-weight:700">چاوەڕوانی ڕکابەر...</div>
-      <div style="font-size:12px;color:#94a3b8;margin-top:5px">یاریزانەکەی تر هێشتا یاری تەواو نەکردووە</div>
-    </div>
-  </div>
-
-  <div id="olympiad-result" class="olympiad-result-screen" style="max-width:480px;margin:auto;width:100%;display:none">
-    <div class="trophy" id="olyr-trophy" style="font-size:70px;margin-bottom:14px;animation:bounce 1s infinite"></div>
-    <h2 id="olyr-title" style="font-size:24px;font-weight:900;margin-bottom:8px">ئەنجام</h2>
-    <div class="sub" id="olyr-sub" style="font-size:13px;color:#94a3b8;margin-bottom:24px">یاری تەواو بوو</div>
-    
-    <div class="olympiad-result-scores">
-      <div class="olympiad-result-player">
-        <div class="olympiad-result-avatar" id="olyr-my-av">?</div>
-        <div class="olympiad-result-pname" id="olyr-my-name">تۆ</div>
-        <div class="olympiad-result-pscore" id="olyr-my-score" style="color:#38bdf8">0</div>
-      </div>
-      <div class="olympiad-result-player">
-        <div class="olympiad-result-avatar" id="olyr-opp-av">?</div>
-        <div class="olympiad-result-pname" id="olyr-opp-name">ڕکابەر</div>
-        <div class="olympiad-result-pscore" id="olyr-opp-score" style="color:#ef4444">0</div>
-      </div>
-    </div>
-
-    <div class="olympiad-rewards">
-      <div class="olympiad-reward-item">
-        <span class="olympiad-reward-label">⭐ خاڵ</span>
-        <span class="olympiad-reward-value" id="olyr-pts" style="color:#fbbf24">+0</span>
-      </div>
-      <div class="olympiad-reward-item" id="olyr-dia-row" style="display:none">
-        <span class="olympiad-reward-label">💎 ئەڵماس</span>
-        <span class="olympiad-reward-value" id="olyr-dia" style="color:#a78bfa">+0</span>
-      </div>
-    </div>
-
-    <button class="olympiad-home-btn" onclick="playAgainOlympiad()">🔄 یاری دوبارە</button>
-    <button class="olympiad-home-btn" style="margin-top:10px;background:rgba(255,255,255,.08)" onclick="exitOlympiad()">🏠 گەڕانەوە بۆ سەرەتا</button>
-  </div>
-</div>
-
-<!-- مۆدالی پرۆفایلی ئۆڵۆمپیاد -->
-<div id="olympiad-profile-modal" class="olympiad-profile-modal" onclick="if(event.target===this)closeOlympiadProfile()">
-  <div class="olympiad-profile-card">
-    <button class="olympiad-profile-close" onclick="closeOlympiadProfile()">✕</button>
-    <div class="olympiad-profile-header">
-      <div class="olympiad-profile-avatar-large" id="oly-modal-av">?</div>
-      <div class="olympiad-profile-name" id="oly-modal-name">-</div>
-      <div class="olympiad-profile-city" id="oly-modal-city">-</div>
-    </div>
-    <div id="oly-modal-medal" style="text-align:center;font-size:32px;margin:10px 0"></div>
-    <div class="olympiad-profile-stats">
-      <div class="olympiad-profile-stat">
-        <div class="olympiad-profile-stat-value" id="oly-modal-lvl" style="color:#38bdf8">0</div>
-        <div class="olympiad-profile-stat-label">🎖️ ئاست</div>
-      </div>
-      <div class="olympiad-profile-stat">
-        <div class="olympiad-profile-stat-value" id="oly-modal-pts" style="color:#fbbf24">0</div>
-        <div class="olympiad-profile-stat-label">⭐ خاڵ</div>
-      </div>
-      <div class="olympiad-profile-stat">
-        <div class="olympiad-profile-stat-value" id="oly-modal-dia" style="color:#a78bfa">0</div>
-        <div class="olympiad-profile-stat-label">💎 ئەڵماس</div>
-      </div>
-      <div class="olympiad-profile-stat">
-        <div class="olympiad-profile-stat-value" id="oly-modal-wins" style="color:#22c55e">0</div>
-        <div class="olympiad-profile-stat-label">🏆 بردنەوە</div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal-bg" id="name-modal">
   <div class="modal">
     <div class="um-inner">
-      <h3>️ گۆڕینی ناو</h3>
+      <h3>✏️ گۆڕینی ناو</h3>
       <input type="text" id="new-name-input" placeholder="ناوی نوێ" minlength="3">
       <p style="font-size:10px;color:#f87171;margin-bottom:12px;text-align:center">⚠️ ٧ ڕۆژ ناتوانیت بگۆڕیتەوە</p>
       <div class="modal-btns"><button class="m-save" onclick="saveName()">پاشەکەوت</button><button class="m-cancel" onclick="closeNameModal()">پاشگەزبوونەوە</button></div>
@@ -811,7 +650,6 @@ body{font-family:'Vazirmatn',sans-serif;background:linear-gradient(160deg,#0f172
     <div class="popup-btns" id="popup-btns"></div>
   </div>
 </div>
-
 <script>
 const firebaseConfig={apiKey:"AIzaSyC3qMjhPB9hUbY8z6ebMKqHIWLdFO1Sfhs",authDomain:"prsyar-walam-90198.firebaseapp.com",projectId:"prsyar-walam-90198",storageBucket:"prsyar-walam-90198.firebasestorage.app",messagingSenderId:"860935258194",appId:"1:860935258194:web:8608971a55df56bb4d5f8b",measurementId:"G-ZEVJ0VMJXJ"};
 firebase.initializeApp(firebaseConfig);
@@ -822,14 +660,15 @@ let cityScoresData={hawler:0,slimany:0};
 let PAY_CFG={},PAY_PACK=null,PAY_METHOD='',PAY_PROOF='',PAY_STEP='method';
 let userDocUnsub=null,payLockUnsub=null,hasPendingPay=false;
 let gameLBType='memory';
-const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,answeredQuestions:[],cityPoints:{},memoryPoints:0,wordPoints:0,olympiadPoints:0,wins:0};
-const POP_ICONS={success:'✅',error:'❌',warning:'️',info:'ℹ️',reward:'🎉'};
+const UDEF={name:'یاریزان',email:'',phone:'',city:'',points:0,diamonds:0,dinars:0,avatar:'',cover:'',coverSetAt:null,ownedCovers:[],frame:'',ownedFrames:[],claimedRewards:[],lastNameChange:null,lastGameAt:null,lastRewardedLevel:0,answeredQuestions:[],cityPoints:{},memoryPoints:0,wordPoints:0};
+const POP_ICONS={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️',reward:'🎉'};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showPopup(msg,type,btn){type=type||'info';btn=btn||'باشە';const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText=POP_ICONS[type]||'ℹ️';ic.className='popup-icon '+type;document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn '+type+'" id="popup-ok">'+btn+'</button>';bg.classList.add('show');document.getElementById('popup-ok').onclick=function(){bg.classList.remove('show');};}
 function showConfirm(msg,okText,noText){okText=okText||'بەڵێ';noText=noText||'نەخێر';return new Promise(function(resolve){const bg=document.getElementById('popup-bg');const ic=document.getElementById('popup-icon');ic.innerText='❓';ic.className='popup-icon info';document.getElementById('popup-msg').innerHTML=String(msg).replace(/\n/g,'<br>');document.getElementById('popup-btns').innerHTML='<button class="popup-btn no" id="popup-no">'+noText+'</button><button class="popup-btn yes" id="popup-yes">'+okText+'</button>';bg.classList.add('show');document.getElementById('popup-yes').onclick=function(){bg.classList.remove('show');resolve(true);};document.getElementById('popup-no').onclick=function(){bg.classList.remove('show');resolve(false);};});}
 function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
 function copyText(t,btn){const done=function(){if(btn){const o=btn.innerText;btn.innerText='✓ کۆپی کرا';setTimeout(function(){btn.innerText=o;},1400);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(function(){fallbackCopy(t);done();});}else{fallbackCopy(t);done();}}
 function compressImage(file,maxW,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');let w=im.width,h=im.height;if(w>maxW){h=h*(maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q||0.8));};im.onerror=rej;im.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
+/* ===== چوارچێوە — سڕینەوەی پاشبنەمای سپی/خۆڵەمێشی (flood-fill لە سووچەکانەوە) ===== */
 function cbPixels(ctx,w,h){const d=ctx.getImageData(0,0,w,h),p=d.data;const W=w,H=h;const isBg=function(i){if(p[i+3]===0)return false;const r=p[i],g=p[i+1],b=p[i+2];const mx=r>g?(r>b?r:b):(g>b?g:b);const mn=r<g?(r<b?r:b):(g<b?g:b);if((mx-mn)<=24&&mn>=150)return true;if(r>222&&g>222&&b>222&&(mx-mn)<22)return true;return false;};const visited=new Uint8Array(W*H);const stk=[];const seed=function(x,y){if(x<0||y<0||x>=W||y>=H)return;const id=y*W+x;if(visited[id])return;const i=id*4;if(!isBg(i))return;visited[id]=1;stk.push(id);};for(let x=0;x<W;x++){seed(x,0);seed(x,H-1);}for(let y=1;y<H-1;y++){seed(0,y);seed(W-1,y);}let cleared=0;while(stk.length){const id=stk.pop();const i=id*4;if(p[i+3]!==0){p[i+3]=0;cleared++;}const x=id%W,y=(id/W)|0;seed(x+1,y);seed(x-1,y);seed(x,y+1);seed(x,y-1);}ctx.putImageData(d,0,0);return cleared>0;}
 function loadImgForClean(src,cb){const PROXIES=['https://api.allorigins.win/raw?url=','https://corsproxy.io/?'];const tryProxy=function(idx){if(idx>=PROXIES.length){cb(null);return;}fetch(PROXIES[idx]+encodeURIComponent(src)).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){const u=URL.createObjectURL(b);const im=new Image();im.onload=function(){cb(im);};im.onerror=function(){URL.revokeObjectURL(u);tryProxy(idx+1);};im.src=u;}).catch(function(){tryProxy(idx+1);});};const im=new Image();im.crossOrigin='anonymous';im.onload=function(){cb(im);};im.onerror=function(){tryProxy(0);};im.src=src;}
 const frameCache={};
@@ -841,26 +680,134 @@ function isImg(a){return a&&(a.startsWith('data:')||a.startsWith('http'));}
 function fmtTS(d){if(!d)return'';try{const t=d.toDate?d.toDate():new Date(d);return`${t.getDate()}/${t.getMonth()+1}/${t.getFullYear()} - ${t.getHours().toString().padStart(2,'0')}:${t.getMinutes().toString().padStart(2,'0')}`;}catch(e){return'';}}
 function updateLevelBar(){const pts=U.points||0,lvl=getLevel(pts),inLvl=pts%500,pct=Math.floor((inLvl/500)*100);const pe=document.getElementById('profile-lvl');if(pe)pe.innerText=lvl;const pf=document.getElementById('profile-lvl-fill');if(pf)pf.style.width=pct+'%';const txt=`${inLvl} / 500 بۆ ئاستی ${lvl+1}`;const pt=document.getElementById('profile-lvl-txt');if(pt)pt.innerText=txt;}
 const TIME_PER_Q=15,POINTS_CORRECT=10,CITY_POINT=1,GAME_COOLDOWN=24*60*60*1000;
-function startVerifyPolling(){stopVerifyPolling();verifyPollTimer=setInterval(async()=>{const user=auth.currentUser;if(!user){stopVerifyPolling();return;}try{await user.reload();}catch(e){}if(user.emailVerified){stopVerifyPolling();try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}const er=document.getElementById('err');if(er){er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';}setTimeout(()=>location.reload(),800);}},3500);}
+/* ===== پشتڕاستکردنەوەی ئیمەیل (Firebase Auth — لینک) ===== */
+function startVerifyPolling(){
+  stopVerifyPolling();
+  verifyPollTimer=setInterval(async()=>{
+    const user=auth.currentUser;
+    if(!user){stopVerifyPolling();return;}
+    try{await user.reload();}catch(e){}
+    if(user.emailVerified){
+      stopVerifyPolling();
+      try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}
+      const er=document.getElementById('err');if(er){er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';}
+      setTimeout(()=>location.reload(),800);
+    }
+  },3500);
+}
 function stopVerifyPolling(){if(verifyPollTimer){clearInterval(verifyPollTimer);verifyPollTimer=null;}}
-async function checkVerifyDone(){const er=document.getElementById('err');const btn=document.getElementById('v-btn');const user=auth.currentUser;if(!user){er.style.color='#f87171';er.innerText='هیچ هەژمارێک چالاک نییە';return;}btn.disabled=true;btn.innerText='پشکنین...';try{await user.reload();}catch(e){}if(user.emailVerified){try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';stopVerifyPolling();setTimeout(()=>location.reload(),800);}else{er.style.color='#fbbf24';er.innerText='هێشتا پشتڕاست نەکراوەتەوە. تکایە کلیک لە لینکەکەی ناو ئیمەییلەکە بکە، ئینجا دووبارە هەوڵ بدە.';btn.disabled=false;btn.innerText='✅ پشتڕاستکردنەوە تەواو بوو';}}
-async function resendVerification(){const er=document.getElementById('err');const user=auth.currentUser;if(!user){er.innerText='هیچ هەژمارێک چالاک نییە';return;}try{await user.sendEmailVerification();er.style.color='#22c55e';er.innerText='✅ ئیمەیڵی نوێ نێردرا! ئیمەییلەکەت بپشکنە (spamـیش).';}catch(e){er.style.color='#f87171';er.innerText='هەڵە لە ناردن: '+(e.message||'');}}
+async function checkVerifyDone(){
+  const er=document.getElementById('err');const btn=document.getElementById('v-btn');
+  const user=auth.currentUser;
+  if(!user){er.style.color='#f87171';er.innerText='هیچ هەژمارێک چالاک نییە';return;}
+  btn.disabled=true;btn.innerText='پشکنین...';
+  try{await user.reload();}catch(e){}
+  if(user.emailVerified){
+    try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}
+    er.style.color='#22c55e';er.innerText='✅ پشتڕاست کرایەوە!';
+    stopVerifyPolling();
+    setTimeout(()=>location.reload(),800);
+  }else{
+    er.style.color='#fbbf24';er.innerText='هێشتا پشتڕاست نەکراوەتەوە. تکایە کلیک لە لینکەکەی ناو ئیمەییلەکە بکە، ئینجا دووبارە هەوڵ بدە.';
+    btn.disabled=false;btn.innerText='✅ پشتڕاستکردنەوە تەواو بوو';
+  }
+}
+async function resendVerification(){
+  const er=document.getElementById('err');const user=auth.currentUser;
+  if(!user){er.innerText='هیچ هەژمارێک چالاک نییە';return;}
+  try{await user.sendEmailVerification();er.style.color='#22c55e';er.innerText='✅ ئیمەیڵی نوێ نێردرا! ئیمەییلەکەت بپشکنە (spamـیش).';}
+  catch(e){er.style.color='#f87171';er.innerText='هەڵە لە ناردن: '+(e.message||'');}
+}
 function attachUserListener(uid){if(userDocUnsub){try{userDocUnsub();}catch(e){}userDocUnsub=null;}userDocUnsub=db.collection('users').doc(uid).onSnapshot(function(doc){if(doc&&doc.exists){const nd=doc.data();const keepEmail=U.email;Object.assign(U,nd);if(!U.email)U.email=keepEmail;if(document.getElementById('main-app').style.display==='block'){refreshUI();setAvatarUI();updateLevelBar();updateCityLocks();updateGameBoxPoints();}}},function(e){console.error(e);});}
 function attachPayLockListener(uid){if(payLockUnsub){try{payLockUnsub();}catch(e){}payLockUnsub=null;}payLockUnsub=db.collection('payment_requests').where('uid','==',uid).onSnapshot(function(snap){let pend=false;snap.forEach(function(d){if((d.data().status||'pending')==='pending')pend=true;});hasPendingPay=pend;const b=document.getElementById('pay-lock-banner');if(b)b.style.display=pend?'flex':'none';const g=document.getElementById('dpacks-grid');if(g)g.style.filter=pend?'grayscale(.5) opacity(.6)':'';},function(e){console.error(e);});}
 async function checkLevelReward(){try{const lrDoc=await db.collection('settings').doc('levelReward').get();if(lrDoc.exists&&typeof lrDoc.data().perLevel==='number')LEVEL_REWARD=lrDoc.data().perLevel;}catch(e){}const reward=LEVEL_REWARD||0;if(reward<=0)return;const lvl=getLevel(U.points),last=U.lastRewardedLevel||0;if(lvl>last){const gained=(lvl-last)*reward,newD=(U.diamonds||0)+gained;try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,lastRewardedLevel:lvl});U.diamonds=newD;U.lastRewardedLevel=lvl;refreshUI();await syncProfileToScores();showPopup('🎖️ پیرۆز! گەیشتیتە ئاست '+lvl+'\n💎 '+gained+' ئەڵماس وەک خەڵات وەرگرت!','reward','زۆر باشە');}catch(e){console.error(e);}}}
-auth.onAuthStateChanged(async user=>{if(suppressAuth)return;if(user){try{await user.reload();}catch(e){}if(user.emailVerified){stopVerifyPolling();let d={};try{const doc=await db.collection('users').doc(user.uid).get();d=doc.exists?doc.data():{};}catch(e){}if(d.verified!==true){try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}d.verified=true;}U=Object.assign({},UDEF,{email:user.email},d);showApp();loadNotif();loadLocks();loadCityScores();}else{pendingUid=user.uid;pendingEmail=user.email;showVerify();startVerifyPolling();}}else{stopVerifyPolling();if(userDocUnsub){try{userDocUnsub();}catch(e){}userDocUnsub=null;}if(payLockUnsub){try{payLockUnsub();}catch(e){}payLockUnsub=null;}document.getElementById('login-screen').style.display='flex';document.getElementById('main-app').style.display='none';if(lockTimer){clearInterval(lockTimer);lockTimer=null;}const er=document.getElementById('err');if(er){er.innerText='';er.style.color='#f87171';}}});
+auth.onAuthStateChanged(async user=>{
+  if(suppressAuth)return;
+  if(user){
+    try{await user.reload();}catch(e){}
+    if(user.emailVerified){
+      stopVerifyPolling();
+      let d={};try{const doc=await db.collection('users').doc(user.uid).get();d=doc.exists?doc.data():{};}catch(e){}
+      if(d.verified!==true){try{await db.collection('users').doc(user.uid).update({verified:true});}catch(e){}d.verified=true;}
+      U=Object.assign({},UDEF,{email:user.email},d);
+      showApp();loadNotif();loadLocks();loadCityScores();
+    }else{
+      pendingUid=user.uid;pendingEmail=user.email;
+      showVerify();startVerifyPolling();
+    }
+  }else{
+    stopVerifyPolling();
+    if(userDocUnsub){try{userDocUnsub();}catch(e){}userDocUnsub=null;}
+    if(payLockUnsub){try{payLockUnsub();}catch(e){}payLockUnsub=null;}
+    document.getElementById('login-screen').style.display='flex';document.getElementById('main-app').style.display='none';
+    if(lockTimer){clearInterval(lockTimer);lockTimer=null;}
+    const er=document.getElementById('err');if(er){er.innerText='';er.style.color='#f87171';}
+  }
+});
 function switchAuth(t){const tabs=document.querySelectorAll('.tab');const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';document.getElementById('f-verify').style.display='none';stopVerifyPolling();if(t==='login'){document.getElementById('f-login').style.display='block';document.getElementById('f-reg').style.display='none';tabs[0].classList.add('on');tabs[1].classList.remove('on');}else{document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='block';tabs[0].classList.remove('on');tabs[1].classList.add('on');}}
-async function doLogin(e){e.preventDefault();const btn=document.getElementById('l-btn'),em=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pass').value,er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;er.style.color='#f87171';suppressAuth=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.signInWithEmailAndPassword(em,pw);await cred.user.reload();if(cred.user.emailVerified){suppressAuth=false;let d={};try{const doc=await db.collection('users').doc(cred.user.uid).get();d=doc.exists?doc.data():{};}catch(e){}if(d.verified!==true){try{await db.collection('users').doc(cred.user.uid).update({verified:true});}catch(e){}d.verified=true;}U=Object.assign({},UDEF,{email:cred.user.email},d);showApp();loadNotif();loadLocks();loadCityScores();er.innerText='';}else{try{await cred.user.sendEmailVerification();}catch(x){}pendingUid=cred.user.uid;pendingEmail=cred.user.email;showVerify();startVerifyPolling();er.style.color='#22c55e';er.innerText='✅ ئیمەیڵی پشتڕاستکردنەوە نێردرا بۆ '+em+' — کلیک لە لینکەکە بکە.';}}catch(err){suppressAuth=false;er.innerText=errMsg(err.code);}finally{btn.innerText='چوونەژوورەوە';btn.disabled=false;}}
-async function doRegister(e){e.preventDefault();const name=document.getElementById('r-name').value.trim(),email=document.getElementById('r-email').value,phone=document.getElementById('r-phone').value.trim(),city=document.getElementById('r-city').value,pass=document.getElementById('r-pass').value,btn=document.getElementById('r-btn'),er=document.getElementById('err');btn.innerText='چاوەڕێ...';btn.disabled=true;er.style.color='#f87171';suppressAuth=true;try{if(auth.currentUser){try{await auth.signOut();}catch(x){}}const cred=await auth.createUserWithEmailAndPassword(email,pass);await cred.user.sendEmailVerification();await db.collection('users').doc(cred.user.uid).set(Object.assign({},UDEF,{name,email,phone,city,verified:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()}));await db.collection('scores').add({uid:cred.user.uid,name,city,score:0,diamonds:0,avatar:'',cover:'',frame:'',timestamp:firebase.firestore.FieldValue.serverTimestamp()});pendingUid=cred.user.uid;pendingEmail=email;showVerify();startVerifyPolling();er.style.color='#22c55e';er.innerText='✅ ئیمەیڵی پشتڕاستکردنەوە نێردرا بۆ '+email+' (spamـیش بپشکنە).';}catch(err){suppressAuth=false;er.innerText=errMsg(err.code);}finally{btn.innerText='تۆمارکردن';btn.disabled=false;}}
+async function doLogin(e){
+  e.preventDefault();
+  const btn=document.getElementById('l-btn'),em=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pass').value,er=document.getElementById('err');
+  btn.innerText='چاوەڕێ...';btn.disabled=true;er.style.color='#f87171';suppressAuth=true;
+  try{
+    if(auth.currentUser){try{await auth.signOut();}catch(x){}}
+    const cred=await auth.signInWithEmailAndPassword(em,pw);
+    await cred.user.reload();
+    if(cred.user.emailVerified){
+      suppressAuth=false;
+      let d={};try{const doc=await db.collection('users').doc(cred.user.uid).get();d=doc.exists?doc.data():{};}catch(e){}
+      if(d.verified!==true){try{await db.collection('users').doc(cred.user.uid).update({verified:true});}catch(e){}d.verified=true;}
+      U=Object.assign({},UDEF,{email:cred.user.email},d);
+      showApp();loadNotif();loadLocks();loadCityScores();er.innerText='';
+    }else{
+      try{await cred.user.sendEmailVerification();}catch(x){}
+      pendingUid=cred.user.uid;pendingEmail=cred.user.email;
+      showVerify();startVerifyPolling();
+      er.style.color='#22c55e';er.innerText='✅ ئیمەیڵی پشتڕاستکردنەوە نێردرا بۆ '+em+' — کلیک لە لینکەکە بکە.';
+    }
+  }catch(err){suppressAuth=false;er.innerText=errMsg(err.code);}
+  finally{btn.innerText='چوونەژوورەوە';btn.disabled=false;}
+}
+async function doRegister(e){
+  e.preventDefault();
+  const name=document.getElementById('r-name').value.trim(),email=document.getElementById('r-email').value,phone=document.getElementById('r-phone').value.trim(),city=document.getElementById('r-city').value,pass=document.getElementById('r-pass').value,btn=document.getElementById('r-btn'),er=document.getElementById('err');
+  btn.innerText='چاوەڕێ...';btn.disabled=true;er.style.color='#f87171';suppressAuth=true;
+  try{
+    if(auth.currentUser){try{await auth.signOut();}catch(x){}}
+    const cred=await auth.createUserWithEmailAndPassword(email,pass);
+    await cred.user.sendEmailVerification();
+    await db.collection('users').doc(cred.user.uid).set(Object.assign({},UDEF,{name,email,phone,city,verified:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()}));
+    await db.collection('scores').add({uid:cred.user.uid,name,city,score:0,diamonds:0,avatar:'',cover:'',frame:'',timestamp:firebase.firestore.FieldValue.serverTimestamp()});
+    pendingUid=cred.user.uid;pendingEmail=email;
+    showVerify();startVerifyPolling();
+    er.style.color='#22c55e';er.innerText='✅ ئیمەیڵی پشتڕاستکردنەوە نێردرا بۆ '+email+' (spamـیش بپشکنە).';
+  }catch(err){suppressAuth=false;er.innerText=errMsg(err.code);}
+  finally{btn.innerText='تۆمارکردن';btn.disabled=false;}
+}
 function showVerify(){document.getElementById('f-login').style.display='none';document.getElementById('f-reg').style.display='none';document.getElementById('f-verify').style.display='block';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('v-email').innerText=pendingEmail;}
 function backToLogin(){suppressAuth=false;stopVerifyPolling();if(auth.currentUser){try{auth.signOut();}catch(e){}}document.getElementById('f-verify').style.display='none';document.getElementById('f-login').style.display='block';document.getElementById('f-reg').style.display='none';document.querySelectorAll('.tab')[0].classList.add('on');const er=document.getElementById('err');er.innerText='';er.style.color='#f87171';}
-function showApp(){document.getElementById('login-screen').style.display='none';document.getElementById('main-app').style.display='block';document.getElementById('d-name').innerText=U.name||'یاریزان';document.getElementById('d-lvl').innerText=getLevel(U.points);document.getElementById('d-pts').innerText=(U.points||0).toLocaleString();document.getElementById('d-dia').innerText=(U.diamonds||0).toLocaleString();document.getElementById('d-din').innerText=(U.dinars||0).toLocaleString();document.getElementById('p-name').innerText=U.name||'یاریزان';document.getElementById('p-email').innerText=U.email||'-';document.getElementById('p-phone').innerText=U.phone||'-';document.getElementById('p-city').innerText=U.city||'-';document.getElementById('p-pts').innerText=(U.points||0).toLocaleString();document.getElementById('p-dia').innerText=(U.diamonds||0).toLocaleString();document.getElementById('p-din').innerText=(U.dinars||0).toLocaleString();setAvatarUI();updateLevelBar();checkCooldown();updateGameNotice();updateCityLocks();loadLB();checkLevelReward();loadMemoryBox();loadWordBox();loadOlympiadBox();loadGameBoxImages();updateGameBoxPoints();setupPayDelegation();if(auth.currentUser){attachUserListener(auth.currentUser.uid);attachPayLockListener(auth.currentUser.uid);}}
+function showApp(){
+  document.getElementById('login-screen').style.display='none';document.getElementById('main-app').style.display='block';
+  document.getElementById('d-name').innerText=U.name||'یاریزان';
+  document.getElementById('d-lvl').innerText=getLevel(U.points);
+  document.getElementById('d-pts').innerText=(U.points||0).toLocaleString();
+  document.getElementById('d-dia').innerText=(U.diamonds||0).toLocaleString();
+  document.getElementById('d-din').innerText=(U.dinars||0).toLocaleString();
+  document.getElementById('p-name').innerText=U.name||'یاریزان';
+  document.getElementById('p-email').innerText=U.email||'-';
+  document.getElementById('p-phone').innerText=U.phone||'-';
+  document.getElementById('p-city').innerText=U.city||'-';
+  document.getElementById('p-pts').innerText=(U.points||0).toLocaleString();
+  document.getElementById('p-dia').innerText=(U.diamonds||0).toLocaleString();
+  document.getElementById('p-din').innerText=(U.dinars||0).toLocaleString();
+  setAvatarUI();updateLevelBar();checkCooldown();updateGameNotice();updateCityLocks();loadLB();checkLevelReward();loadMemoryBox();loadWordBox();loadGameBoxImages();updateGameBoxPoints();setupPayDelegation();
+  if(auth.currentUser){attachUserListener(auth.currentUser.uid);attachPayLockListener(auth.currentUser.uid);}
+}
 function logout(){if(userDocUnsub){try{userDocUnsub();}catch(e){}userDocUnsub=null;}if(payLockUnsub){try{payLockUnsub();}catch(e){}payLockUnsub=null;}auth.signOut();}
 function setAvatarUI(){const av=U.avatar||'',cov=U.cover||'',fr=U.frame||'',ini=(U.name||'?').charAt(0);const cover=document.getElementById('p-cover');if(cover){cover.style.backgroundImage=isImg(cov)?`url('${cov}')`:'';}const pav=document.getElementById('p-av');if(pav){pav.innerHTML=isImg(av)?`<img src="${av}">`:(av||ini);}const dav=document.getElementById('d-av');if(dav){dav.innerHTML=isImg(av)?`<img src="${av}">`:(av||ini);}setFrame('d-frame',fr);setFrame('p-frame',fr);}
-function updateGameBoxPoints(){const mp=document.getElementById('membox-pts');if(mp)mp.innerText=(U.memoryPoints||0).toLocaleString();const wp=document.getElementById('wordbox-pts');if(wp)wp.innerText=(U.wordPoints||0).toLocaleString();const op=document.getElementById('olympiad-pts');if(op)op.innerText=(U.olympiadPoints||0).toLocaleString();}
+function updateGameBoxPoints(){const mp=document.getElementById('membox-pts');if(mp)mp.innerText=(U.memoryPoints||0).toLocaleString();const wp=document.getElementById('wordbox-pts');if(wp)wp.innerText=(U.wordPoints||0).toLocaleString();}
 function loadMemoryBox(){db.collection('settings').doc('memoryConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const def='https://i.ibb.co/X092D1P/file-00000000e04c8243871d159694789881.png';const city=U?U.city:'';let img=def;if(city==='هەولێر')img=d.boxImageHawler||def;else if(city==='سلێمانی')img=d.boxImageSlimany||def;const el=document.getElementById('membox-img');if(el){if(img){el.src=img;el.classList.add('on');}else{el.classList.remove('on');}}},function(e){});}
 function loadWordBox(){db.collection('settings').doc('wordConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const city=U?U.city:'';let img='';if(city==='هەولێر')img=d.boxImageHawler||'';else if(city==='سلێمانی')img=d.boxImageSlimany||'';const el=document.getElementById('wordbox-img');if(el){if(img){el.src=img;el.classList.add('on');}else{el.classList.remove('on');}}const lb=document.getElementById('word-lock-badge');if(lb)lb.style.display=(d.locked===true)?'block':'none';},function(e){});}
-function loadOlympiadBox(){db.collection('settings').doc('olympiadConfig').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const def='https://i.ibb.co/X092D1P/file-00000000e04c8243871d159694789881.png';const el=document.getElementById('olympiadbox-img');if(el){if(d.boxImage){el.src=d.boxImage;el.classList.add('on');}else{el.src=def;el.classList.add('on');}}},function(e){});}
 function loadGameBoxImages(){db.collection('settings').doc('gameBoxImages').onSnapshot(doc=>{const d=doc.exists?doc.data():{};const defH='https://i.ibb.co/q3bj1T0X/images.jpg',defS='https://i.ibb.co/cX8TKy0t/slimania-33-w900-h900.jpg';const ih=document.getElementById('gcimg-hawler');if(ih)ih.src=d.hawler||defH;const is=document.getElementById('gcimg-slimany');if(is)is.src=d.slimany||defS;},function(e){});}
 function loadCityScores(){db.collection('settings').doc('cityScores').onSnapshot(doc=>{const d=doc.exists?doc.data():{};cityScoresData.hawler=d.hawler||0;cityScoresData.slimany=d.slimany||0;const ehp=document.getElementById('pts-hawler');if(ehp)ehp.innerText=(d.hawler||0).toLocaleString();const esp=document.getElementById('pts-slimany');if(esp)esp.innerText=(d.slimany||0).toLocaleString();});}
 function updateCityLocks(){['slimany','hawler'].forEach(k=>{const cityName=k==='slimany'?'سلێمانی':'هەولێر';const box=document.getElementById('gc-'+k);if(!box)return;let badge=box.querySelector('.city-lock-badge');if(U.city&&U.city!==cityName){if(!badge){badge=document.createElement('div');badge.className='city-lock-badge';box.appendChild(badge);}badge.innerHTML='🔒 تەنها شاری خۆت<br><span style="font-size:9px;color:#94a3b8">('+U.city+')</span>';}else if(badge){badge.remove();}});}
@@ -876,16 +823,16 @@ function checkCooldown(){const msg=document.getElementById('cooldown-msg');if(!m
 function openNameModal(){if(U.lastNameChange){const last=new Date(U.lastNameChange.toDate?U.lastNameChange.toDate():U.lastNameChange);if(Math.floor((Date.now()-last)/86400000)<7){showPopup('⏳ هێشتا ٧ ڕۆژ ناتوانیت ناوەکەت بگۆڕیتەوە','warning');return;}}document.getElementById('name-modal').classList.add('show');document.getElementById('new-name-input').value=U.name||'';}
 function closeNameModal(){document.getElementById('name-modal').classList.remove('show');}
 async function saveName(){const n=document.getElementById('new-name-input').value.trim();if(!n||n.length<3){showPopup('ناوی نوێ دەبێت لانیکەم ٣ پیت بێت','warning');return;}try{await db.collection('users').doc(auth.currentUser.uid).update({name:n,lastNameChange:firebase.firestore.FieldValue.serverTimestamp()});U.name=n;document.getElementById('p-name').innerText=n;document.getElementById('d-name').innerText=n;setAvatarUI();await syncProfileToScores();closeNameModal();checkCooldown();showPopup('✅ ناوەکەت گۆڕدرا!','success');}catch(e){showPopup('هەڵە','error');}}
+/* ===== ڕیزبەندی + پرۆفایلی یاریزان ===== */
 function setLBFilter(f,el){lbFilter=f;document.querySelectorAll('#lb-main-tabs .lb-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');if(f==='games'){document.getElementById('lb-players').style.display='none';document.getElementById('lb-games').style.display='block';renderGameLB();}else{document.getElementById('lb-players').style.display='block';document.getElementById('lb-games').style.display='none';renderLB();}}
 function setGameLB(type,el){gameLBType=type;document.querySelectorAll('#lb-games-tabs .lb-tab').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');renderGameLB();}
 function loadLB(){const list=document.getElementById('lb-list');list.innerHTML='<p style="text-align:center;color:#64748b;padding:20px;font-size:12px">بارکردن...</p>';db.collection('scores').get().then(snap=>{lbData=[];snap.forEach(doc=>{lbData.push(doc.data());});renderLB();}).catch(()=>{list.innerHTML='<p style="text-align:center;color:#f87171;padding:20px;font-size:12px">هەڵە</p>';});}
 function renderLB(){const list=document.getElementById('lb-list');let data=[...lbData];if(lbFilter!=='all'&&lbFilter!=='games')data=data.filter(d=>d.city===lbFilter);data.sort((a,b)=>(b.score||0)-(a.score||0));const top=data.slice(0,20);if(top.length===0){list.innerHTML='<p style="text-align:center;color:#64748b;padding:20px;font-size:12px">هیچ تۆمارێک نییە</p>';return;}list.innerHTML='';let r=1;top.forEach(d=>{const medal=r===1?'🥇':(r===2?'🥈':(r===3?'🥉':''));const frImg=d.frame?`<img class="av-frame" src="${d.frame}" style="display:block">`:'';const uid=String(d.uid||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');list.innerHTML+=`<div class="li"><div class="rk">#${r}</div><div class="lb-av-wrap" onclick="viewUserByUid('${uid}')"><div class="lb-av">${avHtml(d.avatar,d.name)}</div>${frImg}</div><div class="lb-info"><div class="nm" onclick="viewUserByUid('${uid}')">${d.name||'یاریزان'}</div><div class="ct">🏙️ ${d.city||'-'}</div></div><div class="lb-medal">${medal}</div><div class="lb-scores"><div class="sc">⭐ ${(d.score||0).toLocaleString()}</div><div class="dm">💎 ${(d.diamonds||0).toLocaleString()}</div></div></div>`;r++;});list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});}
-function gameLBMetric(u){if(gameLBType==='memory')return u.memoryPoints||0;if(gameLBType==='word')return u.wordPoints||0;if(gameLBType==='olympiad')return u.olympiadPoints||0;const cp=u.cityPoints||{};return (cp.hawler||0)+(cp.slimany||0);}
-async function renderGameLB(){const list=document.getElementById('lb-games-list');list.innerHTML='<p style="text-align:center;color:#64748b;padding:20px;font-size:12px">بارکردن...</p>';let users=[];try{const snap=await db.collection('users').get();snap.forEach(d=>{users.push(Object.assign({uid:d.id},d.data()));});}catch(e){}gameLBUsers=users;users.sort((a,b)=>gameLBMetric(b)-gameLBMetric(a));const top=users.slice(0,20);if(top.length===0){list.innerHTML='<p style="text-align:center;color:#64748b;padding:20px;font-size:12px">هیچ تۆمارێک نییە</p>';return;}list.innerHTML='';let r=1;top.forEach(u=>{const pts=gameLBMetric(u);const medal=r===1?'🥇':(r===2?'🥈':(r===3?'':''));const frImg=u.frame?`<img class="av-frame" src="${u.frame}" style="display:block">`:'';const uid=String(u.uid||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');list.innerHTML+=`<div class="li"><div class="rk">#${r}</div><div class="lb-av-wrap" onclick="viewUserByUid('${uid}')"><div class="lb-av">${avHtml(u.avatar,u.name)}</div>${frImg}</div><div class="lb-info"><div class="nm" onclick="viewUserByUid('${uid}')">${u.name||'یاریزان'}</div><div class="ct">🏙️ ${u.city||'-'}</div></div><div class="lb-medal">${medal}</div><div class="lb-scores"><div class="sc">⭐ ${pts.toLocaleString()}</div></div></div>`;r++;});list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});}
-function viewUserByUid(uid){let d=lbData.find(x=>x.uid===uid);if(!d)d=gameLBUsers.find(x=>x.uid===uid);if(!d)return;if(uid&&auth.currentUser&&uid===auth.currentUser.uid){go('profile');return;}const cov=d.cover||'';document.getElementById('um-cover').style.backgroundImage=isImg(cov)?`url('${cov}')`:'';const tEl=document.getElementById('um-time');if(d.coverSetAt){const ts=fmtTS(d.coverSetAt);if(ts){tEl.innerText='🕐 '+ts;tEl.style.display='block';}else{tEl.style.display='none';}}else{tEl.style.display='none';}setFrame('um-frame',d.frame||'');document.getElementById('um-av').innerHTML=avHtml(d.avatar,d.name);const allSorted=[...lbData].sort((a,b)=>(b.score||0)-(a.score||0));const gRank=allSorted.findIndex(x=>x.uid===d.uid)+1;const medalEl=document.getElementById('um-medal');if(medalEl){if(gRank>0){const em=gRank===1?'🥇':(gRank===2?'':(gRank===3?'🥉':''));medalEl.innerHTML='#'+gRank+(em?' '+em:'');}else{medalEl.innerHTML='';}}const score=(d.score!=null?d.score:(d.points||0));document.getElementById('um-name').innerText=d.name||'یاریزان';document.getElementById('um-city').innerText=d.city||'-';document.getElementById('um-lvl').innerText=getLevel(score);document.getElementById('um-pts').innerText=score.toLocaleString();document.getElementById('um-dia').innerText=(d.diamonds||0).toLocaleString();document.getElementById('user-modal').classList.add('show');}
+function gameLBMetric(u){if(gameLBType==='memory')return u.memoryPoints||0;if(gameLBType==='word')return u.wordPoints||0;const cp=u.cityPoints||{};return (cp.hawler||0)+(cp.slimany||0);}
+async function renderGameLB(){const list=document.getElementById('lb-games-list');list.innerHTML='<p style="text-align:center;color:#64748b;padding:20px;font-size:12px">بارکردن...</p>';let users=[];try{const snap=await db.collection('users').get();snap.forEach(d=>{users.push(Object.assign({uid:d.id},d.data()));});}catch(e){}gameLBUsers=users;users.sort((a,b)=>gameLBMetric(b)-gameLBMetric(a));const top=users.slice(0,20);if(top.length===0){list.innerHTML='<p style="text-align:center;color:#64748b;padding:20px;font-size:12px">هیچ تۆمارێک نییە</p>';return;}list.innerHTML='';let r=1;top.forEach(u=>{const pts=gameLBMetric(u);const medal=r===1?'🥇':(r===2?'🥈':(r===3?'🥉':''));const frImg=u.frame?`<img class="av-frame" src="${u.frame}" style="display:block">`:'';const uid=String(u.uid||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');list.innerHTML+=`<div class="li"><div class="rk">#${r}</div><div class="lb-av-wrap" onclick="viewUserByUid('${uid}')"><div class="lb-av">${avHtml(u.avatar,u.name)}</div>${frImg}</div><div class="lb-info"><div class="nm" onclick="viewUserByUid('${uid}')">${u.name||'یاریزان'}</div><div class="ct">🏙️ ${u.city||'-'}</div></div><div class="lb-medal">${medal}</div><div class="lb-scores"><div class="sc">⭐ ${pts.toLocaleString()}</div></div></div>`;r++;});list.querySelectorAll('img.av-frame').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});}
+function viewUserByUid(uid){let d=lbData.find(x=>x.uid===uid);if(!d)d=gameLBUsers.find(x=>x.uid===uid);if(!d)return;if(uid&&auth.currentUser&&uid===auth.currentUser.uid){go('profile');return;}const cov=d.cover||'';document.getElementById('um-cover').style.backgroundImage=isImg(cov)?`url('${cov}')`:'';const tEl=document.getElementById('um-time');if(d.coverSetAt){const ts=fmtTS(d.coverSetAt);if(ts){tEl.innerText='🕐 '+ts;tEl.style.display='block';}else{tEl.style.display='none';}}else{tEl.style.display='none';}setFrame('um-frame',d.frame||'');document.getElementById('um-av').innerHTML=avHtml(d.avatar,d.name);const allSorted=[...lbData].sort((a,b)=>(b.score||0)-(a.score||0));const gRank=allSorted.findIndex(x=>x.uid===d.uid)+1;const medalEl=document.getElementById('um-medal');if(medalEl){if(gRank>0){const em=gRank===1?'🥇':(gRank===2?'🥈':(gRank===3?'🥉':''));medalEl.innerHTML='#'+gRank+(em?' '+em:'');}else{medalEl.innerHTML='';}}const score=(d.score!=null?d.score:(d.points||0));document.getElementById('um-name').innerText=d.name||'یاریزان';document.getElementById('um-city').innerText=d.city||'-';document.getElementById('um-lvl').innerText=getLevel(score);document.getElementById('um-pts').innerText=score.toLocaleString();document.getElementById('um-dia').innerText=(d.diamonds||0).toLocaleString();document.getElementById('user-modal').classList.add('show');}
 function closeUserModal(){document.getElementById('user-modal').classList.remove('show');}
 function go(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('pg-'+id).classList.add('active');document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));if(el){el.classList.add('on');}else{const navMap={home:0,citygame:1,profile:2,lb:3,rewards:4,store:5};const nis=document.querySelectorAll('.ni');if(nis[navMap[id]]!==undefined)nis[navMap[id]].classList.add('on');}if(id==='lb')loadLB();if(id==='rewards')loadRewards();if(id==='home'){updateGameNotice();}if(id==='citygame'){updateGameNotice();updateCityLocks();}if(id==='store'){loadDPacks();loadAvatars();loadFrames();}}
-
 /* ================= یاری پرسیار ================= */
 let gameCity='',gameQs=[],gameIdx=0,gameScore=0,gameCorrect=0,gameDiamonds=0,gameCityScore=0,gameTimer=null,gameTimeLeft=0,gameLogged=false;
 async function startGame(city){if(city!==U.city){showPopup('🚫 تەنها دەتوانیت یاری شاری خۆت ('+(U.city||'-')+') بکەیت!','warning');return;}if(U.lastGameAt){const last=U.lastGameAt.toDate?U.lastGameAt.toDate():new Date(U.lastGameAt);const diff=Date.now()-last.getTime();if(diff<GAME_COOLDOWN){const rem=GAME_COOLDOWN-diff,h=Math.floor(rem/3600000),m=Math.floor((rem%3600000)/60000);showPopup('⏳ چاوەڕوان بە: '+h+' کاتژمێر و '+m+' خولەک','warning');return;}}const box=document.getElementById('gc-'+(city==='سلێمانی'?'slimany':'hawler'));if(box&&box.classList.contains('locked'))return;let qs=[];try{const snap=await db.collection('questions').where('city','==',city).get();snap.forEach(d=>qs.push(Object.assign({id:d.id},d.data())));}catch(e){}if(qs.length<1){showPopup('⚠️ هیچ پرسیارێک بۆ "'+city+'" نییە.','warning');return;}const answered=U.answeredQuestions||[];qs=qs.filter(q=>!answered.includes(q.id));if(qs.length<1){showPopup('🎉 هەموو پرسیارەکانی "'+city+'"ـت وەڵام دایەوە!','reward');return;}gameCity=city;gameQs=qs.sort(()=>Math.random()-0.5).map(q=>{const ca=q.a[q.c];const sh=[...q.a].sort(()=>Math.random()-0.5);return{id:q.id,q:q.q,a:sh,c:sh.indexOf(ca)};});gameIdx=0;gameScore=0;gameCorrect=0;gameCityScore=0;gameLogged=false;document.getElementById('g-city').innerText=city;document.getElementById('g-qtotal').innerText=gameQs.length;document.getElementById('game-screen').classList.add('show');document.getElementById('game-play').style.display='block';document.getElementById('game-result').style.display='none';showQuestion();}
@@ -893,7 +840,6 @@ function showQuestion(){if(gameIdx>=gameQs.length){endGame();return;}const q=gam
 function answerQ(idx,btn){clearInterval(gameTimer);const q=gameQs[gameIdx];const btns=document.querySelectorAll('.game-ans');btns.forEach(b=>b.disabled=true);if(idx===q.c){if(btn)btn.classList.add('correct');gameCorrect++;gameScore+=POINTS_CORRECT;gameCityScore+=CITY_POINT;U.points=(U.points||0)+POINTS_CORRECT;refreshUI();const ck=gameCity==='سلێمانی'?'slimany':'hawler';try{db.collection('settings').doc('cityScores').set({[ck]:firebase.firestore.FieldValue.increment(CITY_POINT)},{merge:true});db.collection('users').doc(auth.currentUser.uid).update({points:firebase.firestore.FieldValue.increment(POINTS_CORRECT),[`cityPoints.${ck}`]:firebase.firestore.FieldValue.increment(CITY_POINT)});}catch(e){}if(!U.cityPoints)U.cityPoints={};U.cityPoints[ck]=(U.cityPoints[ck]||0)+CITY_POINT;}else{if(btn)btn.classList.add('wrong');btns[q.c].classList.add('correct');}document.getElementById('g-score').innerText=gameScore;setTimeout(()=>{gameIdx++;showQuestion();},1200);}
 async function endGame(){if(gameTimer)clearInterval(gameTimer);gameDiamonds=Math.floor(gameCorrect/10);document.getElementById('game-play').style.display='none';document.getElementById('game-result').style.display='block';document.getElementById('r-correct').innerText=gameCorrect;document.getElementById('r-points').innerText=gameScore;document.getElementById('r-diamonds').innerText=gameDiamonds;const pct=gameCorrect/gameQs.length;document.getElementById('r-trophy').innerText=pct>=0.8?'🏆':(pct>=0.5?'🥈':'');document.getElementById('r-title').innerText=pct>=0.8?'نایاب!':(pct>=0.5?'باشە!':'هەوڵ بدەرەوە');document.getElementById('r-sub').innerText='یاری تەواو بوو | بۆ شاری '+gameCity+': +'+gameCityScore+' خاڵ 🏙️';try{const newD=(U.diamonds||0)+gameDiamonds;await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,lastGameAt:firebase.firestore.FieldValue.serverTimestamp()});U.diamonds=newD;U.lastGameAt=new Date();const set=new Set(U.answeredQuestions||[]);gameQs.forEach(q=>set.add(q.id));U.answeredQuestions=[...set];await db.collection('users').doc(auth.currentUser.uid).update({answeredQuestions:U.answeredQuestions});await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:gameCity,type:'quiz',correct:gameCorrect,total:gameQs.length,points:gameScore,diamonds:gameDiamonds,date:firebase.firestore.FieldValue.serverTimestamp()});refreshUI();await syncProfileToScores();updateGameNotice();await checkLevelReward();}catch(e){console.error(e);}}
 async function exitGame(){if(gameTimer)clearInterval(gameTimer);document.getElementById('game-screen').classList.remove('show');refreshUI();await syncProfileToScores();updateGameNotice();loadLB();}
-
 /* ================= یادی کارتی ================= */
 let memCards=[],memFirst=null,memLock=false,memMatchedCount=0,memPairs=0,memMoves=0,memTimeLeft=0,memTimerInt=null,memStartTime=0,memActive=false,memCfg={},memEnded=false,memReveal2Used=false,memReveal4Used=false;
 const MEM_EMOJIS=['🏰','🕌','🌳','','📚','','🎵',''];
@@ -904,237 +850,29 @@ function peekPhase(){const peek=memCfg.peekSeconds||3;document.querySelectorAll(
 function startMemTimer(){if(!memCfg.timerEnabled){document.getElementById('mem-timer').innerText='∞';return;}memTimeLeft=memCfg.timeLimit||60;document.getElementById('mem-timer').innerText=memTimeLeft;if(memTimerInt)clearInterval(memTimerInt);memTimerInt=setInterval(()=>{memTimeLeft--;document.getElementById('mem-timer').innerText=memTimeLeft;if(memTimeLeft<=10)document.getElementById('mem-timer-box').classList.add('warn');if(memTimeLeft<=0){clearInterval(memTimerInt);endMemory(false);}},1000);}
 function memFlip(i){if(memLock||!memActive)return;const card=document.querySelector('.mem-card[data-idx="'+i+'"]');if(!card||card.classList.contains('flipped')||card.classList.contains('matched'))return;card.classList.add('flipped');if(memFirst===null){memFirst=i;}else{memMoves++;document.getElementById('mem-moves').innerText=memMoves;memLock=true;const first=memFirst;memFirst=null;const c1=memCards[first],c2=memCards[i];if(c1.pairId===c2.pairId){setTimeout(()=>{const f=document.querySelector('.mem-card[data-idx="'+first+'"]');if(f)f.classList.add('matched');card.classList.add('matched');memMatchedCount++;document.getElementById('mem-found').innerText=memMatchedCount+'/'+memPairs;memLock=false;if(memMatchedCount===memPairs){endMemory(true);}},400);}else{setTimeout(()=>{const f=document.querySelector('.mem-card[data-idx="'+first+'"]');if(f)f.classList.remove('flipped');card.classList.remove('flipped');memLock=false;},800);}}}
 async function memReveal(n,cost){if(!memActive||memLock||memEnded)return;if(n===2&&memReveal2Used){showPopup('ئەم یارمەتیدەرە بەکارهاتووە لەم یارییەدا 👀','warning');return;}if(n===4&&memReveal4Used){showPopup('ئەم یارمەتیدەرە بەکارهاتووە لەم یارییەدا 👀','warning');return;}if((U.diamonds||0)<cost){showPopup('ئەڵماسی پێویستت نییە! 💎\n('+cost+' ئەڵماس پێویستە)','warning');return;}let unmatched=[];document.querySelectorAll('.mem-card').forEach(c=>{if(!c.classList.contains('matched')&&!c.classList.contains('flipped'))unmatched.push(c);});if(unmatched.length===0)return;try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:firebase.firestore.FieldValue.increment(-cost)});U.diamonds=(U.diamonds||0)-cost;refreshUI();}catch(e){showPopup('هەڵە','error');return;}if(n===2)memReveal2Used=true;else memReveal4Used=true;const toShow=unmatched.sort(()=>Math.random()-0.5).slice(0,n);memLock=true;toShow.forEach(c=>c.classList.add('flipped'));setTimeout(()=>{toShow.forEach(c=>{if(!c.classList.contains('matched'))c.classList.remove('flipped');});memLock=false;},1500);}
-async function endMemory(win){if(memEnded)return;memEnded=true;if(memTimerInt)clearInterval(memTimerInt);memActive=false;const elapsed=Math.round((Date.now()-memStartTime)/1000);document.getElementById('mem-play').style.display='none';document.getElementById('mem-result').style.display='block';let gainedPts=0,gainedDia=0;if(win){gainedPts=50;const fast=memCfg.timerEnabled&&(elapsed<=(memCfg.diamondTimeLimit||30));if(fast)gainedDia=memCfg.diamondReward||0;try{const upd={points:firebase.firestore.FieldValue.increment(gainedPts),memoryPoints:firebase.firestore.FieldValue.increment(gainedPts)};if(gainedDia>0)upd.diamonds=firebase.firestore.FieldValue.increment(gainedDia);await db.collection('users').doc(auth.currentUser.uid).update(upd);U.points=(U.points||0)+gainedPts;U.memoryPoints=(U.memoryPoints||0)+gainedPts;if(gainedDia>0)U.diamonds=(U.diamonds||0)+gainedDia;refreshUI();await syncProfileToScores();await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:U.city||'',type:'memory',correct:memPairs,total:memPairs,points:gainedPts,diamonds:gainedDia,time:elapsed,date:firebase.firestore.FieldValue.serverTimestamp()});await checkLevelReward();}catch(e){console.error(e);}}document.getElementById('memr-trophy').innerText=win?'🎉':'';document.getElementById('memr-title').innerText=win?'تەواوت کرد!':'کاتەکە تەواو بوو!';document.getElementById('memr-sub').innerText=win?('بە '+elapsed+' چرکە تەواوت کرد 🧠'):'هەوڵێکی تر بدەرەوە ';document.getElementById('memr-time').innerText=elapsed;document.getElementById('memr-moves').innerText=memMoves;document.getElementById('memr-found').innerText=memMatchedCount+'/'+memPairs;document.getElementById('memr-pts').innerText='+'+gainedPts;document.getElementById('memr-dia').innerText='+'+gainedDia;document.getElementById('memr-dia-row').style.display=gainedDia>0?'block':'none';}
+async function endMemory(win){if(memEnded)return;memEnded=true;if(memTimerInt)clearInterval(memTimerInt);memActive=false;const elapsed=Math.round((Date.now()-memStartTime)/1000);document.getElementById('mem-play').style.display='none';document.getElementById('mem-result').style.display='block';let gainedPts=0,gainedDia=0;if(win){gainedPts=50;const fast=memCfg.timerEnabled&&(elapsed<=(memCfg.diamondTimeLimit||30));if(fast)gainedDia=memCfg.diamondReward||0;try{const upd={points:firebase.firestore.FieldValue.increment(gainedPts),memoryPoints:firebase.firestore.FieldValue.increment(gainedPts)};if(gainedDia>0)upd.diamonds=firebase.firestore.FieldValue.increment(gainedDia);await db.collection('users').doc(auth.currentUser.uid).update(upd);U.points=(U.points||0)+gainedPts;U.memoryPoints=(U.memoryPoints||0)+gainedPts;if(gainedDia>0)U.diamonds=(U.diamonds||0)+gainedDia;refreshUI();await syncProfileToScores();await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:U.city||'',type:'memory',correct:memPairs,total:memPairs,points:gainedPts,diamonds:gainedDia,time:elapsed,date:firebase.firestore.FieldValue.serverTimestamp()});await checkLevelReward();}catch(e){console.error(e);}}document.getElementById('memr-trophy').innerText=win?'🎉':'';document.getElementById('memr-title').innerText=win?'تەواوت کرد!':'کاتەکە تەواو بوو!';document.getElementById('memr-sub').innerText=win?('بە '+elapsed+' چرکە تەواوت کرد 🧠'):'هەوڵێکی تر بدەرەوە 💪';document.getElementById('memr-time').innerText=elapsed;document.getElementById('memr-moves').innerText=memMoves;document.getElementById('memr-found').innerText=memMatchedCount+'/'+memPairs;document.getElementById('memr-pts').innerText='+'+gainedPts;document.getElementById('memr-dia').innerText='+'+gainedDia;document.getElementById('memr-dia-row').style.display=gainedDia>0?'block':'none';}
 function exitMemory(){if(memTimerInt)clearInterval(memTimerInt);memActive=false;document.getElementById('mem-peek').style.display='none';document.getElementById('memory-screen').classList.remove('show');}
-
 /* ================= وشەکە بدۆزەرەوە ================= */
 let wordList=[],wordIdx=0,wordCorrect=0,wordTimerInt=null,wordTimeLeft=0,wordStartTime=0,wordActive=false,wordEnded=false,wordCfg={};
 let curWord='',curHint='',curSlots=[],curTiles=[];
 const WORD_FALLBACK=['هەولێر','سلێمانی','قەڵا','بازاڕ','چیا','ڕووبار','کتێب','مامۆستا','نان','ئاو','خۆر','مانگ','ئاسمان','درەخت','گوڵ','هاوڕێ','شار','گوند','خێزان','یاری'];
 async function loadWordCfg(){try{const d=await db.collection('settings').doc('wordConfig').get();wordCfg=d.exists?d.data():{};}catch(e){wordCfg={};}if(typeof wordCfg.timerEnabled!=='boolean')wordCfg.timerEnabled=true;wordCfg.timeLimit=wordCfg.timeLimit||180;wordCfg.diamondReward=(wordCfg.diamondReward==null)?1:wordCfg.diamondReward;wordCfg.diamondTimeLimit=wordCfg.diamondTimeLimit||90;wordCfg.locked=wordCfg.locked===true;}
-async function startWord(){await loadWordCfg();if(wordCfg.locked){showPopup(' ئەم یارییە لەلایەن بەڕێوەبەرەوە قوفڵ کراوە','warning');return;}const city=U.city;if(!city){showPopup('🏙️ شار دیاری نەکراوە','warning');return;}let words=[];try{const snap=await db.collection('word_puzzle').where('city','==',city).get();snap.forEach(d=>{const dd=d.data();if(dd.word)words.push({w:dd.word,h:dd.hint||''});});}catch(e){}const seen={};words=words.filter(x=>{if(seen[x.w])return false;seen[x.w]=1;return true;});if(words.length<1){words=WORD_FALLBACK.map(x=>({w:x,h:''}));}if(words.length>10){words=words.sort(()=>Math.random()-0.5).slice(0,10);}wordList=words.sort(()=>Math.random()-0.5);wordIdx=0;wordCorrect=0;wordActive=true;wordEnded=false;document.getElementById('word-screen').classList.add('show');document.getElementById('word-play').style.display='block';document.getElementById('word-result').style.display='none';document.getElementById('w-city').innerText='🔤 وشەکە بدۆزەرەوە — '+city;document.getElementById('w-total').innerText=wordList.length;document.getElementById('w-correct').innerText='0';document.getElementById('w-timer-box').classList.remove('warn');wordStartTime=Date.now();startWordTimer();showWord();}
-function showWord(){if(wordIdx>=wordList.length){endWord(true);return;}curWord=wordList[wordIdx].w;curHint=wordList[wordIdx].h;document.getElementById('w-num').innerText=wordIdx+1;document.getElementById('w-progress').style.width=((wordIdx)/wordList.length*100)+'%';document.getElementById('w-hint').innerText=curHint?('💡 '+curHint):(' وشەیەک بە '+curWord.length+' پیت');let letters=curWord.split('');let scrambled=letters.slice().sort(()=>Math.random()-0.5);if(scrambled.join('')===curWord&&letters.length>1){scrambled=scrambled.reverse();}curSlots=new Array(curWord.length).fill('');curTiles=scrambled.map((ch,i)=>({ch:ch,used:false,id:i}));renderWord();}
+async function startWord(){await loadWordCfg();if(wordCfg.locked){showPopup('🔒 ئەم یارییە لەلایەن بەڕێوەبەرەوە قوفڵ کراوە','warning');return;}const city=U.city;if(!city){showPopup('🏙️ شار دیاری نەکراوە','warning');return;}let words=[];try{const snap=await db.collection('word_puzzle').where('city','==',city).get();snap.forEach(d=>{const dd=d.data();if(dd.word)words.push({w:dd.word,h:dd.hint||''});});}catch(e){}const seen={};words=words.filter(x=>{if(seen[x.w])return false;seen[x.w]=1;return true;});if(words.length<1){words=WORD_FALLBACK.map(x=>({w:x,h:''}));}if(words.length>10){words=words.sort(()=>Math.random()-0.5).slice(0,10);}wordList=words.sort(()=>Math.random()-0.5);wordIdx=0;wordCorrect=0;wordActive=true;wordEnded=false;document.getElementById('word-screen').classList.add('show');document.getElementById('word-play').style.display='block';document.getElementById('word-result').style.display='none';document.getElementById('w-city').innerText='🔤 وشەکە بدۆزەرەوە — '+city;document.getElementById('w-total').innerText=wordList.length;document.getElementById('w-correct').innerText='0';document.getElementById('w-timer-box').classList.remove('warn');wordStartTime=Date.now();startWordTimer();showWord();}
+function showWord(){if(wordIdx>=wordList.length){endWord(true);return;}curWord=wordList[wordIdx].w;curHint=wordList[wordIdx].h;document.getElementById('w-num').innerText=wordIdx+1;document.getElementById('w-progress').style.width=((wordIdx)/wordList.length*100)+'%';document.getElementById('w-hint').innerText=curHint?('💡 '+curHint):('🔤 وشەیەک بە '+curWord.length+' پیت');let letters=curWord.split('');let scrambled=letters.slice().sort(()=>Math.random()-0.5);if(scrambled.join('')===curWord&&letters.length>1){scrambled=scrambled.reverse();}curSlots=new Array(curWord.length).fill('');curTiles=scrambled.map((ch,i)=>({ch:ch,used:false,id:i}));renderWord();}
 function renderWord(){const slotsEl=document.getElementById('w-slots');const tilesEl=document.getElementById('w-tiles');slotsEl.innerHTML='';curSlots.forEach((ch,i)=>{const el=document.createElement('div');el.className='w-slot'+(ch?' filled':'');el.innerText=ch||'';el.onclick=function(){wordSlotTap(i);};slotsEl.appendChild(el);});tilesEl.innerHTML='';curTiles.forEach((t,i)=>{const el=document.createElement('div');el.className='w-tile'+(t.used?' used':'');el.innerText=t.ch;el.onclick=function(){wordTileTap(i);};tilesEl.appendChild(el);});}
 function wordTileTap(i){if(!wordActive)return;const t=curTiles[i];if(t.used)return;const emptyIdx=curSlots.indexOf('');if(emptyIdx===-1)return;t.used=true;curSlots[emptyIdx]=t.ch;renderWord();checkWordIfFull();}
 function wordSlotTap(i){if(!wordActive)return;const ch=curSlots[i];if(!ch)return;const t=curTiles.find(x=>x.used&&x.ch===ch);if(t)t.used=false;curSlots[i]='';renderWord();}
 function wordClear(){if(!wordActive)return;curSlots=curSlots.map(()=>'');curTiles.forEach(t=>t.used=false);renderWord();}
 function checkWordIfFull(){if(curSlots.indexOf('')!==-1)return;const attempt=curSlots.join('');const slotEls=document.querySelectorAll('.w-slot');if(attempt===curWord){slotEls.forEach(el=>el.classList.add('correct'));wordCorrect++;document.getElementById('w-correct').innerText=wordCorrect;wordActive=false;setTimeout(()=>{wordActive=true;wordIdx++;showWord();},900);}else{slotEls.forEach(el=>el.classList.add('wrong'));setTimeout(()=>{wordClear();},650);}}
-async function wordReveal2(){if(!wordActive||wordEnded)return;if((U.diamonds||0)<10){showPopup('ئەڵماسی پێویستت نییە! \n(١٠ ئەڵماس پێویستە)','warning');return;}let emptyPos=[];for(let i=0;i<curWord.length;i++){if(curSlots[i]==='')emptyPos.push(i);}if(emptyPos.length===0)return;try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:firebase.firestore.FieldValue.increment(-10)});U.diamonds=(U.diamonds||0)-10;refreshUI();}catch(e){showPopup('هەڵە','error');return;}const toReveal=emptyPos.sort(()=>Math.random()-0.5).slice(0,2);toReveal.forEach(pos=>{const ch=curWord[pos];const tile=curTiles.find(t=>!t.used&&t.ch===ch);if(tile)tile.used=true;curSlots[pos]=ch;});renderWord();checkWordIfFull();}
+async function wordReveal2(){if(!wordActive||wordEnded)return;if((U.diamonds||0)<10){showPopup('ئەڵماسی پێویستت نییە! 💎\n(١٠ ئەڵماس پێویستە)','warning');return;}let emptyPos=[];for(let i=0;i<curWord.length;i++){if(curSlots[i]==='')emptyPos.push(i);}if(emptyPos.length===0)return;try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:firebase.firestore.FieldValue.increment(-10)});U.diamonds=(U.diamonds||0)-10;refreshUI();}catch(e){showPopup('هەڵە','error');return;}const toReveal=emptyPos.sort(()=>Math.random()-0.5).slice(0,2);toReveal.forEach(pos=>{const ch=curWord[pos];const tile=curTiles.find(t=>!t.used&&t.ch===ch);if(tile)tile.used=true;curSlots[pos]=ch;});renderWord();checkWordIfFull();}
 async function wordSkip(){if(!wordActive||wordEnded)return;if((U.diamonds||0)<20){showPopup('ئەڵماسی پێویستت نییە! 💎\n(٢٠ ئەڵماس پێویستە)','warning');return;}try{await db.collection('users').doc(auth.currentUser.uid).update({diamonds:firebase.firestore.FieldValue.increment(-20)});U.diamonds=(U.diamonds||0)-20;refreshUI();}catch(e){showPopup('هەڵە','error');return;}wordIdx++;showWord();}
 function startWordTimer(){if(!wordCfg.timerEnabled){document.getElementById('w-timer').innerText='∞';return;}wordTimeLeft=wordCfg.timeLimit||180;document.getElementById('w-timer').innerText=wordTimeLeft;if(wordTimerInt)clearInterval(wordTimerInt);wordTimerInt=setInterval(()=>{wordTimeLeft--;document.getElementById('w-timer').innerText=wordTimeLeft;if(wordTimeLeft<=15)document.getElementById('w-timer-box').classList.add('warn');if(wordTimeLeft<=0){clearInterval(wordTimerInt);endWord(false);}},1000);}
-async function endWord(win){if(wordEnded)return;wordEnded=true;if(wordTimerInt)clearInterval(wordTimerInt);wordActive=false;const elapsed=Math.round((Date.now()-wordStartTime)/1000);document.getElementById('word-play').style.display='none';document.getElementById('word-result').style.display='block';let gainedPts=0,gainedDia=0;const perfect=(wordCorrect===wordList.length);if(win&&perfect){gainedPts=50;const fast=wordCfg.timerEnabled&&(elapsed<=(wordCfg.diamondTimeLimit||90));if(fast)gainedDia=wordCfg.diamondReward||0;try{const upd={points:firebase.firestore.FieldValue.increment(gainedPts),wordPoints:firebase.firestore.FieldValue.increment(gainedPts)};if(gainedDia>0)upd.diamonds=firebase.firestore.FieldValue.increment(gainedDia);await db.collection('users').doc(auth.currentUser.uid).update(upd);U.points=(U.points||0)+gainedPts;U.wordPoints=(U.wordPoints||0)+gainedPts;if(gainedDia>0)U.diamonds=(U.diamonds||0)+gainedDia;refreshUI();await syncProfileToScores();await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:U.city||'',type:'word',correct:wordCorrect,total:wordList.length,points:gainedPts,diamonds:gainedDia,time:elapsed,date:firebase.firestore.FieldValue.serverTimestamp()});await checkLevelReward();}catch(e){console.error(e);}}document.getElementById('wordr-trophy').innerText=(win&&perfect)?'🎉':'';document.getElementById('wordr-title').innerText=(win&&perfect)?'تەواوت کرد!':'تەواو نەبوو!';document.getElementById('wordr-sub').innerText=(win&&perfect)?('بە '+elapsed+' چرکە تەواوت کرد 🔤'):'هەوڵێکی تر بدەرەوە 💪';document.getElementById('wordr-time').innerText=elapsed;document.getElementById('wordr-correct').innerText=wordCorrect+'/'+wordList.length;document.getElementById('wordr-total').innerText=wordList.length;document.getElementById('wordr-pts').innerText='+'+gainedPts;document.getElementById('wordr-dia').innerText='+'+gainedDia;document.getElementById('wordr-dia-row').style.display=gainedDia>0?'block':'none';}
+async function endWord(win){if(wordEnded)return;wordEnded=true;if(wordTimerInt)clearInterval(wordTimerInt);wordActive=false;const elapsed=Math.round((Date.now()-wordStartTime)/1000);document.getElementById('word-play').style.display='none';document.getElementById('word-result').style.display='block';let gainedPts=0,gainedDia=0;const perfect=(wordCorrect===wordList.length);if(win&&perfect){gainedPts=50;const fast=wordCfg.timerEnabled&&(elapsed<=(wordCfg.diamondTimeLimit||90));if(fast)gainedDia=wordCfg.diamondReward||0;try{const upd={points:firebase.firestore.FieldValue.increment(gainedPts),wordPoints:firebase.firestore.FieldValue.increment(gainedPts)};if(gainedDia>0)upd.diamonds=firebase.firestore.FieldValue.increment(gainedDia);await db.collection('users').doc(auth.currentUser.uid).update(upd);U.points=(U.points||0)+gainedPts;U.wordPoints=(U.wordPoints||0)+gainedPts;if(gainedDia>0)U.diamonds=(U.diamonds||0)+gainedDia;refreshUI();await syncProfileToScores();await db.collection('gameHistory').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',city:U.city||'',type:'word',correct:wordCorrect,total:wordList.length,points:gainedPts,diamonds:gainedDia,time:elapsed,date:firebase.firestore.FieldValue.serverTimestamp()});await checkLevelReward();}catch(e){console.error(e);}}document.getElementById('wordr-trophy').innerText=(win&&perfect)?'🎉':'⏰';document.getElementById('wordr-title').innerText=(win&&perfect)?'تەواوت کرد!':'تەواو نەبوو!';document.getElementById('wordr-sub').innerText=(win&&perfect)?('بە '+elapsed+' چرکە تەواوت کرد 🔤'):'هەوڵێکی تر بدەرەوە 💪';document.getElementById('wordr-time').innerText=elapsed;document.getElementById('wordr-correct').innerText=wordCorrect+'/'+wordList.length;document.getElementById('wordr-total').innerText=wordList.length;document.getElementById('wordr-pts').innerText='+'+gainedPts;document.getElementById('wordr-dia').innerText='+'+gainedDia;document.getElementById('wordr-dia-row').style.display=gainedDia>0?'block':'none';}
 function exitWord(){if(wordTimerInt)clearInterval(wordTimerInt);wordActive=false;document.getElementById('word-screen').classList.remove('show');}
-
-/* ================= ئۆڵۆمپیاد 1v1 ================= */
-let olympiadMatchId=null,olympiadOpponent=null,olympiadQuestions=[],olympiadIdx=0,olympiadMyScore=0,olympiadOppScore=0,olympiadTimer=null,olympiadTimeLeft=0,olympiadActive=false,olympiadEnded=false,olympiadUnsub=null,myFinished=false,opponentFinished=false;
-
-async function startOlympiad(){
-  if(!auth.currentUser){showPopup('تکایە سەرەتا چوونەژوورەوە بکە','warning');return;}
-  document.getElementById('olympiad-screen').classList.add('show');
-  document.getElementById('olympiad-matchmaking').style.display='block';
-  document.getElementById('olympiad-play').style.display='none';
-  document.getElementById('olympiad-result').style.display='none';
-  myFinished=false;opponentFinished=false;
-  
-  try{
-    const waitingSnap=await db.collection('olympiad_matches').where('status','==','waiting').limit(1).get();
-    if(!waitingSnap.empty){
-      const matchDoc=waitingSnap.docs[0];
-      if(matchDoc.data().player1===auth.currentUser.uid){await createNewOlympiadMatch();return;}
-      olympiadMatchId=matchDoc.id;
-      await db.collection('olympiad_matches').doc(olympiadMatchId).update({status:'matched',player2:auth.currentUser.uid,player2Name:U.name||'یاریزان',player2Avatar:U.avatar||'',player2Frame:U.frame||''});
-      olympiadOpponent={uid:matchDoc.data().player1,name:matchDoc.data().player1Name||'ڕکابەر',avatar:matchDoc.data().player1Avatar||'',frame:matchDoc.data().player1Frame||'',city:matchDoc.data().player1City||''};
-      startOlympiadGame(matchDoc.data().questions||[]);
-    }else{
-      await createNewOlympiadMatch();
-    }
-  }catch(e){console.error(e);showPopup('هەڵە لە دەستپێکردنی یاری','error');exitOlympiad();}
-}
-
-async function createNewOlympiadMatch(){
-  let qs=[];try{const snap=await db.collection('olympiad_questions').get();snap.forEach(d=>qs.push({id:d.id,...d.data()}));}catch(e){}
-  if(qs.length<10){showPopup('پرسیاری پێویست نییە (لانیکەم ١٠ پێویستە)','error');exitOlympiad();return;}
-  const selectedQuestions=qs.sort(()=>Math.random()-0.5).slice(0,10);
-  try{
-    const matchRef=await db.collection('olympiad_matches').add({status:'waiting',player1:auth.currentUser.uid,player1Name:U.name||'یاریزان',player1Avatar:U.avatar||'',player1Frame:U.frame||'',player1City:U.city||'',questions:selectedQuestions,player1Score:0,player2Score:0,player1Finished:false,player2Finished:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    olympiadMatchId=matchRef.id;
-    olympiadUnsub=db.collection('olympiad_matches').doc(olympiadMatchId).onSnapshot(async doc=>{
-      if(!doc.exists)return;
-      const data=doc.data();
-      if(data.status==='matched'&&data.player2&&!olympiadOpponent){
-        olympiadOpponent={uid:data.player2,name:data.player2Name||'ڕکابەر',avatar:data.player2Avatar||'',frame:data.player2Frame||'',city:data.player2City||''};
-        startOlympiadGame(data.questions||[]);
-      }
-      // Real-time score update
-      if(olympiadActive){
-        if(data.player2Score!==undefined){
-          document.getElementById('oly-opp-score').innerText=data.player2Score;
-        }
-        // Check if opponent finished
-        if(data.player2Finished&&!myFinished){
-          opponentFinished=true;
-          document.getElementById('waiting-opponent').style.display='block';
-        }
-      }
-      // Both finished - show results
-      if(data.player1Finished&&data.player2Finished&&myFinished&&opponentFinished){
-        showOlympiadResultFinal(data);
-      }
-    });
-  }catch(e){showPopup('هەڵە لە دروستکردنی یاری','error');exitOlympiad();}
-}
-
-function startOlympiadGame(questions){
-  if(olympiadUnsub)olympiadUnsub();
-  document.getElementById('olympiad-matchmaking').style.display='none';
-  document.getElementById('olympiad-play').style.display='block';
-  document.getElementById('waiting-opponent').style.display='none';
-  
-  const myAv=document.getElementById('oly-my-av');
-  myAv.innerHTML=U.avatar?`<img src="${U.avatar}">`:(U.name||'?').charAt(0);
-  document.getElementById('oly-my-name').innerText=U.name||'تۆ';
-  if(U.frame){const fr=document.createElement('img');fr.className='olympiad-frame';fr.src=U.frame;myAv.appendChild(fr);}
-  
-  const oppAv=document.getElementById('oly-opp-av');
-  oppAv.innerHTML=olympiadOpponent.avatar?`<img src="${olympiadOpponent.avatar}">`:olympiadOpponent.name.charAt(0);
-  document.getElementById('oly-opp-name').innerText=olympiadOpponent.name;
-  if(olympiadOpponent.frame){const fr=document.createElement('img');fr.className='olympiad-frame';fr.src=olympiadOpponent.frame;oppAv.appendChild(fr);}
-  
-  olympiadQuestions=questions;olympiadIdx=0;olympiadMyScore=0;olympiadOppScore=0;olympiadActive=true;olympiadEnded=false;myFinished=false;opponentFinished=false;
-  document.getElementById('oly-my-score').innerText='0';
-  document.getElementById('oly-opp-score').innerText='0';
-  setTimeout(()=>{showOlympiadQuestion();},1500);
-}
-
-function showOlympiadQuestion(){
-  if(olympiadIdx>=olympiadQuestions.length){
-    // I finished
-    myFinished=true;
-    document.getElementById('oly-my-score').innerText=olympiadMyScore;
-    // Update Firebase
-    db.collection('olympiad_matches').doc(olympiadMatchId).update({player1Score:olympiadMyScore,player1Finished:true});
-    
-    if(opponentFinished){
-      // Both finished, wait for snapshot to trigger
-    }else{
-      // Wait for opponent
-      document.getElementById('waiting-opponent').style.display='block';
-    }
-    return;
-  }
-  const q=olympiadQuestions[olympiadIdx];
-  document.getElementById('oly-qnum').innerText=olympiadIdx+1;
-  document.getElementById('oly-question').innerText=q.q;
-  const ans=document.getElementById('oly-answers');ans.innerHTML='';
-  let answersWithIndex=q.a.map((ans,idx)=>({text:ans,originalIndex:idx}));
-  answersWithIndex.sort(()=>Math.random()-0.5);
-  answersWithIndex.forEach(item=>{
-    const b=document.createElement('button');b.className='game-ans';b.innerText=item.text;b.onclick=()=>answerOlympiad(item.originalIndex,b,q);ans.appendChild(b);
-  });
-  olympiadTimeLeft=10;document.getElementById('oly-timer').innerText=olympiadTimeLeft;document.getElementById('oly-timer-box').classList.remove('warn');
-  if(olympiadTimer)clearInterval(olympiadTimer);
-  olympiadTimer=setInterval(()=>{
-    olympiadTimeLeft--;document.getElementById('oly-timer').innerText=olympiadTimeLeft;
-    if(olympiadTimeLeft<=3)document.getElementById('oly-timer-box').classList.add('warn');
-    if(olympiadTimeLeft<=0){clearInterval(olympiadTimer);answerOlympiad(-1,null,q);}
-  },1000);
-}
-
-function answerOlympiad(idx,btn,q){
-  clearInterval(olympiadTimer);
-  const btns=document.querySelectorAll('#oly-answers .game-ans');btns.forEach(b=>b.disabled=true);
-  let points=0;
-  if(idx===q.c){
-    if(btn)btn.classList.add('correct');
-    if(olympiadTimeLeft>7)points=15;else if(olympiadTimeLeft>4)points=12;else points=10;
-    olympiadMyScore+=points;document.getElementById('oly-my-score').innerText=olympiadMyScore;
-    // Update score in real-time
-    db.collection('olympiad_matches').doc(olympiadMatchId).update({player1Score:olympiadMyScore});
-  }else{
-    if(btn)btn.classList.add('wrong');
-    btns.forEach(b=>{if(b.innerText===q.a[q.c])b.classList.add('correct');});
-  }
-  setTimeout(()=>{olympiadIdx++;showOlympiadQuestion();},1500);
-}
-
-function showOlympiadResultFinal(data){
-  if(olympiadTimer)clearInterval(olympiadTimer);
-  olympiadActive=false;olympiadEnded=true;
-  
-  const myScore=data.player1Score||0;
-  const oppScore=data.player2Score||0;
-  const iWon=myScore>oppScore;
-  const gainedPts=iWon?100:30;
-  const gainedDia=iWon?5:0;
-  
-  try{
-    db.collection('users').doc(auth.currentUser.uid).update({points:firebase.firestore.FieldValue.increment(gainedPts),olympiadPoints:firebase.firestore.FieldValue.increment(gainedPts),diamonds:firebase.firestore.FieldValue.increment(gainedDia),wins:firebase.firestore.FieldValue.increment(iWon?1:0)});
-    U.points=(U.points||0)+gainedPts;U.olympiadPoints=(U.olympiadPoints||0)+gainedPts;U.diamonds=(U.diamonds||0)+gainedDia;U.wins=(U.wins||0)+(iWon?1:0);
-    refreshUI();syncProfileToScores();
-  }catch(e){}
-  
-  document.getElementById('olympiad-play').style.display='none';
-  document.getElementById('olympiad-result').style.display='block';
-  document.getElementById('olyr-my-av').innerHTML=U.avatar?`<img src="${U.avatar}">`:(U.name||'?').charAt(0);
-  document.getElementById('olyr-my-name').innerText=U.name||'تۆ';
-  document.getElementById('olyr-my-score').innerText=myScore;
-  document.getElementById('olyr-opp-av').innerHTML=olympiadOpponent.avatar?`<img src="${olympiadOpponent.avatar}">`:olympiadOpponent.name.charAt(0);
-  document.getElementById('olyr-opp-name').innerText=olympiadOpponent.name;
-  document.getElementById('olyr-opp-score').innerText=oppScore;
-  document.getElementById('olyr-trophy').innerText=iWon?'':'😔';
-  document.getElementById('olyr-title').innerText=iWon?'پیرۆزە! بردنتەوە!':'بەختت باش نەبوو!';
-  document.getElementById('olyr-sub').innerText=iWon?'ئاستەکەت بەرزتر بوو':'جارێکی تر هەوڵ بدەرەوە';
-  document.getElementById('olyr-pts').innerText='+'+gainedPts;
-  if(gainedDia>0){document.getElementById('olyr-dia-row').style.display='flex';document.getElementById('olyr-dia').innerText='+'+gainedDia;}
-  else{document.getElementById('olyr-dia-row').style.display='none';}
-}
-
-async function viewOlympiadProfile(type){
-  let userData;
-  if(type==='me'){userData=U;}
-  else{try{const doc=await db.collection('users').doc(olympiadOpponent.uid).get();userData=doc.exists?doc.data():olympiadOpponent;}catch(e){userData=olympiadOpponent;}}
-  document.getElementById('oly-modal-av').innerHTML=userData.avatar?`<img src="${userData.avatar}">`:(userData.name||'?').charAt(0);
-  document.getElementById('oly-modal-name').innerText=userData.name||'یاریزان';
-  document.getElementById('oly-modal-city').innerText=userData.city||'-';
-  document.getElementById('oly-modal-lvl').innerText=Math.floor((userData.points||0)/500);
-  document.getElementById('oly-modal-pts').innerText=(userData.points||0).toLocaleString();
-  document.getElementById('oly-modal-dia').innerText=(userData.diamonds||0).toLocaleString();
-  document.getElementById('oly-modal-wins').innerText=(userData.wins||0);
-  const rank=userData.points>=1000?'🥇':(userData.points>=500?'🥈':(userData.points>=100?'🥉':''));
-  document.getElementById('oly-modal-medal').innerText=rank;
-  document.getElementById('olympiad-profile-modal').classList.add('show');
-}
-function closeOlympiadProfile(){document.getElementById('olympiad-profile-modal').classList.remove('show');}
-
-function playAgainOlympiad(){
-  // Restart the matchmaking process
-  document.getElementById('olympiad-result').style.display='none';
-  document.getElementById('olympiad-matchmaking').style.display='block';
-  myFinished=false;opponentFinished=false;
-  olympiadOpponent=null;
-  olympiadMatchId=null;
-  if(olympiadUnsub){olympiadUnsub();olympiadUnsub=null;}
-  
-  // Start new match
-  startOlympiad();
-}
-
-function exitOlympiad(){
-  if(olympiadTimer)clearInterval(olympiadTimer);
-  if(olympiadUnsub){olympiadUnsub();olympiadUnsub=null;}
-  if(olympiadMatchId&&!myFinished){
-    db.collection('olympiad_matches').doc(olympiadMatchId).get().then(doc=>{
-      if(doc.exists&&doc.data().status==='waiting'&&doc.data().player1===auth.currentUser.uid){doc.ref.delete();}
-    }).catch(()=>{});
-    olympiadMatchId=null;
-  }
-  olympiadActive=false;
-  document.getElementById('olympiad-screen').classList.remove('show');
-}
-
-/* ================= دیاری و فرۆشگا ================= */
-function loadRewards(){const grid=document.getElementById('rewards-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p>';db.collection('rewards').get().then(snap=>{if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">هیچ بۆکسێک نییە.</p>';return;}grid.innerHTML='';const claimed=U.claimedRewards||[];snap.forEach(doc=>{const d=doc.data();const lvlNeed=d.reqLevel||0,scNeed=d.reqScore||0;const lvlOk=getLevel(U.points)>=lvlNeed,scOk=(U.points||0)>=scNeed;const unlocked=lvlOk&&scOk,isClaimed=claimed.includes(doc.id);let cls='rw-box',btnHtml='',lockOv='';if(isClaimed){cls+=' claimed';btnHtml='<button class="rw-btn done">✅ وەرگیراوە</button>';}else if(unlocked){cls+=' unlocked';btnHtml='<button class="rw-btn open">🎁 وەرگرتن</button>';}else{cls+=' locked';lockOv='<div class="rw-lock-ov">🔒</div>';btnHtml='<button class="rw-btn lock">قفڵە</button>';}const reqHtml='<div class="rw-req">'+(lvlNeed>0?('<div>🎖️ ئاست: <span class="'+(lvlOk?'ok':'no')+'">'+getLevel(U.points)+'/'+lvlNeed+'</span></div>'):'')+(scNeed>0?('<div>⭐ خاڵ: <span class="'+(scOk?'ok':'no')+'">'+(U.points||0)+'/'+scNeed+'</span></div>'):'')+'</div>';let gift=[];if(d.rewardPoints)gift.push('⭐'+d.rewardPoints);if(d.rewardDiamonds)gift.push('💎'+d.rewardDiamonds);if(d.rewardDinars)gift.push('💵'+d.rewardDinars);grid.innerHTML+='<div class="'+cls+'" onclick="'+(unlocked&&!isClaimed?("claimReward('"+doc.id+"')"):'')+'">'+lockOv+'<div class="rw-ic">'+(d.icon||'')+'</div><div class="rw-nm">'+(d.name||'بۆکس')+'</div>'+reqHtml+'<div class="rw-gift">خەڵات: '+(gift.join(' ')||'-')+'</div>'+btnHtml+'</div>';});}).catch(()=>{grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#f87171;font-size:12px;padding:20px">هەڵە</p>';});}
-async function claimReward(id){const doc=await db.collection('rewards').doc(id).get();if(!doc.exists)return;const d=doc.data(),claimed=U.claimedRewards||[];if(claimed.includes(id)){showPopup('ئەم خەڵاتە پێشتر وەرگیراوە ✅','info');return;}const lvlOk=getLevel(U.points)>=(d.reqLevel||0),scOk=(U.points||0)>=(d.reqScore||0);if(!lvlOk||!scOk){showPopup('🔒 مەرجەکانت هێشتا تەواو نین!','warning');return;}try{const newP=(U.points||0)+(d.rewardPoints||0),newD=(U.diamonds||0)+(d.rewardDiamonds||0),newDin=(U.dinars||0)+(d.rewardDinars||0),newClaimed=[...claimed,id];await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,dinars:newDin,claimedRewards:newClaimed});U.points=newP;U.diamonds=newD;U.dinars=newDin;U.claimedRewards=newClaimed;refreshUI();await syncProfileToScores();loadRewards();await checkLevelReward();let g=[];if(d.rewardPoints)g.push('⭐ '+d.rewardPoints+' خاڵ');if(d.rewardDiamonds)g.push('💎 '+d.rewardDiamonds+' ئەڵماس');if(d.rewardDinars)g.push('💵 '+d.rewardDinars+' دینار');showPopup(' پیرۆز! خەڵاتەکەت وەرگرت:\n'+g.join('\n'),'reward','سوپاس');}catch(e){showPopup('هەڵە لە وەرگرتنی خەڵات','error');}}
+/* ================= دیاری ================= */
+function loadRewards(){const grid=document.getElementById('rewards-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p>';db.collection('rewards').get().then(snap=>{if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">هیچ بۆکسێک نییە.</p>';return;}grid.innerHTML='';const claimed=U.claimedRewards||[];snap.forEach(doc=>{const d=doc.data();const lvlNeed=d.reqLevel||0,scNeed=d.reqScore||0;const lvlOk=getLevel(U.points)>=lvlNeed,scOk=(U.points||0)>=scNeed;const unlocked=lvlOk&&scOk,isClaimed=claimed.includes(doc.id);let cls='rw-box',btnHtml='',lockOv='';if(isClaimed){cls+=' claimed';btnHtml='<button class="rw-btn done">✅ وەرگیراوە</button>';}else if(unlocked){cls+=' unlocked';btnHtml='<button class="rw-btn open">🎁 وەرگرتن</button>';}else{cls+=' locked';lockOv='<div class="rw-lock-ov">🔒</div>';btnHtml='<button class="rw-btn lock">قفڵە</button>';}const reqHtml='<div class="rw-req">'+(lvlNeed>0?('<div>🎖️ ئاست: <span class="'+(lvlOk?'ok':'no')+'">'+getLevel(U.points)+'/'+lvlNeed+'</span></div>'):'')+(scNeed>0?('<div>⭐ خاڵ: <span class="'+(scOk?'ok':'no')+'">'+(U.points||0)+'/'+scNeed+'</span></div>'):'')+'</div>';let gift=[];if(d.rewardPoints)gift.push('⭐'+d.rewardPoints);if(d.rewardDiamonds)gift.push('💎'+d.rewardDiamonds);if(d.rewardDinars)gift.push('💵'+d.rewardDinars);grid.innerHTML+='<div class="'+cls+'" onclick="'+(unlocked&&!isClaimed?("claimReward('"+doc.id+"')"):'')+'">'+lockOv+'<div class="rw-ic">'+(d.icon||'🎁')+'</div><div class="rw-nm">'+(d.name||'بۆکس')+'</div>'+reqHtml+'<div class="rw-gift">خەڵات: '+(gift.join(' ')||'-')+'</div>'+btnHtml+'</div>';});}).catch(()=>{grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#f87171;font-size:12px;padding:20px">هەڵە</p>';});}
+async function claimReward(id){const doc=await db.collection('rewards').doc(id).get();if(!doc.exists)return;const d=doc.data(),claimed=U.claimedRewards||[];if(claimed.includes(id)){showPopup('ئەم خەڵاتە پێشتر وەرگیراوە ✅','info');return;}const lvlOk=getLevel(U.points)>=(d.reqLevel||0),scOk=(U.points||0)>=(d.reqScore||0);if(!lvlOk||!scOk){showPopup('🔒 مەرجەکانت هێشتا تەواو نین!','warning');return;}try{const newP=(U.points||0)+(d.rewardPoints||0),newD=(U.diamonds||0)+(d.rewardDiamonds||0),newDin=(U.dinars||0)+(d.rewardDinars||0),newClaimed=[...claimed,id];await db.collection('users').doc(auth.currentUser.uid).update({points:newP,diamonds:newD,dinars:newDin,claimedRewards:newClaimed});U.points=newP;U.diamonds=newD;U.dinars=newDin;U.claimedRewards=newClaimed;refreshUI();await syncProfileToScores();loadRewards();await checkLevelReward();let g=[];if(d.rewardPoints)g.push('⭐ '+d.rewardPoints+' خاڵ');if(d.rewardDiamonds)g.push('💎 '+d.rewardDiamonds+' ئەڵماس');if(d.rewardDinars)g.push('💵 '+d.rewardDinars+' دینار');showPopup('🎉 پیرۆز! خەڵاتەکەت وەرگرت:\n'+g.join('\n'),'reward','سوپاس');}catch(e){showPopup('هەڵە لە وەرگرتنی خەڵات','error');}}
+/* ================= فرۆشگا ================= */
 function loadDPacks(){const grid=document.getElementById('dpacks-grid');grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">بارکردن...</p>';db.collection('diamond_packs').orderBy('dinars','asc').get().then(snap=>{db.collection('payment_settings').doc('config').get().then(c=>{PAY_CFG=c.exists?c.data():{};buildPacks(snap);}).catch(()=>{PAY_CFG={};buildPacks(snap);});}).catch(()=>{grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#f87171;font-size:12px;padding:20px">هەڵە</p>';});}
 function buildPacks(snap){const grid=document.getElementById('dpacks-grid');if(snap.empty){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;font-size:12px;padding:20px">هیچ پاکێجێک نییە</p>';return;}grid.innerHTML='';const qr=PAY_CFG.fibQR||'';snap.forEach(doc=>{const d=doc.data();const dia=d.diamonds||0,din=d.dinars||0;const badge=qr?('<img class="dp-qr" src="'+qr+'">'):'<div class="dp-qr-emoji">🏦</div>';grid.innerHTML+='<div class="dpack" data-act="buy" data-id="'+doc.id+'" data-dia="'+dia+'" data-din="'+din+'">'+badge+'<div class="dp-dia">💎 '+dia+' <small>ئەڵماس</small></div><div class="dp-arrow">⬇️</div><div class="dp-din">💵 '+din+' دینار</div><button class="dp-buy" type="button">کڕین</button></div>';});}
 function setupPayDelegation(){const inner=document.getElementById('pay-inner');const grid=document.getElementById('dpacks-grid');if(inner&&!inner.getAttribute('data-deleg')){inner.setAttribute('data-deleg','1');inner.addEventListener('click',function(e){const el=e.target.closest('[data-act]');if(!el)return;const act=el.getAttribute('data-act');if(act==='choose-fib'){payChoose('fib');}else if(act==='choose-asy'){payChoose('asyacell');}else if(act==='back'){payBack();}else if(act==='close'){closePayModal();}else if(act==='copy'){payCopy();}else if(act==='copy-acc'){copyText(el.getAttribute('data-val')||'',el);}else if(act==='proof-camera'){const fi=document.getElementById('pay-proof-camera');if(fi){e.preventDefault();e.stopPropagation();fi.value='';fi.click();}}else if(act==='proof-gallery'){const fi=document.getElementById('pay-proof-gallery');if(fi){e.preventDefault();e.stopPropagation();fi.value='';fi.click();}}else if(act==='submit'){paySubmit();}});inner.addEventListener('change',function(e){if(e.target&&(e.target.id==='pay-proof-camera'||e.target.id==='pay-proof-gallery')){payProofPick(e);}});}if(grid&&!grid.getAttribute('data-deleg')){grid.setAttribute('data-deleg','1');grid.addEventListener('click',function(e){const el=e.target.closest('[data-act="buy"]');if(!el)return;const id=el.getAttribute('data-id'),dia=parseInt(el.getAttribute('data-dia'))||0,din=parseInt(el.getAttribute('data-din'))||0;buyDPack(id,dia,din);});}}
@@ -1143,23 +881,23 @@ function buyDPack(id,dia,din){if(hasPendingPay){showPopup('⏳ داواکاری�
 function closePayModal(){document.getElementById('pay-modal').classList.remove('show');PAY_PROOF='';}
 function payChoose(m){PAY_METHOD=m;PAY_PROOF='';PAY_STEP=m;renderPay();}
 function payBack(){PAY_STEP='method';renderPay();}
-function proofPickRow(){return '<div class="proof-pick-row"><button type="button" class="proof-pick-btn cam" data-act="proof-camera"> کامێرا</button><button type="button" class="proof-pick-btn gal" data-act="proof-gallery">🖼️ سکرینشۆت / گەلەری</button></div>';}
+function proofPickRow(){return '<div class="proof-pick-row"><button type="button" class="proof-pick-btn cam" data-act="proof-camera">📷 کامێرا</button><button type="button" class="proof-pick-btn gal" data-act="proof-gallery">🖼️ سکرینشۆت / گەلەری</button></div>';}
 function payProofPick(e){const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){showPopup('وێنەکە زۆر گەورەیە','warning');return;}compressImage(f,900,0.7).then(function(data){PAY_PROOF=data;const drop=document.getElementById('pay-drop');if(drop)drop.classList.add('has');const pv=document.getElementById('pay-proof-preview');if(pv)pv.innerHTML='<img src="'+data+'">'+proofPickRow();}).catch(function(){showPopup('هەڵە','error');});}
 async function paySubmit(){const p=PAY_PACK;if(!p)return;let cardCode='',senderName='',senderAcc='';if(PAY_METHOD==='asyacell'){const el=document.getElementById('pay-card-code');cardCode=(el?el.value:'').trim();if(!cardCode){showPopup('تکایە کۆدی کارتەکە بنووسە 🔢','warning');return;}}if(PAY_METHOD==='fib'){const sn=document.getElementById('pay-sender-name');senderName=(sn?sn.value:'').trim();const sa=document.getElementById('pay-sender-acc');senderAcc=(sa?sa.value:'').trim();if(!senderName){showPopup('تکایە ناوی خاوەن هەژمارەکەی خۆت بنووسە 👤','warning');return;}if(!senderAcc){showPopup('تکایە ژمارەی هەژمارەکەی خۆت بنووسە 🔢','warning');return;}}if(!PAY_PROOF){showPopup('تکایە سکرینشۆتی بەڵگەکە بار بکە 📎','warning');return;}const btn=document.getElementById('pay-cta');if(btn){btn.disabled=true;btn.innerHTML='<span class="spin"></span> دەنێردرێت...';}try{await db.collection('payment_requests').add({uid:auth.currentUser.uid,name:U.name||'یاریزان',email:U.email||'',method:PAY_METHOD,diamonds:p.dia,amount:p.din,cardCode:cardCode,senderName:senderName,senderAccount:senderAcc,proofImage:PAY_PROOF,status:'pending',createdAt:firebase.firestore.FieldValue.serverTimestamp()});PAY_STEP='sent';renderPay();}catch(e){if(btn){btn.disabled=false;btn.innerHTML='✓ پارەکەم نارد';}showPopup('هەڵە لە ناردن','error');}}
 function renderPay(){const inner=document.getElementById('pay-inner');try{const p=PAY_PACK||{};
-if(PAY_STEP==='method'){inner.innerHTML='<h3 style="font-size:18px">💳 شێوازی پارەدان</h3><div class="pay-ticket"><div class="pt-side"><div class="pt-v dia">💎 '+(p.dia||0)+'</div><div class="pt-l">ئەڵماس</div></div><div class="pt-arrow">⟵</div><div class="pt-side"><div class="pt-v din"> '+(p.din||0)+'</div><div class="pt-l">دینار</div></div></div><button type="button" class="pay-method-card" data-act="choose-fib"><div class="pmc-ic fib"></div><div class="pmc-tx"><div class="pmc-t">پارەدان بە FIB</div><div class="pmc-s">بانکی یەکەمی عێراقی — سکانی QR</div></div><div class="pmc-ch">‹</div></button><button type="button" class="pay-method-card" data-act="choose-asy"><div class="pmc-ic asy">📱</div><div class="pmc-tx"><div class="pmc-t">پارەدان بە ئاسیا سیڵ</div><div class="pmc-s">کارتی پڕکردنەوە</div></div><div class="pmc-ch">‹</div></button><button type="button" class="pay-back" data-act="close">پاشگەزبوونەوە</button>';return;}
+if(PAY_STEP==='method'){inner.innerHTML='<h3 style="font-size:18px">💳 شێوازی پارەدان</h3><div class="pay-ticket"><div class="pt-side"><div class="pt-v dia">💎 '+(p.dia||0)+'</div><div class="pt-l">ئەڵماس</div></div><div class="pt-arrow">⟵</div><div class="pt-side"><div class="pt-v din">💵 '+(p.din||0)+'</div><div class="pt-l">دینار</div></div></div><button type="button" class="pay-method-card" data-act="choose-fib"><div class="pmc-ic fib">🏦</div><div class="pmc-tx"><div class="pmc-t">پارەدان بە FIB</div><div class="pmc-s">بانکی یەکەمی عێراقی — سکانی QR</div></div><div class="pmc-ch">‹</div></button><button type="button" class="pay-method-card" data-act="choose-asy"><div class="pmc-ic asy">📱</div><div class="pmc-tx"><div class="pmc-t">پارەدان بە ئاسیا سیڵ</div><div class="pmc-s">کارتی پڕکردنەوە</div></div><div class="pmc-ch">‹</div></button><button type="button" class="pay-back" data-act="close">پاشگەزبوونەوە</button>';return;}
 if(PAY_STEP==='sent'){inner.innerHTML='<div class="pay-sent-ic"><svg viewBox="0 0 52 52"><circle class="ring" cx="26" cy="26" r="23"/><path class="ck" d="M15 27 l7 7 l15 -16"/></svg></div><h3 style="font-size:18px">داواکارییەکەت نێردرا</h3><div class="pay-note">⏳ چاوەڕوانی پەسەندکردنی بەڕێوەبەر بە — <b style="color:#a78bfa">💎 '+(p.dia||0)+' ئەڵماس</b> خۆکار دەچێتە سەر هەژمارەکەت.</div><button type="button" class="pay-cta" data-act="close">تەواو ✓</button>';return;}
-const stepBar='<div class="pay-step-bar"><div class="ps done"><div class="dot">✓</div></div><div class="ln"></div><div class="ps on"><div class="dot"></div>پارەدان</div></div>';
+const stepBar='<div class="pay-step-bar"><div class="ps done"><div class="dot">✓</div></div><div class="ln"></div><div class="ps on"><div class="dot">٢</div>پارەدان</div></div>';
 const ticket='<div class="pay-ticket"><div class="pt-side"><div class="pt-v dia">💎 '+(p.dia||0)+'</div><div class="pt-l">ئەڵماس</div></div><div class="pt-arrow">⟵</div><div class="pt-side"><div class="pt-v din">💵 '+(p.din||0)+'</div><div class="pt-l">دینار</div></div></div>';
 const proofBlock='<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:14px 0 6px;text-align:right">📎 بەڵگەی پارەدان <span style="color:#f87171">(پێویستە)</span></label><div class="pay-drop" id="pay-drop"><div class="pd-in" id="pay-proof-preview"><div class="ic">📸</div><div>وێنەی بەڵگەکەت زیاد بکە</div>'+proofPickRow()+'</div></div><input type="file" id="pay-proof-camera" capture="environment" style="display:none"><input type="file" id="pay-proof-gallery" accept="image/*" style="display:none">';
-if(PAY_STEP==='fib'){const qr=PAY_CFG.fibQR?('<div class="pay-qr-wrap"><img src="'+PAY_CFG.fibQR+'"><div class="scan"></div></div>'):'<div class="pay-qr-empty">️ وێنەی QR هێشتا لە admin دانەنراوە</div>';const code=PAY_CFG.fibCode||'';const codeChip=code?('<div class="pay-code-chip"><span class="cc">'+esc(code)+'</span><button type="button" id="pay-copy-btn" data-act="copy">📋 کۆپی</button></div>'):'';const accName=PAY_CFG.fibAccountName||'',accNum=PAY_CFG.fibAccountNumber||'';let accBlock='';if(accName||accNum){accBlock='<div class="pay-acc">';if(accName)accBlock+='<div class="pay-acc-row"><span class="pay-acc-l">👤 ناوی خاوەن هەژمار</span><span class="pay-acc-v" style="font-family:Vazirmatn">'+esc(accName)+'</span></div>';if(accNum)accBlock+='<div class="pay-acc-row"><span class="pay-acc-l">🔢 ژمارەی هەژمار</span><span class="pay-acc-v">'+esc(accNum)+'</span><button type="button" class="pay-acc-copy" data-act="copy-acc" data-val="'+esc(accNum)+'">📋</button></div>';accBlock+='</div>';}const rawInstr=PAY_CFG.fibInstructions||'ئەپی FIB بکەرەوە و QRـەکە سکان بکە|بڕی پارەکە بنێرە|ناو و ژمارەی هەژمارەکەی خۆت بنووسە|سکرینشۆت بار بکە';const items=rawInstr.split('|').map(function(t,i){return '<li><span class="n">'+(i+1)+'</span><span>'+esc(t)+'</span></li>';}).join('');inner.innerHTML=stepBar+'<h3 style="font-size:18px">🏦 پارەدان بە FIB</h3>'+ticket+accBlock+qr+codeChip+'<ul class="pay-list">'+items+'</ul>'+'<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:6px 0 6px;text-align:right">👤 ناوی خاوەن هەژمارەکەی خۆت <span style="color:#f87171">(پێویستە)</span></label><input type="text" id="pay-sender-name" class="pay-card-input" placeholder="ناوەکەی خۆت...">'+'<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:6px 0 6px;text-align:right">🔢 ژمارەی هەژمارەکەی خۆت <span style="color:#f87171">(پێویستە)</span></label><input type="text" id="pay-sender-acc" class="pay-card-input mono" inputmode="numeric" placeholder="ژمارەی هەژمارەکەی خۆت...">'+proofBlock+'<button type="button" class="pay-cta" id="pay-cta" data-act="submit">✓ پارەکەم نارد</button><button type="button" class="pay-back" data-act="back">⬅️ گەڕانەوە</button>';if(PAY_PROOF){const drop=document.getElementById('pay-drop');if(drop)drop.classList.add('has');const pv=document.getElementById('pay-proof-preview');if(pv)pv.innerHTML='<img src="'+PAY_PROOF+'">'+proofPickRow();}return;}
-const rawInstr2=PAY_CFG.asyacellInstructions||'کارتی پڕکردنەوە بکڕە|کۆدی کارتەکە بنووسە|سکرینشۆت بار بکە';const items2=rawInstr2.split('|').map(function(t,i){return '<li><span class="n">'+(i+1)+'</span><span>'+esc(t)+'</span></li>';}).join('');const num=PAY_CFG.asyacellNumber?('<div class="pay-note" style="text-align:center">📞 ژمارەی پەسەندکردن: <b style="color:#38bdf8;direction:ltr;display:inline-block">'+esc(PAY_CFG.asyacellNumber)+'</b></div>'):'';inner.innerHTML=stepBar+'<h3 style="font-size:18px">📱 پارەدان بە ئاسیا سیڵ</h3>'+ticket+num+'<ul class="pay-list">'+items2+'</ul>'+'<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:6px 0 6px;text-align:right">🔢 کۆدی کارتەکە <span style="color:#f87171">(پێویستە)</span></label><input type="text" id="pay-card-code" class="pay-card-input mono" placeholder="کۆدی کارتی پڕکردنەوە...">'+proofBlock+'<button type="button" class="pay-cta" id="pay-cta" data-act="submit">✓ پارەکەم نارد</button><button type="button" class="pay-back" data-act="back">⬅️ گەڕانەوە</button>';if(PAY_PROOF){const drop=document.getElementById('pay-drop');if(drop)drop.classList.add('has');const pv=document.getElementById('pay-proof-preview');if(pv)pv.innerHTML='<img src="'+PAY_PROOF+'">'+proofPickRow();}}catch(err){const i2=document.getElementById('pay-inner');if(i2)i2.innerHTML='<div style="color:#fca5a5;font-size:12px;padding:10px">⚠️ هەڵەیەک ڕوویدا</div><button class="pay-back" type="button" data-act="back">️ گەڕانەوە</button>';}}
+if(PAY_STEP==='fib'){const qr=PAY_CFG.fibQR?('<div class="pay-qr-wrap"><img src="'+PAY_CFG.fibQR+'"><div class="scan"></div></div>'):'<div class="pay-qr-empty">⚠️ وێنەی QR هێشتا لە admin دانەنراوە</div>';const code=PAY_CFG.fibCode||'';const codeChip=code?('<div class="pay-code-chip"><span class="cc">'+esc(code)+'</span><button type="button" id="pay-copy-btn" data-act="copy">📋 کۆپی</button></div>'):'';const accName=PAY_CFG.fibAccountName||'',accNum=PAY_CFG.fibAccountNumber||'';let accBlock='';if(accName||accNum){accBlock='<div class="pay-acc">';if(accName)accBlock+='<div class="pay-acc-row"><span class="pay-acc-l">👤 ناوی خاوەن هەژمار</span><span class="pay-acc-v" style="font-family:Vazirmatn">'+esc(accName)+'</span></div>';if(accNum)accBlock+='<div class="pay-acc-row"><span class="pay-acc-l">🔢 ژمارەی هەژمار</span><span class="pay-acc-v">'+esc(accNum)+'</span><button type="button" class="pay-acc-copy" data-act="copy-acc" data-val="'+esc(accNum)+'">📋</button></div>';accBlock+='</div>';}const rawInstr=PAY_CFG.fibInstructions||'ئەپی FIB بکەرەوە و QRـەکە سکان بکە|بڕی پارەکە بنێرە|ناو و ژمارەی هەژمارەکەی خۆت بنووسە|سکرینشۆت بار بکە';const items=rawInstr.split('|').map(function(t,i){return '<li><span class="n">'+(i+1)+'</span><span>'+esc(t)+'</span></li>';}).join('');inner.innerHTML=stepBar+'<h3 style="font-size:18px">🏦 پارەدان بە FIB</h3>'+ticket+accBlock+qr+codeChip+'<ul class="pay-list">'+items+'</ul>'+'<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:6px 0 6px;text-align:right">👤 ناوی خاوەن هەژمارەکەی خۆت <span style="color:#f87171">(پێویستە)</span></label><input type="text" id="pay-sender-name" class="pay-card-input" placeholder="ناوەکەی خۆت...">'+'<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:6px 0 6px;text-align:right">🔢 ژمارەی هەژمارەکەی خۆت <span style="color:#f87171">(پێویستە)</span></label><input type="text" id="pay-sender-acc" class="pay-card-input mono" inputmode="numeric" placeholder="ژمارەی هەژمارەکەی خۆت...">'+proofBlock+'<button type="button" class="pay-cta" id="pay-cta" data-act="submit">✓ پارەکەم نارد</button><button type="button" class="pay-back" data-act="back">⬅️ گەڕانەوە</button>';if(PAY_PROOF){const drop=document.getElementById('pay-drop');if(drop)drop.classList.add('has');const pv=document.getElementById('pay-proof-preview');if(pv)pv.innerHTML='<img src="'+PAY_PROOF+'">'+proofPickRow();}return;}
+const rawInstr2=PAY_CFG.asyacellInstructions||'کارتی پڕکردنەوە بکڕە|کۆدی کارتەکە بنووسە|سکرینشۆت بار بکە';const items2=rawInstr2.split('|').map(function(t,i){return '<li><span class="n">'+(i+1)+'</span><span>'+esc(t)+'</span></li>';}).join('');const num=PAY_CFG.asyacellNumber?('<div class="pay-note" style="text-align:center">📞 ژمارەی پەسەندکردن: <b style="color:#38bdf8;direction:ltr;display:inline-block">'+esc(PAY_CFG.asyacellNumber)+'</b></div>'):'';inner.innerHTML=stepBar+'<h3 style="font-size:18px">📱 پارەدان بە ئاسیا سیڵ</h3>'+ticket+num+'<ul class="pay-list">'+items2+'</ul>'+'<label style="display:block;font-size:11px;font-weight:700;color:#94a3b8;margin:6px 0 6px;text-align:right">🔢 کۆدی کارتەکە <span style="color:#f87171">(پێویستە)</span></label><input type="text" id="pay-card-code" class="pay-card-input mono" placeholder="کۆدی کارتی پڕکردنەوە...">'+proofBlock+'<button type="button" class="pay-cta" id="pay-cta" data-act="submit">✓ پارەکەم نارد</button><button type="button" class="pay-back" data-act="back">⬅️ گەڕانەوە</button>';if(PAY_PROOF){const drop=document.getElementById('pay-drop');if(drop)drop.classList.add('has');const pv=document.getElementById('pay-proof-preview');if(pv)pv.innerHTML='<img src="'+PAY_PROOF+'">'+proofPickRow();}}catch(err){const i2=document.getElementById('pay-inner');if(i2)i2.innerHTML='<div style="color:#fca5a5;font-size:12px;padding:10px">⚠️ هەڵەیەک ڕوویدا</div><button class="pay-back" type="button" data-act="back">⬅️ گەڕانەوە</button>';}}
 function loadAvatars(){const col=document.getElementById('covers-col');col.innerHTML='<div class="shop-empty">بارکردن...</div>';db.collection('avatars').get().then(snap=>{if(snap.empty){col.innerHTML='<div class="shop-empty">هیچ وێنەیەک نییە</div>';return;}col.innerHTML='';const owned=U.ownedCovers||[];snap.forEach(doc=>{const d=doc.data(),isImage=isImg(d.avatar);const imgHtml=isImage?('<img src="'+d.avatar+'">'):(d.avatar||'🖼️');const isOwned=owned.includes(doc.id),isActive=U.cover===d.avatar;const badge=isOwned?'<div class="si-owned">✓</div>':'';const priceHtml=isOwned?'<div class="si-price owned">✅ کڕدراوە</div>':('<div class="si-price">💎 '+(d.price||0)+'</div>');col.innerHTML+='<div class="shop-item'+(isActive?' av-active':'')+'" onclick="selectAvatar(\''+doc.id+'\')">'+badge+'<div class="si-img cover">'+imgHtml+'</div><div class="si-meta"><div class="si-nm">'+(d.name||'پاشبنەما')+'</div>'+(d.city?('<div class="si-ct">🏙️ '+d.city+'</div>'):'')+priceHtml+'</div></div>';});}).catch(()=>{col.innerHTML='<div class="shop-empty">هەڵە</div>';});}
 async function selectAvatar(id){const doc=await db.collection('avatars').doc(id).get();if(!doc.exists)return;const d=doc.data(),owned=(U.ownedCovers||[]).includes(id);if(owned){if(U.cover===d.avatar){showPopup('ئەم وێنەیە ئێستا دانراوە ✅','info');return;}if(!(await showConfirm('ئەم وێنەیە دابنێیت بە پاشبنەما؟','دابنێ','نەخێر')))return;try{await db.collection('users').doc(auth.currentUser.uid).update({cover:d.avatar,coverSetAt:firebase.firestore.FieldValue.serverTimestamp()});U.cover=d.avatar;setAvatarUI();await syncProfileToScores();go('profile');}catch(e){showPopup('هەڵە','error');}}else{const needD=d.price||0;if((U.diamonds||0)<needD){showPopup('ئەڵماسی پێویستت نییە! 💎','warning');return;}if(!(await showConfirm('ئەم وێنەیە بکڕە بە 💎 '+needD+'؟','بیکڕە','پاشگەزبوونەوە')))return;try{const newD=(U.diamonds||0)-needD,newOwned=[...(U.ownedCovers||[]),id];await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,cover:d.avatar,coverSetAt:firebase.firestore.FieldValue.serverTimestamp(),ownedCovers:newOwned});U.diamonds=newD;U.cover=d.avatar;U.ownedCovers=newOwned;refreshUI();setAvatarUI();await syncProfileToScores();go('profile');showPopup('✅ کڕدرا!','success');}catch(e){showPopup('هەڵە لە کڕین','error');}}}
 function loadFrames(){const col=document.getElementById('frames-col');col.innerHTML='<div class="shop-empty">بارکردن...</div>';db.collection('frames').get().then(snap=>{if(snap.empty){col.innerHTML='<div class="shop-empty">هیچ چوارچێوەیەک نییە</div>';return;}col.innerHTML='';const owned=U.ownedFrames||[];snap.forEach(doc=>{const d=doc.data();const isOwned=owned.includes(doc.id),isActive=U.frame===d.avatar;const badge=isOwned?'<div class="si-owned">✓</div>':'';const priceHtml=isOwned?'<div class="si-price owned">✅ کڕدراوە</div>':('<div class="si-price">💎 '+(d.price||0)+'</div>');col.innerHTML+='<div class="shop-item'+(isActive?' fr-active':'')+'" onclick="selectFrame(\''+doc.id+'\')">'+badge+'<div class="si-img frame"><img src="'+d.avatar+'"></div><div class="si-meta"><div class="si-nm">'+(d.name||'چوارچێوە')+'</div>'+priceHtml+'</div></div>';});col.querySelectorAll('.si-img.frame img').forEach(function(img){const s=img.getAttribute('src');if(s)processFrame(s,function(cleaned){img.src=cleaned;});});}).catch(()=>{col.innerHTML='<div class="shop-empty">هەڵە</div>';});}
 async function selectFrame(id){const doc=await db.collection('frames').doc(id).get();if(!doc.exists)return;const d=doc.data(),owned=(U.ownedFrames||[]).includes(id);if(owned){if(U.frame===d.avatar){if(!(await showConfirm('لابردنی چوارچێوە؟','لابردن','پاشگەزبوونەوە')))return;try{await db.collection('users').doc(auth.currentUser.uid).update({frame:''});U.frame='';setAvatarUI();await syncProfileToScores();loadFrames();showPopup('✅ چوارچێوە لابرا','success');}catch(e){showPopup('هەڵە','error');}return;}if(!(await showConfirm('ئەم چوارچێوەیە دابنێیت؟','دابنێ','نەخێر')))return;try{await db.collection('users').doc(auth.currentUser.uid).update({frame:d.avatar});U.frame=d.avatar;setAvatarUI();await syncProfileToScores();loadFrames();showPopup('✅ چوارچێوە دانرا بە پرۆفایلەکەت! 👑','success');}catch(e){showPopup('هەڵە','error');}}else{const needD=d.price||0;if((U.diamonds||0)<needD){showPopup('ئەڵماسی پێویستت نییە! 💎','warning');return;}if(!(await showConfirm('ئەم چوارچێوەیە بکڕە بە 💎 '+needD+'؟','بیکڕە','پاشگەزبوونەوە')))return;try{const newD=(U.diamonds||0)-needD,newOwned=[...(U.ownedFrames||[]),id];await db.collection('users').doc(auth.currentUser.uid).update({diamonds:newD,frame:d.avatar,ownedFrames:newOwned});U.diamonds=newD;U.frame=d.avatar;U.ownedFrames=newOwned;refreshUI();setAvatarUI();await syncProfileToScores();loadFrames();showPopup('✅ چوارچێوە کڕدرا و دانرا! 👑','success');}catch(e){showPopup('هەڵە لە کڕین','error');}}}
-function errMsg(c){const m={'auth/user-not-found':'ئەم ئیمەیلە تۆمار نەکراوە','auth/wrong-password':'وشەی نهێنی هەڵەیە','auth/email-already-in-use':'ئەم ئیمەیلە پێشتر تۆمار کراوە','auth/weak-password':'وشەی نهێنی لاوازە (لانیکەم  پیت)','auth/invalid-email':'ئیمەیل نادروستە','auth/too-many-requests':'زۆر هەوڵت دا، چاوەڕوان بە','auth/invalid-credential':'ئیمەیل یان وشەی نهێنی هەڵەیە','auth/network-request-failed':'پەیوەندی ئینتەرنێت نییە'};return m[c]||c;}
-(function(){var lastMod='';function check(){try{var gs=document.getElementById('game-screen');if(gs&&gs.classList.contains('show'))return;var ms=document.getElementById('memory-screen');if(ms&&ms.classList.contains('show'))return;var ws=document.getElementById('word-screen');if(ws&&ws.classList.contains('show'))return;var os=document.getElementById('olympiad-screen');if(os&&os.classList.contains('show'))return;fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){var m=r.headers.get('last-modified')||r.headers.get('etag')||'';if(!m)return;if(!lastMod){lastMod=m;return;}if(m!==lastMod){location.reload();}}).catch(function(){});}catch(e){}}setTimeout(function(){try{fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){lastMod=r.headers.get('last-modified')||r.headers.get('etag')||'';}).catch(function(){});}catch(e){}},5000);setInterval(check,30000);document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});window.addEventListener('online',check);})();
+function errMsg(c){const m={'auth/user-not-found':'ئەم ئیمەیلە تۆمار نەکراوە','auth/wrong-password':'وشەی نهێنی هەڵەیە','auth/email-already-in-use':'ئەم ئیمەیلە پێشتر تۆمار کراوە','auth/weak-password':'وشەی نهێنی لاوازە (لانیکەم ٦ پیت)','auth/invalid-email':'ئیمەیل نادروستە','auth/too-many-requests':'زۆر هەوڵت دا، چاوەڕوان بە','auth/invalid-credential':'ئیمەیل یان وشەی نهێنی هەڵەیە','auth/network-request-failed':'پەیوەندی ئینتەرنێت نییە'};return m[c]||c;}
+(function(){var lastMod='';function check(){try{var gs=document.getElementById('game-screen');if(gs&&gs.classList.contains('show'))return;var ms=document.getElementById('memory-screen');if(ms&&ms.classList.contains('show'))return;var ws=document.getElementById('word-screen');if(ws&&ws.classList.contains('show'))return;fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){var m=r.headers.get('last-modified')||r.headers.get('etag')||'';if(!m)return;if(!lastMod){lastMod=m;return;}if(m!==lastMod){location.reload();}}).catch(function(){});}catch(e){}}setTimeout(function(){try{fetch(location.href,{method:'HEAD',cache:'no-store'}).then(function(r){lastMod=r.headers.get('last-modified')||r.headers.get('etag')||'';}).catch(function(){});}catch(e){}},5000);setInterval(check,30000);document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});window.addEventListener('online',check);})();
 </script>
 </body>
 </html>
